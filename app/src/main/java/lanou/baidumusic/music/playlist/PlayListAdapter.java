@@ -31,7 +31,7 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayLi
 
     @Override
     public PlayListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_play_list, null);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_music_playlist_item, null);
         PlayListViewHolder viewHolder = new PlayListViewHolder(view);
         return viewHolder;
     }
@@ -65,7 +65,7 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayLi
             rl_playList = (RelativeLayout) itemView.findViewById(R.id.rl_playList);
             iv_playList = (ImageView) itemView.findViewById(R.id.iv_playList);
             tv_count = (TextView) itemView.findViewById(R.id.tv_count);
-            ib_playList = (ImageButton) itemView.findViewById(R.id.ib__playList);
+            ib_playList = (ImageButton) itemView.findViewById(R.id.ib_playList);
             tv_introduction = (TextView) itemView.findViewById(R.id.tv_introduction);
             tv_author = (TextView) itemView.findViewById(R.id.tv_author);
         }

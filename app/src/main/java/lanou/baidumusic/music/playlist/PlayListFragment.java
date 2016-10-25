@@ -1,7 +1,10 @@
 package lanou.baidumusic.music.playlist;
 
+import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -19,7 +22,9 @@ public class PlayListFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        RecyclerView rv_play = (RecyclerView) getView().findViewById(R.id.rv_play);
+        RecyclerView rv_play = bindView(R.id.rv_play);
+        final TextView tv_lastest = bindView(R.id.tv_lastest);
+        final TextView tv_hostest = bindView(R.id.tv_hostest);
 
         ArrayList<PlayListBean> arrayList = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
@@ -35,6 +40,22 @@ public class PlayListFragment extends BaseFragment {
         rv_play.setAdapter(adapter);
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         rv_play.setLayoutManager(manager);
+
+        tv_hostest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_lastest.setTextColor(Color.GRAY);
+                tv_hostest.setTextColor(Color.BLUE);
+            }
+        });
+
+        tv_lastest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_hostest.setTextColor(Color.GRAY);
+                tv_lastest.setTextColor(Color.BLUE);
+            }
+        });
 
     }
 

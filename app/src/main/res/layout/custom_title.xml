@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="45dp"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
     android:background="@mipmap/default_album_bg">
 
     <ImageButton
@@ -10,7 +10,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:src="@mipmap/ic_gengduo_normal"
-        android:background="@null"/>
+        android:background="@null"
+        android:id="@+id/ib_gengduo"/>
     <android.support.design.widget.TabLayout
         android:id="@+id/tb_main"
         android:layout_width="0dp"

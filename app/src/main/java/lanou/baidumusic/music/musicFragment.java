@@ -17,7 +17,7 @@ import lanou.baidumusic.music.video.VideoFragment;
 /**
  * Created by dllo on 16/10/21.
  */
-public class musicFragment extends BaseFragment {
+public class MusicFragment extends BaseFragment {
 
     @Override
     protected int getLayout() {
@@ -26,8 +26,8 @@ public class musicFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        TabLayout tb_music = (TabLayout) getView().findViewById(R.id.tb_music);
-        ViewPager vp_music = (ViewPager) getView().findViewById(R.id.vp_music);
+        TabLayout tb_music = bindView(R.id.tb_music);
+        ViewPager vp_music = bindView(R.id.vp_music);
 
         ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
         fragmentArrayList.add(new RecommendationFragment());

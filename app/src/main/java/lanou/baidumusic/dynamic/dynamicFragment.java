@@ -6,7 +6,7 @@ import lanou.baidumusic.base.BaseFragment;
 /**
  * Created by dllo on 16/10/21.
  */
-public class dynamicFragment extends BaseFragment {
+public class DynamicFragment extends BaseFragment {
     @Override
     protected int getLayout() {
         return R.layout.fragment_dynamic;

@@ -7,19 +7,29 @@
     android:orientation="vertical"
     tools:context="lanou.baidumusic.MainActivity">
 
-    <include layout="@layout/custom_title"/>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_main"
+    <FrameLayout
+        android:id="@+id/replace_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"/>
+        android:layout_weight="8">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <include layout="@layout/custom_title"/>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/ll_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        android:layout_weight="1">
+        android:layout_weight="0.8">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -28,7 +38,9 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:src="@mipmap/default_album_playing_new"
+                android:background="#f2f4f5"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
