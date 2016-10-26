@@ -2,15 +2,22 @@ package lanou.baidumusic.music.toplist;
 
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
 import lanou.baidumusic.R;
 import lanou.baidumusic.base.BaseFragment;
+import lanou.baidumusic.tool.GsonRequest;
+import lanou.baidumusic.tool.Values;
+import lanou.baidumusic.tool.VolleySingleton;
 
 /**
  * Created by dllo on 16/10/24.
  */
 public class TopListFragment extends BaseFragment {
+
+    private TopListAdapter adapter;
+
     @Override
     protected int getLayout() {
         return R.layout.fragment_music_toplist;
@@ -18,20 +25,27 @@ public class TopListFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        ListView lv_toplist = bindView(R.id.lv_toplist);
+        final ListView lvTopList = bindView(R.id.lv_toplist);
 
-        ArrayList<TopListBean> beanArrayList = new ArrayList<>();
-        TopListAdapter adapter = new TopListAdapter(getActivity());
-        for (int i = 0; i < 15; i++) {
-            TopListBean bean = new TopListBean();
-            bean.setTitle("新歌榜");
-            bean.setTop1("下完这场雨-后铉");
-            bean.setTop2("呵护-梁静茹");
-            bean.setTop3("你在终点等我-王菲");
-            beanArrayList.add(bean);
-        }
-        adapter.setBeanArrayList(beanArrayList);
-        lv_toplist.setAdapter(adapter);
+        adapter = new TopListAdapter(getActivity());
+
+        GsonRequest<TopListBean> gsonRequest = new GsonRequest<>(TopListBean.class,
+                Values.MUSIC_TOPLIST, new Response.Listener<TopListBean>() {
+            @Override
+            public void onResponse(TopListBean response) {
+                // 请求成功的方法
+                adapter.setBean(response);
+                lvTopList.setAdapter(adapter);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        VolleySingleton.getInstance().addRequest(gsonRequest);
+
     }
 
     @Override

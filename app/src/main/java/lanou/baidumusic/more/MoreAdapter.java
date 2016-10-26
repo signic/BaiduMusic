@@ -53,19 +53,19 @@ public class MoreAdapter extends BaseAdapter {
         } else {
             viewHolder = (MoreViewHolder) convertView.getTag();
         }
-        viewHolder.iv_more_list.setImageResource(beanArrayList.get(position).getIcon());
-        viewHolder.tv_more_list.setText(beanArrayList.get(position).getName());
+        viewHolder.ivMoreList.setImageResource(beanArrayList.get(position).getIcon());
+        viewHolder.tvMoreList.setText(beanArrayList.get(position).getName());
         return convertView;
     }
 
     private class MoreViewHolder {
 
-        private final ImageView iv_more_list;
-        private final TextView tv_more_list;
+        private final ImageView ivMoreList;
+        private final TextView tvMoreList;
 
         public MoreViewHolder(View convertView) {
-            iv_more_list = (ImageView) convertView.findViewById(R.id.iv_more_list);
-            tv_more_list = (TextView) convertView.findViewById(R.id.tv_more_list);
+            ivMoreList = (ImageView) convertView.findViewById(R.id.iv_more_list);
+            tvMoreList = (TextView) convertView.findViewById(R.id.tv_more_list);
         }
     }
 }

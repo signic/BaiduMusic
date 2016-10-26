@@ -28,8 +28,8 @@ public class MoreFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        ListView lv_more = bindView(R.id.lv_more);
-        LinearLayout ll_more = bindView(R.id.ll_more);
+        ListView lvMore = bindView(R.id.lv_more);
+        LinearLayout llMore = bindView(R.id.ll_more);
 
         ArrayList<MoreBean> beanArrayList = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
@@ -42,9 +42,9 @@ public class MoreFragment extends BaseFragment {
         MoreAdapter adapter = new MoreAdapter(getActivity());
         adapter.setBeanArrayList(beanArrayList);
 
-        lv_more.setAdapter(adapter);
+        lvMore.setAdapter(adapter);
 
-        ll_more.setOnClickListener(new View.OnClickListener() {
+        llMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getFragmentManager().popBackStack();

@@ -15,6 +15,11 @@ import lanou.baidumusic.base.BaseFragment;
  * Created by dllo on 16/10/24.
  */
 public class VideoFragment extends BaseFragment {
+
+    private TextView tvLastest;
+    private TextView tvHostest;
+    private RecyclerView rvVideo;
+
     @Override
     protected int getLayout() {
         return R.layout.fragment_music_video;
@@ -22,9 +27,9 @@ public class VideoFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        RecyclerView rv_video = bindView(R.id.rv_video);
-        final TextView tv_lastest = bindView(R.id.tv_lastest);
-        final TextView tv_hostest = bindView(R.id.tv_hostest);
+        rvVideo = bindView(R.id.rv_video);
+        tvLastest = bindView(R.id.tv_lastest);
+        tvHostest = bindView(R.id.tv_hostest);
 
         ArrayList<VideoBean> arrayList = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
@@ -36,23 +41,23 @@ public class VideoFragment extends BaseFragment {
 
         VideoAdapter adapter = new VideoAdapter(getActivity());
         adapter.setBeanArrayList(arrayList);
-        rv_video.setAdapter(adapter);
+        rvVideo.setAdapter(adapter);
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
-        rv_video.setLayoutManager(manager);
+        rvVideo.setLayoutManager(manager);
 
-        tv_lastest.setOnClickListener(new View.OnClickListener() {
+        tvLastest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv_hostest.setTextColor(Color.GRAY);
-                tv_lastest.setTextColor(Color.BLUE);
+                tvHostest.setTextColor(Color.GRAY);
+                tvLastest.setTextColor(Color.BLUE);
             }
         });
 
-        tv_hostest.setOnClickListener(new View.OnClickListener() {
+        tvHostest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv_lastest.setTextColor(Color.GRAY);
-                tv_hostest.setTextColor(Color.BLUE);
+                tvLastest.setTextColor(Color.GRAY);
+                tvHostest.setTextColor(Color.BLUE);
             }
         });
     }

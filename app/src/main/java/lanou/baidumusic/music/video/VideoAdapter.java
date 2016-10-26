@@ -36,9 +36,9 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
 
     @Override
     public void onBindViewHolder(VideoViewHolder holder, int position) {
-        holder.iv_video.setImageResource(R.mipmap.ic_launcher);
-        holder.tv_title.setText("咆哮");
-        holder.tv_author.setText("EXO");
+        holder.ivVideo.setImageResource(R.mipmap.ic_launcher);
+        holder.tvTitle.setText("咆哮");
+        holder.tvAuthor.setText("EXO");
     }
 
     @Override
@@ -47,14 +47,14 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
     }
 
     public class VideoViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView iv_video;
-        private final TextView tv_title;
-        private final TextView tv_author;
+        private final ImageView ivVideo;
+        private final TextView tvTitle;
+        private final TextView tvAuthor;
         public VideoViewHolder(View itemView) {
             super(itemView);
-            iv_video = (ImageView) itemView.findViewById(R.id.iv_video);
-            tv_title = (TextView) itemView.findViewById(R.id.tv_title);
-            tv_author = (TextView) itemView.findViewById(R.id.tv_author);
+            ivVideo = (ImageView) itemView.findViewById(R.id.iv_video);
+            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            tvAuthor = (TextView) itemView.findViewById(R.id.tv_author);
         }
     }
 }

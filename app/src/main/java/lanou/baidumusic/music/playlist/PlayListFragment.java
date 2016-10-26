@@ -6,15 +6,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
 import lanou.baidumusic.R;
 import lanou.baidumusic.base.BaseFragment;
+import lanou.baidumusic.tool.GsonRequest;
+import lanou.baidumusic.tool.Values;
+import lanou.baidumusic.tool.VolleySingleton;
 
 /**
  * Created by dllo on 16/10/24.
  */
 public class PlayListFragment extends BaseFragment {
+
+    private TextView tvLastest;
+    private TextView tvHostest;
+    private RecyclerView rvPlay;
+    private PlayListAdapter adapter;
+
     @Override
     protected int getLayout() {
         return R.layout.fragment_music_playlist;
@@ -22,38 +32,46 @@ public class PlayListFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        RecyclerView rv_play = bindView(R.id.rv_play);
-        final TextView tv_lastest = bindView(R.id.tv_lastest);
-        final TextView tv_hostest = bindView(R.id.tv_hostest);
+        rvPlay = bindView(R.id.rv_play);
+        tvLastest = bindView(R.id.tv_lastest);
+        tvHostest = bindView(R.id.tv_hostest);
 
-        ArrayList<PlayListBean> arrayList = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            PlayListBean bean = new PlayListBean();
-            bean.setTitle("title");
-            bean.setCount("4219");
-            bean.setAuthor("zuohze");
-            arrayList.add(bean);
-        }
+        adapter = new PlayListAdapter(getActivity());
 
-        PlayListAdapter adapter = new PlayListAdapter(getActivity());
-        adapter.setBeanArrayList(arrayList);
-        rv_play.setAdapter(adapter);
-        GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
-        rv_play.setLayoutManager(manager);
-
-        tv_hostest.setOnClickListener(new View.OnClickListener() {
+        GsonRequest<PlayListBean> gsonRequest = new GsonRequest<>(PlayListBean.class,
+                Values.MUSIC_PLAYLIST_HOT,
+                new Response.Listener<PlayListBean>() {
+                    @Override
+                    public void onResponse(PlayListBean response) {
+                        // 请求成功的方法
+                        adapter.setBean(response);
+                        rvPlay.setAdapter(adapter);
+                    }
+                }, new Response.ErrorListener() {
             @Override
-            public void onClick(View v) {
-                tv_lastest.setTextColor(Color.GRAY);
-                tv_hostest.setTextColor(Color.BLUE);
+            public void onErrorResponse(VolleyError error) {
+
             }
         });
 
-        tv_lastest.setOnClickListener(new View.OnClickListener() {
+        VolleySingleton.getInstance().addRequest(gsonRequest);
+
+        GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
+        rvPlay.setLayoutManager(manager);
+
+        tvHostest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv_hostest.setTextColor(Color.GRAY);
-                tv_lastest.setTextColor(Color.BLUE);
+                tvLastest.setTextColor(Color.GRAY);
+                tvHostest.setTextColor(Color.BLUE);
+            }
+        });
+
+        tvLastest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvHostest.setTextColor(Color.GRAY);
+                tvLastest.setTextColor(Color.BLUE);
             }
         });
 

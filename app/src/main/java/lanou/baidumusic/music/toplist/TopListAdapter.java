@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.squareup.picasso.Picasso;
 
 import lanou.baidumusic.R;
 
@@ -17,24 +17,24 @@ import lanou.baidumusic.R;
  */
 public class TopListAdapter extends BaseAdapter {
     Context mContext;
-    ArrayList<TopListBean> beanArrayList;
+    TopListBean bean;
 
     public TopListAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
-    public void setBeanArrayList(ArrayList<TopListBean> beanArrayList) {
-        this.beanArrayList = beanArrayList;
+    public void setBean(TopListBean bean) {
+        this.bean = bean;
     }
 
     @Override
     public int getCount() {
-        return beanArrayList == null ? 0 : beanArrayList.size();
+        return bean.getContent().size();
     }
 
     @Override
     public Object getItem(int position) {
-        return beanArrayList.get(position);
+        return bean.getContent().get(position);
     }
 
     @Override
@@ -54,29 +54,36 @@ public class TopListAdapter extends BaseAdapter {
             viewHolder = (TopListViewHolder) convertView.getTag();
         }
 
-        viewHolder.iv_toplist.setImageResource(R.mipmap.ic_launcher);
-        viewHolder.tv_title.setText("新歌榜");
-        viewHolder.tv_top1.setText("下完这场雨-后铉");
-        viewHolder.tv_top2.setText("呵护-梁静茹");
-        viewHolder.tv_top3.setText("你在终点等我-王菲");
+        Picasso.with(mContext).load(bean.getContent().get(position)
+                .getPic_s192()).into(viewHolder.ivTopList);
+        viewHolder.tvTitle.setText(bean.getContent().get(position).getName());
+        viewHolder.tvTop1.setText(bean.getContent().get(position)
+                .getContent().get(0).getTitle() + "-" + bean.getContent()
+                .get(position).getContent().get(0).getAuthor());
+        viewHolder.tvTop2.setText(bean.getContent().get(position)
+                .getContent().get(1).getTitle() + "-" + bean.getContent()
+                .get(position).getContent().get(1).getAuthor());
+        viewHolder.tvTop3.setText(bean.getContent().get(position)
+                .getContent().get(2).getTitle() + "-" + bean.getContent()
+                .get(position).getContent().get(2).getAuthor());
 
         return convertView;
     }
 
     private class TopListViewHolder {
 
-        private final ImageView iv_toplist;
-        private final TextView tv_title;
-        private final TextView tv_top1;
-        private final TextView tv_top2;
-        private final TextView tv_top3;
+        private final ImageView ivTopList;
+        private final TextView tvTitle;
+        private final TextView tvTop1;
+        private final TextView tvTop2;
+        private final TextView tvTop3;
 
         public TopListViewHolder(View convertView) {
-            iv_toplist = (ImageView) convertView.findViewById(R.id.iv_toplist);
-            tv_title = (TextView) convertView.findViewById(R.id.tv_title);
-            tv_top1 = (TextView) convertView.findViewById(R.id.tv_top1);
-            tv_top2 = (TextView) convertView.findViewById(R.id.tv_top2);
-            tv_top3 = (TextView) convertView.findViewById(R.id.tv_top3);
+            ivTopList = (ImageView) convertView.findViewById(R.id.iv_toplist);
+            tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
+            tvTop1 = (TextView) convertView.findViewById(R.id.tv_top1);
+            tvTop2 = (TextView) convertView.findViewById(R.id.tv_top2);
+            tvTop3 = (TextView) convertView.findViewById(R.id.tv_top3);
         }
     }
 }

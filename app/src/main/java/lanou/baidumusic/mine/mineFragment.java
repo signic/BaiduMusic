@@ -1,7 +1,5 @@
 package lanou.baidumusic.mine;
 
-import android.support.design.widget.TabLayout;
-
 import lanou.baidumusic.R;
 import lanou.baidumusic.base.BaseFragment;
 
@@ -16,7 +14,7 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        TabLayout tb_main = bindView(R.id.tb_main);
+
     }
 
     @Override

@@ -2,35 +2,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:padding="5dp">
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/ic_launcher"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
         android:id="@+id/rl_playList">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:src="@mipmap/ic_launcher"
             android:background="@null"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/iv_playList"/>
-        <TextView
-            android:layout_width="wrap_content"
+            android:scaleType="fitXY"
+            android:id="@+id/iv_playList_background"/>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="4219"
-            android:textSize="12sp"
-            android:id="@+id/tv_count"
-            android:layout_toRightOf="@id/iv_playList"
-            android:layout_alignTop="@id/iv_playList"/>
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/bt_localmusic_play_nor"
-            android:background="@null"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/ib_playList"/>
+            android:layout_alignParentBottom="true">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_lebo_listen"
+                android:background="@null"
+                android:id="@+id/iv_playList"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4219"
+                android:layout_marginLeft="5dp"
+                android:textSize="12sp"
+                android:textColor="#ffffff"
+                android:id="@+id/tv_count"
+                android:layout_marginBottom="5dp"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/bt_localmusic_play_nor"
+                android:background="@null"
+                android:layout_marginLeft="95dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/ib_playList"/>
+        </LinearLayout>
+
     </RelativeLayout>
 
     <TextView

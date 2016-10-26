@@ -26,8 +26,8 @@ public class MusicFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        TabLayout tb_music = bindView(R.id.tb_music);
-        ViewPager vp_music = bindView(R.id.vp_music);
+        TabLayout tbMusic = bindView(R.id.tb_music);
+        ViewPager vpMusic = bindView(R.id.vp_music);
 
         ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
         fragmentArrayList.add(new RecommendationFragment());
@@ -38,8 +38,8 @@ public class MusicFragment extends BaseFragment {
 
         MusicAdapter adapter = new MusicAdapter(getActivity().getSupportFragmentManager());
         adapter.setFragmentArrayList(fragmentArrayList);
-        vp_music.setAdapter(adapter);
-        tb_music.setupWithViewPager(vp_music);
+        vpMusic.setAdapter(adapter);
+        tbMusic.setupWithViewPager(vpMusic);
     }
 
     @Override
