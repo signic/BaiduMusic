@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import lanou.baidumusic.R;
+import lanou.baidumusic.tool.bean.PlayListBean;
 
 /**
  * Created by dllo on 16/10/24.
@@ -39,16 +40,20 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayLi
 
     @Override
     public void onBindViewHolder(PlayListViewHolder holder, int position) {
-        Picasso.with(mContext).load(bean.getContent().get(position)
-                .getPic_300()).into(holder.ivBackground);
-        holder.tvCount.setText(bean.getContent().get(position).getListenum());
-        holder.tvIntroduction.setText(bean.getContent().get(position).getTitle());
-        holder.tvAuthor.setText("by super悟空");
+
+//        VolleySingleton.getInstance().getImage(bean.getContent().get(position)
+//                .getPic_300(), holder.ivBackground);
+
+        Picasso.with(mContext).load(bean.getDiyInfo().get(position)
+                .getList_pic()).into(holder.ivBackground);
+        holder.tvCount.setText(String.valueOf(bean.getDiyInfo().get(position).getListen_num()));
+        holder.tvIntroduction.setText(bean.getDiyInfo().get(position).getTitle());
+        holder.tvAuthor.setText("by " + bean.getDiyInfo().get(position).getUsername());
     }
 
     @Override
     public int getItemCount() {
-        return bean.getContent().size();
+        return bean.getDiyInfo().size();
     }
 
     public class PlayListViewHolder extends RecyclerView.ViewHolder {

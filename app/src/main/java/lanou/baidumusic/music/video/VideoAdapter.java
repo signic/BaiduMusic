@@ -8,23 +8,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.squareup.picasso.Picasso;
 
 import lanou.baidumusic.R;
+import lanou.baidumusic.tool.bean.VideoBean;
 
 /**
  * Created by dllo on 16/10/25.
  */
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHolder> {
-    ArrayList<VideoBean> beanArrayList;
+    VideoBean bean;
     Context mContext;
 
     public VideoAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
-    public void setBeanArrayList(ArrayList<VideoBean> beanArrayList) {
-        this.beanArrayList = beanArrayList;
+    public void setBean(VideoBean bean) {
+        this.bean = bean;
     }
 
     @Override
@@ -36,14 +37,15 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
 
     @Override
     public void onBindViewHolder(VideoViewHolder holder, int position) {
-        holder.ivVideo.setImageResource(R.mipmap.ic_launcher);
-        holder.tvTitle.setText("咆哮");
-        holder.tvAuthor.setText("EXO");
+        Picasso.with(mContext).load(bean.getResult().getMv_list().get(position).getThumbnail2())
+                .into(holder.ivVideo);
+        holder.tvTitle.setText(bean.getResult().getMv_list().get(position).getTitle());
+        holder.tvAuthor.setText(bean.getResult().getMv_list().get(position).getArtist());
     }
 
     @Override
     public int getItemCount() {
-        return beanArrayList == null ? 0 : beanArrayList.size();
+        return bean.getResult().getMv_list().size();
     }
 
     public class VideoViewHolder extends RecyclerView.ViewHolder {

@@ -7,7 +7,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.base.BaseFragment;
+import lanou.baidumusic.tool.base.BaseFragment;
+import lanou.baidumusic.tool.bean.MoreBean;
 
 /**
  * Created by dllo on 16/10/25.

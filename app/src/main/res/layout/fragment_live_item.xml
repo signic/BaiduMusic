@@ -6,14 +6,14 @@
               android:padding="5dp">
     <RelativeLayout
         android:layout_width="170dp"
-        android:layout_height="170dp"
-        android:id="@+id/rl_playList">
+        android:layout_height="130dp"
+        android:id="@+id/rl_live">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@null"
+            android:src="@mipmap/img_live_play_shade"
             android:scaleType="fitXY"
-            android:id="@+id/iv_playList_background"/>
+            android:id="@+id/iv_live_background"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,9 +21,9 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_songlist_listen"
+                android:src="@mipmap/img_live_play_people"
                 android:background="@null"
-                android:id="@+id/iv_playList"
+                android:id="@+id/iv_live"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="17dp"/>
             <TextView
@@ -33,16 +33,16 @@
                 android:layout_marginLeft="5dp"
                 android:textSize="12sp"
                 android:textColor="#ffffff"
-                android:id="@+id/tv_count"
+                android:id="@+id/tv_num"
                 android:layout_marginTop="15dp"/>
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/bt_play_nor"
+                android:src="@mipmap/ic_live_play_normal"
                 android:background="@null"
                 android:layout_marginLeft="80dp"
                 android:layout_marginBottom="10dp"
-                android:id="@+id/ib_playList"/>
+                android:id="@+id/ib_live"/>
         </LinearLayout>
 
     </RelativeLayout>
@@ -50,15 +50,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="沉淀记忆岁月的歌"
+        android:text="丫头`"
         android:textSize="10sp"
         android:textColor="#000000"
-        android:id="@+id/tv_introduction"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="by super悟空"
-        android:textSize="10sp"
-        android:id="@+id/tv_author"/>
+        android:id="@+id/tv_name"/>
 
 </LinearLayout>

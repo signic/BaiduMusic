@@ -8,9 +8,11 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.base.BaseFragment;
+import lanou.baidumusic.tool.base.BaseFragment;
+import lanou.baidumusic.tool.bean.PlayListBean;
 import lanou.baidumusic.tool.GsonRequest;
 import lanou.baidumusic.tool.Values;
 import lanou.baidumusic.tool.VolleySingleton;
@@ -38,8 +40,42 @@ public class PlayListFragment extends BaseFragment {
 
         adapter = new PlayListAdapter(getActivity());
 
-        GsonRequest<PlayListBean> gsonRequest = new GsonRequest<>(PlayListBean.class,
-                Values.MUSIC_PLAYLIST_HOT,
+        GsonData(Values.MUSIC_PLAYLIST_HOT);
+        tvHostest.setTextColor(Color.BLUE);
+
+        GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
+        rvPlay.setLayoutManager(manager);
+
+        RecyclerViewHeader header = bindView(R.id.rv_header_playlist);
+        header.attachTo(rvPlay, true);
+
+        tvHostest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvLastest.setTextColor(Color.GRAY);
+                tvHostest.setTextColor(Color.BLUE);
+                GsonData(Values.MUSIC_PLAYLIST_HOT);
+            }
+        });
+
+        tvLastest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvHostest.setTextColor(Color.GRAY);
+                tvLastest.setTextColor(Color.BLUE);
+                GsonData(Values.MUSIC_PLAYLIST_LAST);
+            }
+        });
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    private void GsonData(String url) {
+        GsonRequest<PlayListBean> gsonRequest = new GsonRequest<>(PlayListBean.class, url,
                 new Response.Listener<PlayListBean>() {
                     @Override
                     public void onResponse(PlayListBean response) {
@@ -55,30 +91,5 @@ public class PlayListFragment extends BaseFragment {
         });
 
         VolleySingleton.getInstance().addRequest(gsonRequest);
-
-        GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
-        rvPlay.setLayoutManager(manager);
-
-        tvHostest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tvLastest.setTextColor(Color.GRAY);
-                tvHostest.setTextColor(Color.BLUE);
-            }
-        });
-
-        tvLastest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tvHostest.setTextColor(Color.GRAY);
-                tvLastest.setTextColor(Color.BLUE);
-            }
-        });
-
-    }
-
-    @Override
-    protected void initData() {
-
     }
 }

@@ -1,4 +1,4 @@
-package lanou.baidumusic.music.toplist;
+package lanou.baidumusic.tool.bean;
 
 import java.util.List;
 

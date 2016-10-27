@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-import lanou.baidumusic.base.BaseActivity;
+import lanou.baidumusic.tool.base.BaseActivity;
 import lanou.baidumusic.dynamic.DynamicFragment;
 import lanou.baidumusic.live.LiveFragment;
 import lanou.baidumusic.mine.MineFragment;

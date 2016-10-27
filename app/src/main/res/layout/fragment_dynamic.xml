@@ -21,6 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:text="热门话题"/>
             <ImageView
                 android:id="@+id/iv_dynamic"
@@ -33,7 +34,9 @@
                 android:layout_height="20dp"
                 android:text="更多"
                 android:textSize="12sp"
+                android:layout_marginTop="2dp"
                 android:background="@null"
+                android:layout_marginRight="-20dp"
                 android:layout_toLeftOf="@id/iv_dynamic"/>
         </RelativeLayout>
         <android.support.v7.widget.RecyclerView

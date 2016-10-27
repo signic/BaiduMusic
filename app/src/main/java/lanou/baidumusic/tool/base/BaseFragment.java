@@ -1,4 +1,4 @@
-package lanou.baidumusic.base;
+package lanou.baidumusic.tool.base;
 
 import android.content.Context;
 import android.os.Bundle;

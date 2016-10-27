@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import lanou.baidumusic.R;
+import lanou.baidumusic.tool.bean.MoreBean;
 
 /**
  * Created by dllo on 16/10/25.

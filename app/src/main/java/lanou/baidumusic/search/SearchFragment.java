@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.base.BaseFragment;
+import lanou.baidumusic.tool.base.BaseFragment;
 
 /**
  * Created by dllo on 16/10/26.

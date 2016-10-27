@@ -1,6 +1,6 @@
 package lanou.baidumusic;
 
-import lanou.baidumusic.base.BaseActivity;
+import lanou.baidumusic.tool.base.BaseActivity;
 
 /**
  * Created by dllo on 16/10/26.

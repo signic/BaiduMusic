@@ -11,7 +11,6 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@mipmap/ic_launcher"
             android:id="@+id/iv_toplist"/>
         <ImageButton
             android:layout_width="wrap_content"
@@ -19,7 +18,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_margin="5dp"
-            android:src="@mipmap/bt_localmusic_play_nor"
+            android:src="@mipmap/bt_play_nor"
             android:background="@null"/>
     </RelativeLayout>
 

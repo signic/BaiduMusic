@@ -1,4 +1,4 @@
-package lanou.baidumusic.more;
+package lanou.baidumusic.tool.bean;
 
 /**
  * Created by dllo on 16/10/25.
