@@ -6,11 +6,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.tool.base.BaseFragment;
-import lanou.baidumusic.tool.bean.TopListBean;
 import lanou.baidumusic.tool.GsonRequest;
 import lanou.baidumusic.tool.Values;
 import lanou.baidumusic.tool.VolleySingleton;
+import lanou.baidumusic.tool.base.BaseFragment;
+import lanou.baidumusic.tool.bean.TopListBean;
 
 /**
  * Created by dllo on 16/10/24.

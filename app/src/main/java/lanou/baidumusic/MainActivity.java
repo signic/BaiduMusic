@@ -1,6 +1,5 @@
 package lanou.baidumusic;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,13 +12,13 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-import lanou.baidumusic.tool.base.BaseActivity;
 import lanou.baidumusic.dynamic.DynamicFragment;
 import lanou.baidumusic.live.LiveFragment;
 import lanou.baidumusic.mine.MineFragment;
 import lanou.baidumusic.more.MoreFragment;
 import lanou.baidumusic.music.MusicFragment;
 import lanou.baidumusic.search.SearchFragment;
+import lanou.baidumusic.tool.base.BaseActivity;
 
 public class MainActivity extends BaseActivity {
 
@@ -74,8 +73,6 @@ public class MainActivity extends BaseActivity {
         llMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MusicActivity.class);
-                startActivity(intent);
             }
         });
     }

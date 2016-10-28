@@ -7,12 +7,12 @@ import android.support.v4.view.ViewPager;
 import java.util.ArrayList;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.tool.base.BaseFragment;
 import lanou.baidumusic.music.karaoke.KaraokeFragment;
 import lanou.baidumusic.music.playlist.PlayListFragment;
 import lanou.baidumusic.music.recommendation.RecommendationFragment;
 import lanou.baidumusic.music.toplist.TopListFragment;
 import lanou.baidumusic.music.video.VideoFragment;
+import lanou.baidumusic.tool.base.BaseFragment;
 
 /**
  * Created by dllo on 16/10/21.
