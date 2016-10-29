@@ -113,7 +113,8 @@
                 <ImageView
                     android:id="@+id/iv_module_recommendation"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -141,19 +142,21 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_recommendation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"/>
 
 
             <!--新碟上架-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:padding="5dp">
                 <ImageView
                     android:id="@+id/iv_module_last"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -182,18 +185,20 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_last"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"/>
 
             <!--热销专辑-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:padding="5dp">
                 <ImageView
                     android:id="@+id/iv_module_hot"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -205,17 +210,18 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_hot"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"/>
 
 
             <!--广告-->
             <ImageView
                 android:id="@+id/iv_ad"
-                android:layout_width="333dp"
+                android:layout_width="330dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="15dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="5dp"
                 android:scaleType="fitXY"/>
 
@@ -229,7 +235,8 @@
                 <ImageView
                     android:id="@+id/iv_module_scene"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -359,12 +366,13 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:padding="5dp">
                 <ImageView
                     android:id="@+id/iv_module_today"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -392,19 +400,21 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_today"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"/>
 
 
             <!--原创音乐-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:padding="5dp">
                 <ImageView
                     android:id="@+id/iv_module_diy"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -416,19 +426,21 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_diy"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"/>
 
 
             <!--最热MV推荐-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:padding="5dp">
                 <ImageView
                     android:id="@+id/iv_module_mv"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -440,19 +452,21 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_mv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"/>
 
 
             <!--乐播节目-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:padding="5dp">
                 <ImageView
                     android:id="@+id/iv_module_lebo"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -480,19 +494,21 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_lebo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"/>
 
 
             <!--专栏-->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:padding="5dp">
                 <ImageView
                     android:id="@+id/iv_module_mod"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -504,7 +520,8 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_mod"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"/>
 
         </LinearLayout>
 

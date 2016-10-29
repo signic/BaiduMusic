@@ -46,6 +46,14 @@ public class Values {
             ".0&channel=1382d&operator=0&provider=11%2C12&method=baidu.ting.mv" +
             ".searchMV&format=json&order=0&page_num=1&page_size=20&query=%E5%85%A8%E9%83%A8";
 
+    // 动态
+    public static final String DYNAMIC = "http://tingapi.ting.baidu" +
+            ".com/v1/restserver/ting?from=android&version=5.9.0" +
+            ".0&channel=1382d&operator=0&method=baidu.ting.ugcfriend" +
+            ".getList&format=json&param=gQHPwbE1lIc4uU" +
+            "%2Fw5euOhYZy58BhsslJjB1hwSU1iBbiiphbJkqubemS8SVokSuKjcgG7FUkgMCC6K%2FtuVp0jg%3D%3D" +
+            "&timestamp=1477732262&sign=8bfc0526cc289b44edf23d30cb6c8d2d";
+
     // 直播
     public static final String LIVE = "http://tingapi.ting.baidu" +
             ".com/v1/restserver/ting?from=android&version=5.9.0" +

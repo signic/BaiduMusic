@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import lanou.baidumusic.R;
-import lanou.baidumusic.tool.VolleySingleton;
 import lanou.baidumusic.tool.bean.RecommendationBean;
 
 /**
@@ -36,8 +37,8 @@ public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.TodayViewHol
 
     @Override
     public void onBindViewHolder(TodayViewHolder holder, int position) {
-        VolleySingleton.getInstance().getImage(bean.getResult().getRecsong().getResult().get
-                (position).getPic_premium(), holder.ivToday);
+        Picasso.with(mContext).load(bean.getResult().getRecsong().getResult().get
+                (position).getPic_premium()).fit().into(holder.ivToday);
         holder.tvTitle.setText(bean.getResult().getRecsong().getResult().get
                 (position).getTitle());
         holder.tvAuthor.setText(bean.getResult().getRecsong().getResult().get

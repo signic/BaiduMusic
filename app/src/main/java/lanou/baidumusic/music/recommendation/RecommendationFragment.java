@@ -1,5 +1,7 @@
 package lanou.baidumusic.music.recommendation;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
@@ -184,6 +186,7 @@ public class RecommendationFragment extends BaseFragment {
         GsonRequest<RecommendationBean> gsonRequest = new GsonRequest<>(RecommendationBean
                 .class, url,
                 new Response.Listener<RecommendationBean>() {
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
                     @Override
                     public void onResponse(RecommendationBean response) {
                         // 请求成功的方法
@@ -245,6 +248,14 @@ public class RecommendationFragment extends BaseFragment {
                         VolleySingleton.getInstance().getImage(response.getResult().getMod_26()
                                 .getResult().get(0).getPic(), ivAd);
 
+//                        ivScene1.setImageTintList(getActivity().getResources()
+//                                .getColorStateList(R.color.colorOrange));
+//                        ivScene2.setImageTintList(getActivity().getResources().getColorStateList
+//                                (R.color.colorGreen));
+//                        ivScene3.setImageTintList(getActivity().getResources().getColorStateList
+//                                (R.color.colorCyan));
+//                        ivScene4.setImageTintList(getActivity().getResources().getColorStateList
+//                                (R.color.colorBlue));
                         VolleySingleton.getInstance().getImage(response.getResult().getScene()
                                 .getResult().getAction().get(0).getIcon_android(), ivScene1);
                         VolleySingleton.getInstance().getImage(response.getResult().getScene()
