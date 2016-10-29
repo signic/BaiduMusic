@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import lanou.baidumusic.R;
+import lanou.baidumusic.tool.VolleySingleton;
 import lanou.baidumusic.tool.bean.RecommendationBean;
 
 /**
@@ -31,30 +32,34 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
     @Override
     public RecommendationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout
-                .fragment_music_recommendation_recommendation, parent, false);
+                .fragment_music_recommendation_recommendation, null);
         RecommendationViewHolder viewHolder = new RecommendationViewHolder(view);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecommendationViewHolder holder, int position) {
-
+        VolleySingleton.getInstance().getImage(bean.getResult().getDiy().getResult().get
+                (position).getPic(), holder.ivRecommendation);
+        holder.tvNum.setText(String.valueOf(bean.getResult().getDiy().getResult().get
+                (position).getListenum()));
+        holder.tvTitle.setText(bean.getResult().getDiy().getResult().get
+                (position).getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return bean.getResult().getDiy().getResult().size();
     }
 
     public class RecommendationViewHolder extends RecyclerView.ViewHolder {
-
-        private TextView tvRecommendation;
+        private TextView tvNum;
+        private TextView tvTitle;
         private ImageView ivRecommendation;
-
         public RecommendationViewHolder(View itemView) {
             super(itemView);
-
-            tvRecommendation = (TextView) itemView.findViewById(R.id.tv_recommendation_recommendation);
+            tvNum = (TextView) itemView.findViewById(R.id.tv_recommendation_recommendation_num);
+            tvTitle = (TextView) itemView.findViewById(R.id.tv_recommendation_recommendation_title);
             ivRecommendation = (ImageView) itemView.findViewById(R.id.iv_recommendation_recommendation);
         }
     }

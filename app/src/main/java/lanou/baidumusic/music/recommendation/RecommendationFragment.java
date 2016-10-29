@@ -4,8 +4,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -38,9 +40,31 @@ public class RecommendationFragment extends BaseFragment {
     private ImageView ivMv;
     private ImageView ivLebo;
     private ImageView ivMod;
+    private ImageView ivAd;
+    private ImageView ivScene1;
+    private ImageView ivScene2;
+    private ImageView ivScene3;
+    private ImageView ivScene4;
+    private TextView tvScene1;
+    private TextView tvScene2;
+    private TextView tvScene3;
+    private TextView tvScene4;
     private RecyclerView rvRecommendation;
+    private RecommendationAdapter recommendationAdapter;
     private LastAdapter lastAdapter;
     private RecyclerView rvLast;
+    private HotAdapter hotAdapter;
+    private RecyclerView rvHot;
+    private RecyclerView rvToday;
+    private TodayAdapter todayAdapter;
+    private RecyclerView rvDiy;
+    private DiyAdapter diyAdapter;
+    private RecyclerView rvMv;
+    private MvAdapter mvAdapter;
+    private RecyclerView rvLebo;
+    private LeboAdapter leboAdapter;
+    private RecyclerView rvMod;
+    private ModAdapter modAdapter;
 
     @Override
     protected int getLayout() {
@@ -51,10 +75,30 @@ public class RecommendationFragment extends BaseFragment {
     protected void initView() {
         bannerViewPager = bindView(R.id.vp_music_recommendation);
         bannerAdapter = new BannerAdapter();
+
         rvRecommendation = bindView(R.id.rv_recommendation);
-//        RecommendationAdapter recommendationAdapter = new RecommendationAdapter();
+        recommendationAdapter = new RecommendationAdapter(getActivity());
+
         rvLast = bindView(R.id.rv_last);
         lastAdapter = new LastAdapter(getActivity());
+
+        rvHot = bindView(R.id.rv_hot);
+        hotAdapter = new HotAdapter(getActivity());
+
+        rvToday = bindView(R.id.rv_today);
+        todayAdapter = new TodayAdapter(getActivity());
+
+        rvDiy = bindView(R.id.rv_diy);
+        diyAdapter = new DiyAdapter(getActivity());
+
+        rvMv = bindView(R.id.rv_mv);
+        mvAdapter = new MvAdapter(getActivity());
+
+        rvLebo = bindView(R.id.rv_lebo);
+        leboAdapter = new LeboAdapter(getActivity());
+
+        rvMod = bindView(R.id.rv_mod);
+        modAdapter = new ModAdapter(getActivity());
 
         singer = bindView(R.id.iv_music_recommendation_singer);
         songs = bindView(R.id.iv_music_recommendation_songs);
@@ -70,6 +114,15 @@ public class RecommendationFragment extends BaseFragment {
         ivMv = bindView(R.id.iv_module_mv);
         ivLebo = bindView(R.id.iv_module_lebo);
         ivMod = bindView(R.id.iv_module_mod);
+        ivAd = bindView(R.id.iv_ad);
+        ivScene1 = bindView(R.id.iv_recommendation_scene1);
+        ivScene2 = bindView(R.id.iv_recommendation_scene2);
+        ivScene3 = bindView(R.id.iv_recommendation_scene3);
+        ivScene4 = bindView(R.id.iv_recommendation_scene4);
+        tvScene1 = bindView(R.id.tv_recommendation_scene1_name);
+        tvScene2 = bindView(R.id.tv_recommendation_scene2_name);
+        tvScene3 = bindView(R.id.tv_recommendation_scene3_name);
+        tvScene4 = bindView(R.id.tv_recommendation_scene4_name);
 
         new Thread(new Runnable() {
             @Override
@@ -78,8 +131,24 @@ public class RecommendationFragment extends BaseFragment {
             }
         }).start();
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
-        rvLast.setLayoutManager(gridLayoutManager);
+        GridLayoutManager recommendationManager = new GridLayoutManager(getActivity(), 3);
+        rvRecommendation.setLayoutManager(recommendationManager);
+        GridLayoutManager lastManager = new GridLayoutManager(getActivity(), 3);
+        rvLast.setLayoutManager(lastManager);
+        GridLayoutManager hotManager = new GridLayoutManager(getActivity(), 3);
+        rvHot.setLayoutManager(hotManager);
+        LinearLayoutManager todayManager = new LinearLayoutManager(getActivity());
+        todayManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rvToday.setLayoutManager(todayManager);
+        GridLayoutManager diyManager = new GridLayoutManager(getActivity(), 3);
+        rvDiy.setLayoutManager(diyManager);
+        GridLayoutManager mvManager = new GridLayoutManager(getActivity(), 3);
+        rvMv.setLayoutManager(mvManager);
+        GridLayoutManager leboManager = new GridLayoutManager(getActivity(), 3);
+        rvLebo.setLayoutManager(leboManager);
+        LinearLayoutManager modManager = new LinearLayoutManager(getActivity());
+        modManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rvMod.setLayoutManager(modManager);
 
         handler = new Handler() {
             @Override
@@ -122,8 +191,29 @@ public class RecommendationFragment extends BaseFragment {
                         bannerAdapter.setBean(response);
                         bannerViewPager.setAdapter(bannerAdapter);
 
+                        recommendationAdapter.setBean(response);
+                        rvRecommendation.setAdapter(recommendationAdapter);
+
                         lastAdapter.setBean(response);
                         rvLast.setAdapter(lastAdapter);
+
+                        hotAdapter.setBean(response);
+                        rvHot.setAdapter(hotAdapter);
+
+                        todayAdapter.setBean(response);
+                        rvToday.setAdapter(todayAdapter);
+
+                        diyAdapter.setBean(response);
+                        rvDiy.setAdapter(diyAdapter);
+
+                        mvAdapter.setBean(response);
+                        rvMv.setAdapter(mvAdapter);
+
+                        leboAdapter.setBean(response);
+                        rvLebo.setAdapter(leboAdapter);
+
+                        modAdapter.setBean(response);
+                        rvMod.setAdapter(modAdapter);
 
                         VolleySingleton.getInstance().getImage(response.getResult().getEntry()
                                 .getResult().get(0).getIcon(), singer);
@@ -152,6 +242,26 @@ public class RecommendationFragment extends BaseFragment {
                                 .getPicurl(), ivLebo);
                         VolleySingleton.getInstance().getImage(response.getModule().get(13)
                                 .getPicurl(), ivMod);
+                        VolleySingleton.getInstance().getImage(response.getResult().getMod_26()
+                                .getResult().get(0).getPic(), ivAd);
+
+                        VolleySingleton.getInstance().getImage(response.getResult().getScene()
+                                .getResult().getAction().get(0).getIcon_android(), ivScene1);
+                        VolleySingleton.getInstance().getImage(response.getResult().getScene()
+                                .getResult().getAction().get(1).getIcon_android(), ivScene2);
+                        VolleySingleton.getInstance().getImage(response.getResult().getScene()
+                                .getResult().getAction().get(2).getIcon_android(), ivScene3);
+                        VolleySingleton.getInstance().getImage(response.getResult().getScene()
+                                .getResult().getAction().get(3).getIcon_android(), ivScene4);
+                        tvScene1.setText((response.getResult().getScene().getResult().getAction()
+                                .get(0).getScene_name()));
+                        tvScene2.setText((response.getResult().getScene().getResult().getAction()
+                                .get(1).getScene_name()));
+                        tvScene3.setText((response.getResult().getScene().getResult().getAction()
+                                .get(2).getScene_name()));
+                        tvScene4.setText((response.getResult().getScene().getResult().getAction()
+                                .get(3).getScene_name()));
+
                     }
                 }, new Response.ErrorListener() {
             @Override
