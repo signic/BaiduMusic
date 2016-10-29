@@ -20,7 +20,7 @@ public class BannerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return Integer.MAX_VALUE;
+        return bean.getResult().getFocus().getResult() == null ? 0 : Integer.MAX_VALUE;
     }
 
     @Override

@@ -78,6 +78,8 @@ public class RecommendationFragment extends BaseFragment {
         bannerViewPager = bindView(R.id.vp_music_recommendation);
         bannerAdapter = new BannerAdapter();
 
+//        linearLayout = bindView(R.id.ll_music_recommendation_point);
+
         rvRecommendation = bindView(R.id.rv_recommendation);
         recommendationAdapter = new RecommendationAdapter(getActivity());
 
