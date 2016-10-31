@@ -30,7 +30,7 @@ public class TopListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return bean.getContent().size();
+        return bean.getContent() == null ? 0 : bean.getContent().size();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class TopListAdapter extends BaseAdapter {
         TopListViewHolder viewHolder = null;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout
-                    .fragment_music_toplist_item, null);
+                    .fragment_music_toplist_item, parent, false);
             viewHolder = new TopListViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {

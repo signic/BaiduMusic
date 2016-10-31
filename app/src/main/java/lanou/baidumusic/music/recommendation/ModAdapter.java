@@ -29,7 +29,7 @@ public class ModAdapter extends RecyclerView.Adapter<ModAdapter.ModViewHolder> {
     @Override
     public ModViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout
-                .fragment_music_recommendation_mod, null);
+                .fragment_music_recommendation_mod, parent, false);
         ModViewHolder viewHolder = new ModViewHolder(view);
         return viewHolder;
     }
@@ -46,7 +46,8 @@ public class ModAdapter extends RecyclerView.Adapter<ModAdapter.ModViewHolder> {
 
     @Override
     public int getItemCount() {
-        return bean.getResult().getMod_7().getResult().size();
+        return bean.getResult().getMod_7().getResult() == null ? 0 : bean.getResult().getMod_7()
+                .getResult().size();
     }
 
     public class ModViewHolder extends RecyclerView.ViewHolder {

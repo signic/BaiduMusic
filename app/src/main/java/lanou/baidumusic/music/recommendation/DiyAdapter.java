@@ -29,7 +29,7 @@ public class DiyAdapter extends RecyclerView.Adapter<DiyAdapter.DiyViewHolder> {
     @Override
     public DiyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout
-                .fragment_music_recommendation_diy, null);
+                .fragment_music_recommendation_diy, parent, false);
         DiyViewHolder viewHolder = new DiyViewHolder(view);
         return viewHolder;
     }
@@ -44,7 +44,8 @@ public class DiyAdapter extends RecyclerView.Adapter<DiyAdapter.DiyViewHolder> {
 
     @Override
     public int getItemCount() {
-        return bean.getResult().getMix_9().getResult().size();
+        return bean.getResult().getMix_9().getResult() == null ? 0 : bean.getResult()
+                .getMix_9().getResult().size();
     }
 
     public class DiyViewHolder extends RecyclerView.ViewHolder {

@@ -32,7 +32,7 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
     @Override
     public RecommendationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout
-                .fragment_music_recommendation_recommendation, null);
+                .fragment_music_recommendation_recommendation, parent, false);
         RecommendationViewHolder viewHolder = new RecommendationViewHolder(view);
         return viewHolder;
     }
@@ -49,7 +49,8 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
 
     @Override
     public int getItemCount() {
-        return bean.getResult().getDiy().getResult().size();
+        return bean.getResult().getDiy().getResult() == null ? 0 : bean.getResult().getDiy()
+                .getResult().size();
     }
 
     public class RecommendationViewHolder extends RecyclerView.ViewHolder {

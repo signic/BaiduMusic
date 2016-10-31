@@ -75,10 +75,32 @@ public class RecommendationFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        singer = bindView(R.id.iv_music_recommendation_singer);
+        songs = bindView(R.id.iv_music_recommendation_songs);
+        radio = bindView(R.id.iv_music_recommendation_radio);
+        vip = bindView(R.id.iv_music_recommendation_vip);
+        ivRecommendation = bindView(R.id.iv_module_recommendation);
+        ivLast = bindView(R.id.iv_module_last);
+        ivHot = bindView(R.id.iv_module_hot);
+        ivScene = bindView(R.id.iv_module_scene);
+        ivToday = bindView(R.id.iv_module_today);
+        ivDiy = bindView(R.id.iv_module_diy);
+        ivMv = bindView(R.id.iv_module_mv);
+        ivLebo = bindView(R.id.iv_module_lebo);
+        ivMod = bindView(R.id.iv_module_mod);
+        ivAd = bindView(R.id.iv_ad);
+        ivScene1 = bindView(R.id.iv_recommendation_scene1);
+        ivScene2 = bindView(R.id.iv_recommendation_scene2);
+        ivScene3 = bindView(R.id.iv_recommendation_scene3);
+        ivScene4 = bindView(R.id.iv_recommendation_scene4);
+        tvScene1 = bindView(R.id.tv_recommendation_scene1_name);
+        tvScene2 = bindView(R.id.tv_recommendation_scene2_name);
+        tvScene3 = bindView(R.id.tv_recommendation_scene3_name);
+        tvScene4 = bindView(R.id.tv_recommendation_scene4_name);
+
+
         bannerViewPager = bindView(R.id.vp_music_recommendation);
         bannerAdapter = new BannerAdapter();
-
-//        linearLayout = bindView(R.id.ll_music_recommendation_point);
 
         rvRecommendation = bindView(R.id.rv_recommendation);
         recommendationAdapter = new RecommendationAdapter(getActivity());
@@ -104,36 +126,7 @@ public class RecommendationFragment extends BaseFragment {
         rvMod = bindView(R.id.rv_mod);
         modAdapter = new ModAdapter(getActivity());
 
-        singer = bindView(R.id.iv_music_recommendation_singer);
-        songs = bindView(R.id.iv_music_recommendation_songs);
-        radio = bindView(R.id.iv_music_recommendation_radio);
-        vip = bindView(R.id.iv_music_recommendation_vip);
-
-        ivRecommendation = bindView(R.id.iv_module_recommendation);
-        ivLast = bindView(R.id.iv_module_last);
-        ivHot = bindView(R.id.iv_module_hot);
-        ivScene = bindView(R.id.iv_module_scene);
-        ivToday = bindView(R.id.iv_module_today);
-        ivDiy = bindView(R.id.iv_module_diy);
-        ivMv = bindView(R.id.iv_module_mv);
-        ivLebo = bindView(R.id.iv_module_lebo);
-        ivMod = bindView(R.id.iv_module_mod);
-        ivAd = bindView(R.id.iv_ad);
-        ivScene1 = bindView(R.id.iv_recommendation_scene1);
-        ivScene2 = bindView(R.id.iv_recommendation_scene2);
-        ivScene3 = bindView(R.id.iv_recommendation_scene3);
-        ivScene4 = bindView(R.id.iv_recommendation_scene4);
-        tvScene1 = bindView(R.id.tv_recommendation_scene1_name);
-        tvScene2 = bindView(R.id.tv_recommendation_scene2_name);
-        tvScene3 = bindView(R.id.tv_recommendation_scene3_name);
-        tvScene4 = bindView(R.id.tv_recommendation_scene4_name);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                GsonData(Values.MUSIC_RECOMMENDATION);
-            }
-        }).start();
+        GsonData(Values.MUSIC_RECOMMENDATION);
 
         GridLayoutManager recommendationManager = new GridLayoutManager(getActivity(), 3);
         rvRecommendation.setLayoutManager(recommendationManager);
@@ -192,7 +185,6 @@ public class RecommendationFragment extends BaseFragment {
                     @Override
                     public void onResponse(RecommendationBean response) {
                         // 请求成功的方法
-
                         bannerAdapter.setBean(response);
                         bannerViewPager.setAdapter(bannerAdapter);
 
@@ -228,7 +220,6 @@ public class RecommendationFragment extends BaseFragment {
                                 .getResult().get(2).getIcon(), radio);
                         VolleySingleton.getInstance().getImage(response.getResult().getEntry()
                                 .getResult().get(3).getIcon(), vip);
-
                         VolleySingleton.getInstance().getImage(response.getModule().get(3)
                                 .getPicurl(), ivRecommendation);
                         VolleySingleton.getInstance().getImage(response.getModule().get(5)

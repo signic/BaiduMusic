@@ -29,7 +29,7 @@ public class MvAdapter extends RecyclerView.Adapter<MvAdapter.MvViewHolder> {
     @Override
     public MvViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout
-                .fragment_music_recommendation_mv, null);
+                .fragment_music_recommendation_mv, parent, false);
         MvViewHolder viewHolder = new MvViewHolder(view);
         return viewHolder;
     }
@@ -46,7 +46,8 @@ public class MvAdapter extends RecyclerView.Adapter<MvAdapter.MvViewHolder> {
 
     @Override
     public int getItemCount() {
-        return bean.getResult().getMix_5().getResult().size();
+        return bean.getResult().getMix_5().getResult() == null ? 0 : bean.getResult().getMix_5()
+                .getResult().size();
     }
 
     public class MvViewHolder extends RecyclerView.ViewHolder {

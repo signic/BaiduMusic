@@ -30,7 +30,7 @@ public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.TodayViewHol
     @Override
     public TodayViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout
-                .fragment_music_recommendation_today, null);
+                .fragment_music_recommendation_today, parent, false);
         TodayViewHolder viewHolder = new TodayViewHolder(view);
         return viewHolder;
     }
@@ -47,7 +47,7 @@ public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.TodayViewHol
 
     @Override
     public int getItemCount() {
-        return 3;
+        return bean.getResult().getRecsong().getResult() == null ? 0 : 3;
     }
 
     public class TodayViewHolder extends RecyclerView.ViewHolder {

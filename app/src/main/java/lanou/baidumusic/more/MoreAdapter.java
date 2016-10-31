@@ -48,7 +48,8 @@ public class MoreAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         MoreViewHolder viewHolder = null;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.fragment_more_list, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.fragment_more_list,
+                    parent, false);
             viewHolder = new MoreViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {

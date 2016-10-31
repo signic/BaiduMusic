@@ -29,7 +29,7 @@ public class LeboAdapter extends RecyclerView.Adapter<LeboAdapter.LeboViewHolder
     @Override
     public LeboViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout
-                .fragment_music_recommendation_lebo, null);
+                .fragment_music_recommendation_lebo, parent, false);
         LeboViewHolder viewHolder = new LeboViewHolder(view);
         return viewHolder;
     }
@@ -47,7 +47,8 @@ public class LeboAdapter extends RecyclerView.Adapter<LeboAdapter.LeboViewHolder
 
     @Override
     public int getItemCount() {
-        return bean.getResult().getRadio().getResult().size();
+        return bean.getResult().getRadio().getResult() == null ? 0 : bean.getResult().getRadio()
+                .getResult().size();
     }
 
     public class LeboViewHolder extends RecyclerView.ViewHolder {

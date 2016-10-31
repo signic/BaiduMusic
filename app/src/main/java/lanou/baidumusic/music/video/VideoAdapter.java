@@ -30,7 +30,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
 
     @Override
     public VideoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_music_video_item, null);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_music_video_item,
+                parent, false);
         VideoViewHolder viewHolder = new VideoViewHolder(view);
         return viewHolder;
     }
@@ -45,7 +46,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
 
     @Override
     public int getItemCount() {
-        return bean.getResult().getMv_list().size();
+        return bean.getResult().getMv_list() == null ? 0 : bean.getResult().getMv_list().size();
     }
 
     public class VideoViewHolder extends RecyclerView.ViewHolder {

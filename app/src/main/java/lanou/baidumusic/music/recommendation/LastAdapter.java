@@ -32,7 +32,7 @@ public class LastAdapter extends RecyclerView.Adapter<LastAdapter.LastViewHolder
     @Override
     public LastViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout
-                .fragment_music_recommendation_last, null);
+                .fragment_music_recommendation_last, parent, false);
         LastViewHolder viewHolder = new LastViewHolder(view);
         return viewHolder;
     }
@@ -49,7 +49,7 @@ public class LastAdapter extends RecyclerView.Adapter<LastAdapter.LastViewHolder
 
     @Override
     public int getItemCount() {
-        return 6;
+        return bean.getResult().getMix_1().getResult() == null ? 0 : 6;
     }
 
     public class LastViewHolder extends RecyclerView.ViewHolder {

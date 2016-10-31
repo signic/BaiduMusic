@@ -30,7 +30,7 @@ public class HotAdapter extends RecyclerView.Adapter<HotAdapter.HotViewHolder> {
     @Override
     public HotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout
-                .fragment_music_recommendation_hot, null);
+                .fragment_music_recommendation_hot, parent, false);
         HotViewHolder viewHolder = new HotViewHolder(view);
         return viewHolder;
     }
@@ -47,7 +47,8 @@ public class HotAdapter extends RecyclerView.Adapter<HotAdapter.HotViewHolder> {
 
     @Override
     public int getItemCount() {
-        return bean.getResult().getMix_22().getResult().size();
+        return bean.getResult().getMix_22().getResult() == null ? 0 : bean.getResult().getMix_22()
+                .getResult().size();
     }
 
     public class HotViewHolder extends RecyclerView.ViewHolder {

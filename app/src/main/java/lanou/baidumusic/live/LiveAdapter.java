@@ -32,7 +32,7 @@ public class LiveAdapter extends RecyclerView.Adapter<LiveAdapter.LiveViewHolder
 
     @Override
     public LiveViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_live_item, null);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_live_item, parent, false);
         LiveViewHolder viewHolder = new LiveViewHolder(view);
         return viewHolder;
     }
@@ -47,7 +47,7 @@ public class LiveAdapter extends RecyclerView.Adapter<LiveAdapter.LiveViewHolder
 
     @Override
     public int getItemCount() {
-        return bean.getData().getData().size();
+        return bean.getData().getData() == null ? 0 : bean.getData().getData().size();
     }
 
     public class LiveViewHolder extends RecyclerView.ViewHolder {

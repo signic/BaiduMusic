@@ -33,7 +33,8 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayLi
 
     @Override
     public PlayListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_music_playlist_item, null);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_music_playlist_item,
+                parent, false);
         PlayListViewHolder viewHolder = new PlayListViewHolder(view);
         return viewHolder;
     }
@@ -53,7 +54,7 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayLi
 
     @Override
     public int getItemCount() {
-        return bean.getDiyInfo().size();
+        return bean.getDiyInfo() == null ? 0 : bean.getDiyInfo().size();
     }
 
     public class PlayListViewHolder extends RecyclerView.ViewHolder {
