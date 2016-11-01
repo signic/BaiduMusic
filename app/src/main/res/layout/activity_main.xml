@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="lanou.baidumusic.MainActivity">
+    tools:context=".main.MainActivity">
 
     <FrameLayout
         android:id="@+id/replace_view"
@@ -30,7 +30,7 @@
         android:orientation="horizontal"
         android:layout_weight="0.8">
         <LinearLayout
-            android:id="@+id/ll_main"
+            android:id="@+id/ll_main_play"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
@@ -64,18 +64,21 @@
         </LinearLayout>
 
         <ImageButton
+            android:id="@+id/iv_main_twins"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@mipmap/bt_minibar_play_normal"
             android:background="@null"/>
         <ImageButton
+            android:id="@+id/iv_main_next"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@mipmap/bt_minibar_next_normal"
             android:background="@null"/>
         <ImageButton
+            android:id="@+id/iv_main_list"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

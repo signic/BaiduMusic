@@ -3,6 +3,8 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:id="@+id/ll_recommendation_mod"
+              android:clickable="true"
     android:padding="5dp">
 
     <ImageView

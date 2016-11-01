@@ -58,4 +58,16 @@ public class Values {
     public static final String LIVE = "http://tingapi.ting.baidu" +
             ".com/v1/restserver/ting?from=android&version=5.9.0" +
             ".0&channel=1382d&operator=0&method=baidu.ting.show.live&page_no=1&page_size=40";
+
+    // 不安的灵魂
+    public static final String BU = "http://tingapi.ting.baidu" +
+            ".com/v1/restserver/ting?from=android&version=5.9.0.0&channel=1382d&operator=0&method=baidu.ting.song.getInfos&format=json&songid=124468803&ts=1478003994259&e=9XuV6IBM6sg7GVvIVzE3ao5d3qNaQq0Uc62LbrNtE26DLcCKbWt3KUleU1F3ZD4K&nw=2&ucf=1&res=1&l2p=0&lpb=&usup=1&lebo=0";
+
+    // 歌词
+    public static final String LYRICS = "http://musicdata.baidu.com/data2/lrc/124470743/124470743" +
+            ".lrc";
+
+    // gedan
+    public static final String GEDAN = "http://tingapi.ting.baidu" +
+            ".com/v1/restserver/ting?from=android&version=5.9.0.0&channel=1382d&operator=0&method=baidu.ting.ugcdiy.getBaseInfo&param=47mzNr5n39MPtV6NP4AIDtNFDfevk%2FspU8Tzgz74COFHTEPqY66l6O7eSwxrQ7EahS%2BcJhfh1N3qQPTsoIIrQgkq6CI5fcxVkghFp3i%2FA2q2NyLpJ6iKuvlxcS65YVJB5HIZENW9uyANONPauxXvMA%3D%3D&timestamp=1478003971&sign=6349632da1a19cb19cb585457db9a9ed";
 }

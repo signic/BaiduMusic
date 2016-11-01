@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="45dp"
+              android:padding="5dp"
+              android:orientation="horizontal"
+    android:background="@mipmap/default_album_bg">
+
+    <LinearLayout
+        android:id="@+id/ll_mine_local_return"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:clickable="true">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:src="@mipmap/ic_title_return"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="本地音乐"
+            android:textSize="13sp"
+            android:textColor="#ffffff"/>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/ib_mine_local_sort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/abc_ic_search_api_mtrl_alpha"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@null"
+        android:layout_alignParentRight="true"/>
+    <ImageButton
+        android:id="@+id/ib_mine_local_findb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/abc_ic_search_api_mtrl_alpha"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@null"
+        android:layout_toLeftOf="@id/ib_mine_local_sort"/>
+    <ImageButton
+        android:id="@+id/ib_mine_local_finds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/abc_ic_search_api_mtrl_alpha"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@null"
+        android:layout_toLeftOf="@id/ib_mine_local_findb"/>
+
+
+</RelativeLayout>
