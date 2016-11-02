@@ -8,10 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import lanou.baidumusic.R;
 import lanou.baidumusic.tool.bean.VideoBean;
+import lanou.baidumusic.tool.volley.VolleySingleton;
 
 /**
  * Created by dllo on 16/10/25.
@@ -38,8 +37,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
 
     @Override
     public void onBindViewHolder(VideoViewHolder holder, int position) {
-        Picasso.with(mContext).load(bean.getResult().getMv_list().get(position).getThumbnail2())
-                .into(holder.ivVideo);
+        VolleySingleton.getInstance().getImage(bean.getResult().getMv_list().get(position)
+                .getThumbnail2(), holder.ivVideo);
         holder.tvTitle.setText(bean.getResult().getMv_list().get(position).getTitle());
         holder.tvAuthor.setText(bean.getResult().getMv_list().get(position).getArtist());
     }

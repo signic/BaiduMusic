@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.tool.VolleySingleton;
+import lanou.baidumusic.tool.volley.VolleySingleton;
 import lanou.baidumusic.tool.bean.RecommendationBean;
 
 /**

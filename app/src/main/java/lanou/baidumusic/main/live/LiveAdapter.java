@@ -10,10 +10,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import lanou.baidumusic.R;
 import lanou.baidumusic.tool.bean.LiveBean;
+import lanou.baidumusic.tool.volley.VolleySingleton;
 
 /**
  * Created by dllo on 16/10/27.
@@ -39,8 +38,8 @@ public class LiveAdapter extends RecyclerView.Adapter<LiveAdapter.LiveViewHolder
 
     @Override
     public void onBindViewHolder(LiveViewHolder holder, int position) {
-        Picasso.with(mContext).load(bean.getData().getData().get(position)
-                .getLiveimg()).into(holder.ivBackground);
+        VolleySingleton.getInstance().getImage(bean.getData().getData().get(position)
+                .getLiveimg(), holder.ivBackground);
         holder.tvNum.setText(String.valueOf(bean.getData().getData().get(position).getUsercount()));
         holder.tvName.setText(bean.getData().getData().get(position).getNickname());
     }

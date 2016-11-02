@@ -1,6 +1,8 @@
 package lanou.baidumusic.main.music.playlist;
 
 import android.graphics.Color;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,16 +13,16 @@ import com.android.volley.VolleyError;
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.tool.GsonRequest;
 import lanou.baidumusic.tool.Values;
-import lanou.baidumusic.tool.VolleySingleton;
 import lanou.baidumusic.tool.base.BaseFragment;
 import lanou.baidumusic.tool.bean.PlayListBean;
+import lanou.baidumusic.tool.volley.GsonRequest;
+import lanou.baidumusic.tool.volley.VolleySingleton;
 
 /**
  * Created by dllo on 16/10/24.
  */
-public class PlayListFragment extends BaseFragment {
+public class PlayListFragment extends BaseFragment implements OnPlayListItemClickListener {
 
     private TextView tvLastest;
     private TextView tvHostest;
@@ -40,14 +42,16 @@ public class PlayListFragment extends BaseFragment {
 
         adapter = new PlayListAdapter(getActivity());
 
-        GsonData(Values.MUSIC_PLAYLIST_HOT);
-        tvHostest.setTextColor(Color.BLUE);
-
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         rvPlay.setLayoutManager(manager);
-
         RecyclerViewHeader header = bindView(R.id.rv_header_playlist);
         header.attachTo(rvPlay, true);
+    }
+
+    @Override
+    protected void initData() {
+        GsonData(Values.MUSIC_PLAYLIST_HOT);
+        tvHostest.setTextColor(Color.BLUE);
 
         tvHostest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,11 +71,16 @@ public class PlayListFragment extends BaseFragment {
             }
         });
 
-    }
-
-    @Override
-    protected void initData() {
-
+        rvPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getChildFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.replace_view, new PlayListItemFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
     }
 
     private void GsonData(String url) {
@@ -80,6 +89,7 @@ public class PlayListFragment extends BaseFragment {
                     @Override
                     public void onResponse(PlayListBean response) {
                         // 请求成功的方法
+                        adapter.setPlayListItemClickListener(PlayListFragment.this);
                         adapter.setBean(response);
                         rvPlay.setAdapter(adapter);
                     }
@@ -91,5 +101,15 @@ public class PlayListFragment extends BaseFragment {
         });
 
         VolleySingleton.getInstance().addRequest(gsonRequest);
+    }
+
+    // recyclerView的点击事件
+    @Override
+    public void onPlayListClick(int position) {
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.replace_view, new PlayListItemFragment());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

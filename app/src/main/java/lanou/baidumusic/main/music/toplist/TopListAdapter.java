@@ -8,10 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import lanou.baidumusic.R;
 import lanou.baidumusic.tool.bean.TopListBean;
+import lanou.baidumusic.tool.volley.VolleySingleton;
 
 /**
  * Created by dllo on 16/10/25.
@@ -55,11 +54,8 @@ public class TopListAdapter extends BaseAdapter {
             viewHolder = (TopListViewHolder) convertView.getTag();
         }
 
-//        VolleySingleton.getInstance().getImage(bean.getContent().get(position)
-//                .getPic_s192(), viewHolder.ivTopList);
-
-        Picasso.with(mContext).load(bean.getContent().get(position)
-                .getPic_s192()).into(viewHolder.ivTopList);
+        VolleySingleton.getInstance().getImage(bean.getContent().get(position)
+                .getPic_s192(), viewHolder.ivTopList);
         viewHolder.tvTitle.setText(bean.getContent().get(position).getName());
         viewHolder.tvTop1.setText(bean.getContent().get(position)
                 .getContent().get(0).getTitle() + "-" + bean.getContent()

@@ -8,9 +8,9 @@ import com.android.volley.VolleyError;
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.tool.GsonRequest;
+import lanou.baidumusic.tool.volley.GsonRequest;
 import lanou.baidumusic.tool.Values;
-import lanou.baidumusic.tool.VolleySingleton;
+import lanou.baidumusic.tool.volley.VolleySingleton;
 import lanou.baidumusic.tool.base.BaseFragment;
 import lanou.baidumusic.tool.bean.LiveBean;
 
@@ -33,8 +33,6 @@ public class LiveFragment extends BaseFragment {
 
         adapter = new LiveAdapter(getActivity());
 
-        GsonData(Values.LIVE);
-
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         rvK.setLayoutManager(manager);
 
@@ -44,7 +42,7 @@ public class LiveFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-
+        GsonData(Values.LIVE);
     }
 
     private void GsonData(String url) {

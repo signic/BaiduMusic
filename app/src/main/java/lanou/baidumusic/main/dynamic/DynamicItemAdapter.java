@@ -8,14 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.tool.VolleySingleton;
+import lanou.baidumusic.tool.volley.VolleySingleton;
 import lanou.baidumusic.tool.bean.DynamicBean;
 
 /**
  * Created by dllo on 16/10/31.
  */
-public class DynamicItemAdapter extends RecyclerView.Adapter<DynamicItemAdapter
-        .DynamicItemViewHolder> {
+public class DynamicItemAdapter extends RecyclerView.Adapter<DynamicItemAdapter.DynamicItemViewHolder> {
     Context mContext;
     DynamicBean bean;
 

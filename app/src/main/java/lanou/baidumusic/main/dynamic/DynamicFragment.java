@@ -9,9 +9,9 @@ import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 
 import lanou.baidumusic.R;
 import lanou.baidumusic.tool.DividerItemDecoration;
-import lanou.baidumusic.tool.GsonRequest;
+import lanou.baidumusic.tool.volley.GsonRequest;
 import lanou.baidumusic.tool.Values;
-import lanou.baidumusic.tool.VolleySingleton;
+import lanou.baidumusic.tool.volley.VolleySingleton;
 import lanou.baidumusic.tool.base.BaseFragment;
 import lanou.baidumusic.tool.bean.DynamicBean;
 
@@ -33,8 +33,6 @@ public class DynamicFragment extends BaseFragment {
         rvDynamic = bindView(R.id.rv_dynamic);
         adapter = new DynamicAdapter(getActivity());
 
-        GsonData(Values.DYNAMIC);
-
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rvDynamic.setLayoutManager(manager);
@@ -46,7 +44,7 @@ public class DynamicFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-
+        GsonData(Values.DYNAMIC);
     }
 
     private void GsonData(String url) {

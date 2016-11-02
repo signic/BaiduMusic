@@ -1,4 +1,4 @@
-package lanou.baidumusic.tool;
+package lanou.baidumusic.tool.volley;
 
 import android.graphics.Bitmap;
 import android.util.LruCache;
@@ -10,8 +10,7 @@ import com.android.volley.toolbox.ImageLoader;
  * ImageLoader 使用的内存缓存
  */
 public class MemoryCache implements ImageLoader.ImageCache {
-    // 实现了最近最少使用算法
-    // 用法和hashMap类似
+    // 实现了最近最少使用算法    // 用法和hashMap类似
     private LruCache<String, Bitmap> mCache;
 
     public MemoryCache() {

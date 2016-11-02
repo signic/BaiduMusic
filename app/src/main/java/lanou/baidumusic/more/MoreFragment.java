@@ -21,6 +21,7 @@ public class MoreFragment extends BaseFragment {
                     R.mipmap.icon_option_setting_setting, R.mipmap.icon_option_setting_auto_close,
                     R.mipmap.icon_option_setting_pc_sync, R.mipmap.icon_option_setting_action_zone,
                     R.mipmap.icon_option_setting_app_recommend};
+    private LinearLayout llMore;
 
     @Override
     protected int getLayout() {
@@ -30,31 +31,28 @@ public class MoreFragment extends BaseFragment {
     @Override
     protected void initView() {
         ListView lvMore = bindView(R.id.lv_more);
-        LinearLayout llMore = bindView(R.id.ll_more);
+        llMore = bindView(R.id.ll_more);
 
+        MoreAdapter adapter = new MoreAdapter(getActivity());
         ArrayList<MoreBean> beanArrayList = new ArrayList<>();
+
         for (int i = 0; i < 7; i++) {
             MoreBean bean = new MoreBean();
             bean.setName(names[i]);
             bean.setIcon(pics[i]);
             beanArrayList.add(bean);
         }
-
-        MoreAdapter adapter = new MoreAdapter(getActivity());
         adapter.setBeanArrayList(beanArrayList);
-
         lvMore.setAdapter(adapter);
+    }
 
+    @Override
+    protected void initData() {
         llMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getFragmentManager().popBackStack();
             }
         });
-    }
-
-    @Override
-    protected void initData() {
-
     }
 }

@@ -22,7 +22,6 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/trends_guide_img"
                 android:scaleType="fitXY"/>
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,7 +48,6 @@
                     android:layout_toLeftOf="@id/iv_dynamic"/>
             </RelativeLayout>
         </LinearLayout>
-
     </com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader>
 
 </RelativeLayout>

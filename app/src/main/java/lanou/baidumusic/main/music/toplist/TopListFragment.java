@@ -6,9 +6,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.tool.GsonRequest;
+import lanou.baidumusic.tool.volley.GsonRequest;
 import lanou.baidumusic.tool.Values;
-import lanou.baidumusic.tool.VolleySingleton;
+import lanou.baidumusic.tool.volley.VolleySingleton;
 import lanou.baidumusic.tool.base.BaseFragment;
 import lanou.baidumusic.tool.bean.TopListBean;
 
@@ -18,6 +18,7 @@ import lanou.baidumusic.tool.bean.TopListBean;
 public class TopListFragment extends BaseFragment {
 
     private TopListAdapter adapter;
+    private ListView lvTopList;
 
     @Override
     protected int getLayout() {
@@ -26,10 +27,13 @@ public class TopListFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        final ListView lvTopList = bindView(R.id.lv_toplist);
+        lvTopList = bindView(R.id.lv_toplist);
 
         adapter = new TopListAdapter(getActivity());
+    }
 
+    @Override
+    protected void initData() {
         GsonRequest<TopListBean> gsonRequest = new GsonRequest<>(TopListBean.class,
                 Values.MUSIC_TOPLIST, new Response.Listener<TopListBean>() {
             @Override
@@ -46,11 +50,5 @@ public class TopListFragment extends BaseFragment {
         });
 
         VolleySingleton.getInstance().addRequest(gsonRequest);
-
-    }
-
-    @Override
-    protected void initData() {
-
     }
 }

@@ -11,11 +11,11 @@ import com.android.volley.VolleyError;
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.tool.GsonRequest;
 import lanou.baidumusic.tool.Values;
-import lanou.baidumusic.tool.VolleySingleton;
 import lanou.baidumusic.tool.base.BaseFragment;
 import lanou.baidumusic.tool.bean.VideoBean;
+import lanou.baidumusic.tool.volley.GsonRequest;
+import lanou.baidumusic.tool.volley.VolleySingleton;
 
 /**
  * Created by dllo on 16/10/24.
@@ -40,15 +40,16 @@ public class VideoFragment extends BaseFragment {
 
         adapter = new VideoAdapter(getActivity());
 
-        GsonData(Values.MUSIC_VIDEO_LAST);
-
-        tvLastest.setTextColor(Color.BLUE);
-
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 2);
         rvVideo.setLayoutManager(manager);
-
         RecyclerViewHeader header = bindView(R.id.rv_header_video);
         header.attachTo(rvVideo, true);
+    }
+
+    @Override
+    protected void initData() {
+        GsonData(Values.MUSIC_VIDEO_LAST);
+        tvLastest.setTextColor(Color.BLUE);
 
         tvLastest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,11 +68,6 @@ public class VideoFragment extends BaseFragment {
                 GsonData(Values.MUSIC_VIDEO_HOT);
             }
         });
-    }
-
-    @Override
-    protected void initData() {
-
     }
 
     private void GsonData(String url) {

@@ -20,9 +20,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.tool.GsonRequest;
+import lanou.baidumusic.tool.volley.GsonRequest;
 import lanou.baidumusic.tool.Values;
-import lanou.baidumusic.tool.VolleySingleton;
+import lanou.baidumusic.tool.volley.VolleySingleton;
 import lanou.baidumusic.tool.base.BaseFragment;
 import lanou.baidumusic.tool.bean.RecommendationBean;
 
@@ -102,35 +102,33 @@ public class RecommendationFragment extends BaseFragment implements OnRvClickLis
         tvScene2 = bindView(R.id.tv_recommendation_scene2_name);
         tvScene3 = bindView(R.id.tv_recommendation_scene3_name);
         tvScene4 = bindView(R.id.tv_recommendation_scene4_name);
-
+        // 轮播图
         bannerViewPager = bindView(R.id.vp_music_recommendation);
         bannerAdapter = new BannerAdapter();
-
+        // 今日推荐
         rvRecommendation = bindView(R.id.rv_recommendation);
         recommendationAdapter = new RecommendationAdapter(getActivity());
-
+        //新歌
         rvLast = bindView(R.id.rv_last);
         lastAdapter = new LastAdapter(getActivity());
-
+        //热销
         rvHot = bindView(R.id.rv_hot);
         hotAdapter = new HotAdapter(getActivity());
-
+        //今日
         rvToday = bindView(R.id.rv_today);
         todayAdapter = new TodayAdapter(getActivity());
-
+        //原创
         rvDiy = bindView(R.id.rv_diy);
         diyAdapter = new DiyAdapter(getActivity());
-
+        // MV
         rvMv = bindView(R.id.rv_mv);
         mvAdapter = new MvAdapter(getActivity());
-
+        // 乐播节目
         rvLebo = bindView(R.id.rv_lebo);
         leboAdapter = new LeboAdapter(getActivity());
-
+        // 专栏
         rvMod = bindView(R.id.rv_mod);
         modAdapter = new ModAdapter(getActivity());
-
-        GsonData(Values.MUSIC_RECOMMENDATION);
 
         GridLayoutManager recommendationManager = new GridLayoutManager(getActivity(), 3);
         rvRecommendation.setLayoutManager(recommendationManager);
@@ -150,6 +148,11 @@ public class RecommendationFragment extends BaseFragment implements OnRvClickLis
         LinearLayoutManager modManager = new LinearLayoutManager(getActivity());
         modManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvMod.setLayoutManager(modManager);
+    }
+
+    @Override
+    protected void initData() {
+        GsonData(Values.MUSIC_RECOMMENDATION);
 
         // 广告
         ibAd.setOnClickListener(new View.OnClickListener() {
@@ -193,10 +196,6 @@ public class RecommendationFragment extends BaseFragment implements OnRvClickLis
             }
         });
 
-    }
-
-    @Override
-    protected void initData() {
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -447,7 +446,6 @@ public class RecommendationFragment extends BaseFragment implements OnRvClickLis
                 });
 
         VolleySingleton.getInstance().addRequest(gsonRequestMod);
-
     }
 
 }

@@ -31,6 +31,11 @@ public class MainActivity extends BaseActivity {
     private boolean isPlay = false;
     private MediaPlayer player;
     private ImageButton ibTwins;
+    private TabLayout tbMain;
+    private ViewPager vpMain;
+    private ImageButton ibGengduo;
+    private ImageButton ibSearch;
+    private LinearLayout llPlay;
 
     @Override
     protected int getLayout() {
@@ -39,21 +44,14 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        TabLayout tbMain = bindView(R.id.tb_main);
-        ViewPager vpMain = bindView(R.id.vp_main);
-        ImageButton ibGengduo = bindView(R.id.ib_gengduo);
-        ImageButton ibSearch = bindView(R.id.ib_search);
-        LinearLayout llPlay = bindView(R.id.ll_main_play);
+        tbMain = bindView(R.id.tb_main);
+        vpMain = bindView(R.id.vp_main);
+        ibGengduo = bindView(R.id.ib_gengduo);
+        ibSearch = bindView(R.id.ib_search);
+        llPlay = bindView(R.id.ll_main_play);
         ibTwins = bindView(R.id.iv_main_twins);
 
         player = new MediaPlayer();
-//        player = MediaPlayer.create(this, R.raw.remix);
-        try {
-            player.setDataSource(this, Uri.parse("http://zhangmenshiting.baidu.com/data2/music/124469076/124469076.mp3?xcode=44388abf5c8780fca0d51cfc739c1004"));
-            player.prepare();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         ArrayList<Fragment> fragments = new ArrayList<>();
         MyAdapter adapter = new MyAdapter(getSupportFragmentManager());
@@ -67,6 +65,17 @@ public class MainActivity extends BaseActivity {
         vpMain.setAdapter(adapter);
         tbMain.setupWithViewPager(vpMain);
         tbMain.setTabTextColors(Color.GRAY, Color.WHITE);
+    }
+
+    @Override
+    protected void initData() {
+        // player = MediaPlayer.create(this, R.raw.remix);
+        try {
+            player.setDataSource(this, Uri.parse("http://zhangmenshiting.baidu.com/data2/music/124469076/124469076.mp3?xcode=44388abf5c8780fca0d51cfc739c1004"));
+            player.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         ibGengduo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,11 +120,6 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
-    }
-
-    @Override
-    protected void initData() {
-
     }
 
 }

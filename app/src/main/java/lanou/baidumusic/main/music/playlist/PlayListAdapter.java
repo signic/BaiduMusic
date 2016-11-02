@@ -10,10 +10,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import lanou.baidumusic.R;
 import lanou.baidumusic.tool.bean.PlayListBean;
+import lanou.baidumusic.tool.volley.VolleySingleton;
 
 /**
  * Created by dllo on 16/10/24.
@@ -22,6 +21,11 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayLi
 
     Context mContext;
     PlayListBean bean;
+    OnPlayListItemClickListener playListItemClickListener;
+
+    public void setPlayListItemClickListener(OnPlayListItemClickListener playListItemClickListener) {
+        this.playListItemClickListener = playListItemClickListener;
+    }
 
     public PlayListAdapter(Context mContext) {
         this.mContext = mContext;
@@ -40,16 +44,19 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayLi
     }
 
     @Override
-    public void onBindViewHolder(PlayListViewHolder holder, int position) {
+    public void onBindViewHolder(PlayListViewHolder holder, final int position) {
 
-//        VolleySingleton.getInstance().getImage(bean.getContent().get(position)
-//                .getPic_300(), holder.ivBackground);
-
-        Picasso.with(mContext).load(bean.getDiyInfo().get(position)
-                .getList_pic()).into(holder.ivBackground);
+        VolleySingleton.getInstance().getImage(bean.getDiyInfo().get(position)
+                .getList_pic(), holder.ivBackground);
         holder.tvCount.setText(String.valueOf(bean.getDiyInfo().get(position).getListen_num()));
         holder.tvIntroduction.setText(bean.getDiyInfo().get(position).getTitle());
         holder.tvAuthor.setText("by " + bean.getDiyInfo().get(position).getUsername());
+        holder.rlPlayList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                playListItemClickListener.onPlayListClick(position);
+            }
+        });
     }
 
     @Override
