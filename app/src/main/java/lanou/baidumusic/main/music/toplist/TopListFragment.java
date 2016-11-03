@@ -1,21 +1,24 @@
 package lanou.baidumusic.main.music.toplist;
 
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.widget.ListView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.tool.volley.GsonRequest;
 import lanou.baidumusic.tool.Values;
-import lanou.baidumusic.tool.volley.VolleySingleton;
 import lanou.baidumusic.tool.base.BaseFragment;
 import lanou.baidumusic.tool.bean.TopListBean;
+import lanou.baidumusic.tool.volley.GsonRequest;
+import lanou.baidumusic.tool.volley.VolleySingleton;
 
 /**
  * Created by dllo on 16/10/24.
  */
-public class TopListFragment extends BaseFragment {
+public class TopListFragment extends BaseFragment implements OnTopListClickListener {
 
     private TopListAdapter adapter;
     private ListView lvTopList;
@@ -39,6 +42,7 @@ public class TopListFragment extends BaseFragment {
             @Override
             public void onResponse(TopListBean response) {
                 // 请求成功的方法
+                adapter.setOnTopListClickListener(TopListFragment.this);
                 adapter.setBean(response);
                 lvTopList.setAdapter(adapter);
             }
@@ -50,5 +54,18 @@ public class TopListFragment extends BaseFragment {
         });
 
         VolleySingleton.getInstance().addRequest(gsonRequest);
+    }
+
+    @Override
+    public void onTopClick(String type) {
+        TopListItemFragment fragment = new TopListItemFragment();
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.replace_view, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+        Bundle bundle = new Bundle();
+        bundle.putString("type", type);
+        fragment.setArguments(bundle);
     }
 }

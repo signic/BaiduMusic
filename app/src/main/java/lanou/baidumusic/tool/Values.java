@@ -48,6 +48,11 @@ public class Values {
             ".ting.billboard.billCategory&format=json&from=ios&version=5.2" +
             ".1&from=ios&channel=appstore";
 
+    // 音乐 -> 榜单 -> 列表
+    public static final String MUSIC_TOPLIST_LIST_FRONT = "http://tingapi.ting.baidu" +
+            ".com/v1/restserver/ting?method=baidu.ting.billboard.billList&type=";
+    public static final String MUSIC_TOPLIST_LIST_BEHIND = "&format=json&offset=0&size=50&from=ios&fields=title,song_id,author,resource_type,havehigh,is_new,has_mv_mobile,album_title,ting_uid,album_id,charge,all_rate&version=5.2.1&from=ios&channel=appstore";
+
     // 音乐 -> 视频 -> 最新
     public static final String MUSIC_VIDEO_LAST = "http://tingapi.ting.baidu" +
             ".com/v1/restserver/ting?from=android&version=5.9.0" +

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import lanou.baidumusic.R;
@@ -18,6 +19,7 @@ import lanou.baidumusic.tool.volley.VolleySingleton;
 public class TopListAdapter extends BaseAdapter {
     Context mContext;
     TopListBean bean;
+    OnTopListClickListener onTopListClickListener;
 
     public TopListAdapter(Context mContext) {
         this.mContext = mContext;
@@ -25,6 +27,10 @@ public class TopListAdapter extends BaseAdapter {
 
     public void setBean(TopListBean bean) {
         this.bean = bean;
+    }
+
+    public void setOnTopListClickListener(OnTopListClickListener onTopListClickListener) {
+        this.onTopListClickListener = onTopListClickListener;
     }
 
     @Override
@@ -43,7 +49,7 @@ public class TopListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         TopListViewHolder viewHolder = null;
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout
@@ -67,18 +73,28 @@ public class TopListAdapter extends BaseAdapter {
                 .getContent().get(2).getTitle() + "-" + bean.getContent()
                 .get(position).getContent().get(2).getAuthor());
 
+        viewHolder.llTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String type = String.valueOf(bean.getContent().get(position).getType());
+                onTopListClickListener.onTopClick(type);
+            }
+        });
+
         return convertView;
     }
 
     private class TopListViewHolder {
 
-        private final ImageView ivTopList;
-        private final TextView tvTitle;
-        private final TextView tvTop1;
-        private final TextView tvTop2;
-        private final TextView tvTop3;
+        private ImageView ivTopList;
+        private TextView tvTitle;
+        private TextView tvTop1;
+        private TextView tvTop2;
+        private TextView tvTop3;
+        private LinearLayout llTop;
 
         public TopListViewHolder(View convertView) {
+            llTop = (LinearLayout) convertView.findViewById(R.id.ll_toplist);
             ivTopList = (ImageView) convertView.findViewById(R.id.iv_toplist);
             tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
             tvTop1 = (TextView) convertView.findViewById(R.id.tv_top1);
