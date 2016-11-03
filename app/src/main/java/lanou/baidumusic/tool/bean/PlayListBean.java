@@ -7,7 +7,6 @@ import java.util.List;
  */
 public class PlayListBean {
 
-
     /**
      * have_more : 1
      * nums : 7270

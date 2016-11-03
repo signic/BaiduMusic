@@ -7,13 +7,13 @@
     <RelativeLayout
         android:layout_width="170dp"
         android:layout_height="170dp"
-        android:id="@+id/rl_playList">
+        android:id="@+id/rl_playlist">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
             android:scaleType="fitXY"
-            android:id="@+id/iv_playList_background"/>
+            android:id="@+id/iv_playlist_background"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_songlist_listen"
-                android:id="@+id/iv_playList"
+                android:id="@+id/iv_playlist"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="17dp"/>
             <TextView
@@ -40,7 +40,7 @@
                 android:src="@mipmap/bt_play_nor"
                 android:background="@null"
                 android:layout_marginBottom="10dp"
-                android:id="@+id/ib_playList"/>
+                android:id="@+id/ib_playlist"/>
         </LinearLayout>
 
     </RelativeLayout>

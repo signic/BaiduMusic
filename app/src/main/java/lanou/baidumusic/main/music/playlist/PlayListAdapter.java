@@ -54,7 +54,8 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayLi
         holder.rlPlayList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playListItemClickListener.onPlayListClick(position);
+                String listId = bean.getDiyInfo().get(position).getList_id();
+                playListItemClickListener.onPlayListClick(listId);
             }
         });
     }
@@ -76,11 +77,11 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayLi
 
         public PlayListViewHolder(View itemView) {
             super(itemView);
-            rlPlayList = (RelativeLayout) itemView.findViewById(R.id.rl_playList);
-            ivBackground = (ImageView) itemView.findViewById(R.id.iv_playList_background);
-            ivPlayList = (ImageView) itemView.findViewById(R.id.iv_playList);
+            rlPlayList = (RelativeLayout) itemView.findViewById(R.id.rl_playlist);
+            ivBackground = (ImageView) itemView.findViewById(R.id.iv_playlist_background);
+            ivPlayList = (ImageView) itemView.findViewById(R.id.iv_playlist);
             tvCount = (TextView) itemView.findViewById(R.id.tv_count);
-            ibPlayList = (ImageButton) itemView.findViewById(R.id.ib_playList);
+            ibPlayList = (ImageButton) itemView.findViewById(R.id.ib_playlist);
             tvIntroduction = (TextView) itemView.findViewById(R.id.tv_introduction);
             tvAuthor = (TextView) itemView.findViewById(R.id.tv_author);
         }

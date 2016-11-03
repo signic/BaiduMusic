@@ -1,6 +1,7 @@
 package lanou.baidumusic.main.music.playlist;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
@@ -81,7 +82,9 @@ public class PlayListFragment extends BaseFragment implements OnPlayListItemClic
                 transaction.commit();
             }
         });
+        adapter.setPlayListItemClickListener(this);
     }
+
 
     private void GsonData(String url) {
         GsonRequest<PlayListBean> gsonRequest = new GsonRequest<>(PlayListBean.class, url,
@@ -89,9 +92,9 @@ public class PlayListFragment extends BaseFragment implements OnPlayListItemClic
                     @Override
                     public void onResponse(PlayListBean response) {
                         // 请求成功的方法
-                        adapter.setPlayListItemClickListener(PlayListFragment.this);
-                        adapter.setBean(response);
+
                         rvPlay.setAdapter(adapter);
+                        adapter.setBean(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -103,13 +106,17 @@ public class PlayListFragment extends BaseFragment implements OnPlayListItemClic
         VolleySingleton.getInstance().addRequest(gsonRequest);
     }
 
-    // recyclerView的点击事件
     @Override
-    public void onPlayListClick(int position) {
+    public void onPlayListClick(String listId) {
+        PlayListItemFragment fragment = new PlayListItemFragment();
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.replace_view, new PlayListItemFragment());
+        transaction.replace(R.id.replace_view, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+        Bundle bundle = new Bundle();
+        bundle.putString("listId", listId);
+        fragment.setArguments(bundle);
     }
+
 }
