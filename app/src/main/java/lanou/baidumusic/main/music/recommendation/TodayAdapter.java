@@ -8,17 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import lanou.baidumusic.R;
 import lanou.baidumusic.tool.bean.RecommendationBean;
+import lanou.baidumusic.tool.volley.VolleySingleton;
 
 /**
  * Created by dllo on 16/10/29.
  */
 public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.TodayViewHolder> {
-    Context mContext;
-    RecommendationBean bean;
+    private Context mContext;
+    private RecommendationBean bean;
 
     public TodayAdapter(Context mContext) {
         this.mContext = mContext;
@@ -26,6 +25,7 @@ public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.TodayViewHol
 
     public void setBean(RecommendationBean bean) {
         this.bean = bean;
+        notifyDataSetChanged();
     }
     @Override
     public TodayViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -37,8 +37,10 @@ public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.TodayViewHol
 
     @Override
     public void onBindViewHolder(TodayViewHolder holder, int position) {
-        Picasso.with(mContext).load(bean.getResult().getRecsong().getResult().get
-                (position).getPic_premium()).fit().into(holder.ivToday);
+//        Picasso.with(mContext).load(bean.getResult().getRecsong().getResult().get
+//                (position).getPic_premium()).fit().into(holder.ivToday);
+        VolleySingleton.getInstance().getImage(bean.getResult().getRecsong().getResult().get
+                (position).getPic_premium(),holder.ivToday);
         holder.tvTitle.setText(bean.getResult().getRecsong().getResult().get
                 (position).getTitle());
         holder.tvAuthor.setText(bean.getResult().getRecsong().getResult().get

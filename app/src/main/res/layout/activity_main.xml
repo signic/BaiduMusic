@@ -64,21 +64,21 @@
         </LinearLayout>
 
         <ImageButton
-            android:id="@+id/iv_main_twins"
+            android:id="@+id/ib_main_twins"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@mipmap/bt_minibar_play_normal"
             android:background="@null"/>
         <ImageButton
-            android:id="@+id/iv_main_next"
+            android:id="@+id/ib_main_next"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@mipmap/bt_minibar_next_normal"
             android:background="@null"/>
         <ImageButton
-            android:id="@+id/iv_main_list"
+            android:id="@+id/ib_main_list"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

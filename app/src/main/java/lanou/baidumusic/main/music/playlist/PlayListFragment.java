@@ -14,7 +14,7 @@ import com.android.volley.VolleyError;
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.tool.Values;
+import lanou.baidumusic.tool.volley.Values;
 import lanou.baidumusic.tool.base.BaseFragment;
 import lanou.baidumusic.tool.bean.PlayListBean;
 import lanou.baidumusic.tool.volley.GsonRequest;
@@ -23,7 +23,7 @@ import lanou.baidumusic.tool.volley.VolleySingleton;
 /**
  * Created by dllo on 16/10/24.
  */
-public class PlayListFragment extends BaseFragment implements OnPlayListItemClickListener {
+public class PlayListFragment extends BaseFragment implements OnPlayListClickListener {
 
     private TextView tvLastest;
     private TextView tvHostest;
@@ -92,7 +92,6 @@ public class PlayListFragment extends BaseFragment implements OnPlayListItemClic
                     @Override
                     public void onResponse(PlayListBean response) {
                         // 请求成功的方法
-
                         rvPlay.setAdapter(adapter);
                         adapter.setBean(response);
                     }

@@ -10,12 +10,12 @@ import java.util.ArrayList;
  * Created by dllo on 16/10/21.
  */
 public class MyAdapter extends FragmentPagerAdapter {
-
-    ArrayList<Fragment> fragments;
-    String[] titles = {"我的", "音乐", "动态", "直播"};
+    private ArrayList<Fragment> fragments;
+    private String[] titles = {"我的", "音乐", "动态", "直播"};
 
     public void setFragments(ArrayList<Fragment> fragments) {
         this.fragments = fragments;
+        notifyDataSetChanged();
     }
 
     public MyAdapter(FragmentManager fm) {

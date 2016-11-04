@@ -6,7 +6,7 @@
               android:layout_height="wrap_content"
               android:padding="5dp">
 
-    <lanou.baidumusic.tool.CircleImageView
+    <lanou.baidumusic.tool.widget.CircleImageView
         android:id="@+id/iv_recommendation_today"
         android:layout_width="30dp"
         android:layout_height="30dp"

@@ -16,8 +16,8 @@ import lanou.baidumusic.tool.bean.RecommendationBean;
  * Created by dllo on 16/10/29.
  */
 public class MvAdapter extends RecyclerView.Adapter<MvAdapter.MvViewHolder> {
-    Context mContext;
-    RecommendationBean bean;
+    private Context mContext;
+    private RecommendationBean bean;
 
     public MvAdapter(Context mContext) {
         this.mContext = mContext;
@@ -25,6 +25,7 @@ public class MvAdapter extends RecyclerView.Adapter<MvAdapter.MvViewHolder> {
 
     public void setBean(RecommendationBean bean) {
         this.bean = bean;
+        notifyDataSetChanged();
     }
     @Override
     public MvViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

@@ -1,4 +1,4 @@
-package lanou.baidumusic.tool;
+package lanou.baidumusic.tool.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -69,8 +69,18 @@ public class CircleImageView extends ImageView {
 
     }
 
-    private Bitmap getCircleBitmap(Bitmap bitmap) {
+    private Bitmap getSmallBitmap(Bitmap bitmap){
+        int width = getWidth();
+        int height = getHeight();
+        if(width <= 0 || height <= 0){
+            return bitmap;
+        }
+        bitmap = Bitmap.createScaledBitmap(bitmap,width,height,false);
+        return bitmap;
+    }
 
+    private Bitmap getCircleBitmap(Bitmap bitmap) {
+        bitmap = getSmallBitmap(bitmap);
         // 初始化一个空的跟src图片一样大小的Bitmap
         Bitmap outBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         // 创建一个空的装载bitmap的画布

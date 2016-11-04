@@ -8,7 +8,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.tool.Values;
+import lanou.baidumusic.tool.volley.Values;
 import lanou.baidumusic.tool.base.BaseFragment;
 import lanou.baidumusic.tool.bean.TopListItemBean;
 import lanou.baidumusic.tool.volley.GsonRequest;

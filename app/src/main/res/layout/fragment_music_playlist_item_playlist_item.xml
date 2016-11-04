@@ -2,7 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:id="@+id/ll_playlist_list"
+    android:clickable="true"
+    android:descendantFocusability="blocksDescendants">
 
     <LinearLayout
         android:layout_width="260dp"
@@ -43,14 +47,15 @@
 
     <ImageView
         android:id="@+id/iv_playlist_list_k"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="5dp"/>
-    <ImageView
-        android:id="@+id/iv_playlist_list_more"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="fitXY"/>
+    <ImageButton
+        android:id="@+id/ib_playlist_list_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:src="@mipmap/bt_recsong_more_invalid"/>
+        android:src="@mipmap/bt_recsong_more_invalid"
+        android:background="@null"/>
 
 </LinearLayout>

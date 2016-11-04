@@ -12,10 +12,11 @@ import lanou.baidumusic.tool.bean.RecommendationBean;
  * Created by dllo on 16/10/28.
  */
 public class BannerAdapter extends PagerAdapter {
-    RecommendationBean bean = new RecommendationBean();
+    private RecommendationBean bean;
 
     public void setBean(RecommendationBean bean) {
         this.bean = bean;
+        notifyDataSetChanged();
     }
 
     @Override

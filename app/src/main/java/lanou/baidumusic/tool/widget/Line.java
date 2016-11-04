@@ -1,4 +1,4 @@
-package lanou.baidumusic.tool;
+package lanou.baidumusic.tool.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -43,6 +43,7 @@ public class Line extends View {
 
         // 画圆
 //        canvas.drawLine(0, 0, 10, 0, paint);
+//        canvas.drawRect();
         canvas.drawCircle(getWidth() / 2, getHeight() / 2, r, paint);
     }
 }

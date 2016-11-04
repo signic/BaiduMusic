@@ -17,9 +17,9 @@ import lanou.baidumusic.tool.bean.RecommendationBean;
  * Created by dllo on 16/10/29.
  */
 public class HotAdapter extends RecyclerView.Adapter<HotAdapter.HotViewHolder> {
-    Context mContext;
-    RecommendationBean bean;
-    OnRvClickListener onRvClickListener;
+    private Context mContext;
+    private RecommendationBean bean;
+    private OnRvClickListener onRvClickListener;
 
     public void setOnRvClickListener(OnRvClickListener onRvClickListener) {
         this.onRvClickListener = onRvClickListener;
@@ -31,6 +31,7 @@ public class HotAdapter extends RecyclerView.Adapter<HotAdapter.HotViewHolder> {
 
     public void setBean(RecommendationBean bean) {
         this.bean = bean;
+        notifyDataSetChanged();
     }
 
     @Override

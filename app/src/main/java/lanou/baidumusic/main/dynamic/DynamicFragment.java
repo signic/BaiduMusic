@@ -8,9 +8,9 @@ import com.android.volley.VolleyError;
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.tool.DividerItemDecoration;
+import lanou.baidumusic.tool.widget.DividerItemDecoration;
 import lanou.baidumusic.tool.volley.GsonRequest;
-import lanou.baidumusic.tool.Values;
+import lanou.baidumusic.tool.volley.Values;
 import lanou.baidumusic.tool.volley.VolleySingleton;
 import lanou.baidumusic.tool.base.BaseFragment;
 import lanou.baidumusic.tool.bean.DynamicBean;

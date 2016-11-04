@@ -19,12 +19,12 @@ import lanou.baidumusic.tool.volley.VolleySingleton;
  */
 public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayListViewHolder> {
 
-    Context mContext;
-    PlayListBean bean;
-    OnPlayListItemClickListener playListItemClickListener;
+    private Context mContext;
+    private PlayListBean bean;
+    private OnPlayListClickListener playListClickListener;
 
-    public void setPlayListItemClickListener(OnPlayListItemClickListener playListItemClickListener) {
-        this.playListItemClickListener = playListItemClickListener;
+    public void setPlayListItemClickListener(OnPlayListClickListener playListClickListener) {
+        this.playListClickListener = playListClickListener;
     }
 
     public PlayListAdapter(Context mContext) {
@@ -33,6 +33,7 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayLi
 
     public void setBean(PlayListBean bean) {
         this.bean = bean;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -55,7 +56,7 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayLi
             @Override
             public void onClick(View v) {
                 String listId = bean.getDiyInfo().get(position).getList_id();
-                playListItemClickListener.onPlayListClick(listId);
+                playListClickListener.onPlayListClick(listId);
             }
         });
     }
@@ -67,13 +68,13 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayLi
 
     public class PlayListViewHolder extends RecyclerView.ViewHolder {
 
-        private final RelativeLayout rlPlayList;
-        private final ImageView ivPlayList;
-        private final TextView tvCount;
-        private final ImageButton ibPlayList;
-        private final TextView tvIntroduction;
-        private final TextView tvAuthor;
-        private final ImageView ivBackground;
+        private RelativeLayout rlPlayList;
+        private ImageView ivPlayList;
+        private TextView tvCount;
+        private ImageButton ibPlayList;
+        private TextView tvIntroduction;
+        private TextView tvAuthor;
+        private ImageView ivBackground;
 
         public PlayListViewHolder(View itemView) {
             super(itemView);

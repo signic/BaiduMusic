@@ -9,7 +9,7 @@
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name=".tool.volley.MyApp"
+        android:name=".tool.base.MyApp"
         android:theme="@style/CustomTitle">
         <activity android:name=".main.MainActivity">
             <intent-filter>

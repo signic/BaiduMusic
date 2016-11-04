@@ -1,4 +1,4 @@
-package lanou.baidumusic.tool;
+package lanou.baidumusic.tool.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;

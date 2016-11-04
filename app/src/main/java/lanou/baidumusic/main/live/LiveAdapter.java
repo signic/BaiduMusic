@@ -18,8 +18,8 @@ import lanou.baidumusic.tool.volley.VolleySingleton;
  * Created by dllo on 16/10/27.
  */
 public class LiveAdapter extends RecyclerView.Adapter<LiveAdapter.LiveViewHolder> {
-    Context mContext;
-    LiveBean bean;
+    private Context mContext;
+    private LiveBean bean;
 
     public LiveAdapter(Context mContext) {
         this.mContext = mContext;
@@ -27,6 +27,7 @@ public class LiveAdapter extends RecyclerView.Adapter<LiveAdapter.LiveViewHolder
 
     public void setBean(LiveBean bean) {
         this.bean = bean;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -51,12 +52,12 @@ public class LiveAdapter extends RecyclerView.Adapter<LiveAdapter.LiveViewHolder
 
     public class LiveViewHolder extends RecyclerView.ViewHolder {
 
-        private final RelativeLayout rlLive;
-        private final ImageView ivBackground;
-        private final ImageView ivLive;
-        private final TextView tvNum;
-        private final ImageButton ibLive;
-        private final TextView tvName;
+        private RelativeLayout rlLive;
+        private ImageView ivBackground;
+        private ImageView ivLive;
+        private TextView tvNum;
+        private ImageButton ibLive;
+        private TextView tvName;
 
         public LiveViewHolder(View itemView) {
             super(itemView);

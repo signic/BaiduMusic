@@ -11,11 +11,12 @@ import java.util.ArrayList;
  */
 public class MusicAdapter extends FragmentPagerAdapter {
 
-    ArrayList<Fragment> fragmentArrayList;
-    String[] titles = {"推荐", "歌单", "榜单", "视频", "k歌"};
+    private ArrayList<Fragment> fragmentArrayList;
+    private String[] titles = {"推荐", "歌单", "榜单", "视频", "k歌"};
 
     public void setFragmentArrayList(ArrayList<Fragment> fragmentArrayList) {
         this.fragmentArrayList = fragmentArrayList;
+        notifyDataSetChanged();
     }
 
     public MusicAdapter(FragmentManager fm) {

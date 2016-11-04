@@ -18,8 +18,8 @@ import lanou.baidumusic.tool.bean.MoreBean;
  */
 public class MoreAdapter extends BaseAdapter {
 
-    Context mContext;
-    ArrayList<MoreBean> beanArrayList;
+    private Context mContext;
+    private ArrayList<MoreBean> beanArrayList;
 
     public MoreAdapter(Context mContext) {
         this.mContext = mContext;
@@ -27,6 +27,7 @@ public class MoreAdapter extends BaseAdapter {
 
     public void setBeanArrayList(ArrayList<MoreBean> beanArrayList) {
         this.beanArrayList = beanArrayList;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -62,8 +63,8 @@ public class MoreAdapter extends BaseAdapter {
 
     private class MoreViewHolder {
 
-        private final ImageView ivMoreList;
-        private final TextView tvMoreList;
+        private ImageView ivMoreList;
+        private TextView tvMoreList;
 
         public MoreViewHolder(View convertView) {
             ivMoreList = (ImageView) convertView.findViewById(R.id.iv_more_list);

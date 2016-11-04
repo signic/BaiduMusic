@@ -16,8 +16,8 @@ import lanou.baidumusic.tool.volley.VolleySingleton;
  * Created by dllo on 16/10/25.
  */
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHolder> {
-    VideoBean bean;
-    Context mContext;
+    private VideoBean bean;
+    private Context mContext;
 
     public VideoAdapter(Context mContext) {
         this.mContext = mContext;
@@ -25,6 +25,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
 
     public void setBean(VideoBean bean) {
         this.bean = bean;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -49,9 +50,9 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
     }
 
     public class VideoViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView ivVideo;
-        private final TextView tvTitle;
-        private final TextView tvAuthor;
+        private ImageView ivVideo;
+        private TextView tvTitle;
+        private TextView tvAuthor;
         public VideoViewHolder(View itemView) {
             super(itemView);
             ivVideo = (ImageView) itemView.findViewById(R.id.iv_video);

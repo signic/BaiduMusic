@@ -17,9 +17,9 @@ import lanou.baidumusic.tool.bean.RecommendationBean;
  * Created by dllo on 16/10/29.
  */
 public class ModAdapter extends RecyclerView.Adapter<ModAdapter.ModViewHolder> {
-    Context mContext;
-    RecommendationBean bean;
-    OnRvClickListener onRvClickListener;
+    private Context mContext;
+    private RecommendationBean bean;
+    private OnRvClickListener onRvClickListener;
 
     public void setOnRvClickListener(OnRvClickListener onRvClickListener) {
         this.onRvClickListener = onRvClickListener;
@@ -31,6 +31,7 @@ public class ModAdapter extends RecyclerView.Adapter<ModAdapter.ModViewHolder> {
 
     public void setBean(RecommendationBean bean) {
         this.bean = bean;
+        notifyDataSetChanged();
     }
     @Override
     public ModViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -67,7 +68,6 @@ public class ModAdapter extends RecyclerView.Adapter<ModAdapter.ModViewHolder> {
         private TextView tvTitle;
         private TextView tvDesc;
         private LinearLayout llMod;
-
         public ModViewHolder(View itemView) {
             super(itemView);
             llMod = (LinearLayout) itemView.findViewById(R.id.ll_recommendation_mod);

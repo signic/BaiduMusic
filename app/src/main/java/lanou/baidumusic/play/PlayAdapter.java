@@ -11,8 +11,8 @@ import java.util.ArrayList;
  */
 public class PlayAdapter extends FragmentPagerAdapter {
 
-    ArrayList<Fragment> fragments;
-    String[] titles = {"一点", "亮点", "三点"};
+    private ArrayList<Fragment> fragments;
+    private String[] titles = {"一点", "亮点", "三点"};
 
     public PlayAdapter(FragmentManager fm) {
         super(fm);
@@ -20,6 +20,7 @@ public class PlayAdapter extends FragmentPagerAdapter {
 
     public void setFragments(ArrayList<Fragment> fragments) {
         this.fragments = fragments;
+        notifyDataSetChanged();
     }
 
     @Override

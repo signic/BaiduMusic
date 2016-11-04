@@ -15,11 +15,9 @@ import lanou.baidumusic.tool.bean.RecommendationBean;
 /**
  * Created by dllo on 16/10/28.
  */
-public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAdapter
-        .RecommendationViewHolder> {
-
-    Context mContext;
-    RecommendationBean bean = new RecommendationBean();
+public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAdapter.RecommendationViewHolder> {
+    private Context mContext;
+    private RecommendationBean bean;
 
     public RecommendationAdapter(Context mContext) {
         this.mContext = mContext;
@@ -27,6 +25,7 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
 
     public void setBean(RecommendationBean bean) {
         this.bean = bean;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -49,8 +48,14 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
 
     @Override
     public int getItemCount() {
-        return bean.getResult().getDiy().getResult() == null ? 0 : bean.getResult().getDiy()
-                .getResult().size();
+        int count = 0;
+        try {
+            count = bean.getResult().getDiy()
+                    .getResult().size();
+        } catch (NullPointerException e){
+
+        }
+        return count;
     }
 
     public class RecommendationViewHolder extends RecyclerView.ViewHolder {

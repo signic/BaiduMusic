@@ -17,9 +17,9 @@ import lanou.baidumusic.tool.volley.VolleySingleton;
  * Created by dllo on 16/10/25.
  */
 public class TopListAdapter extends BaseAdapter {
-    Context mContext;
-    TopListBean bean;
-    OnTopListClickListener onTopListClickListener;
+    private Context mContext;
+    private TopListBean bean;
+    private OnTopListClickListener onTopListClickListener;
 
     public TopListAdapter(Context mContext) {
         this.mContext = mContext;
@@ -27,6 +27,7 @@ public class TopListAdapter extends BaseAdapter {
 
     public void setBean(TopListBean bean) {
         this.bean = bean;
+        notifyDataSetChanged();
     }
 
     public void setOnTopListClickListener(OnTopListClickListener onTopListClickListener) {

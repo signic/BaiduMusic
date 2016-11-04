@@ -15,8 +15,8 @@ import lanou.baidumusic.tool.bean.DynamicBean;
  * Created by dllo on 16/10/31.
  */
 public class DynamicItemAdapter extends RecyclerView.Adapter<DynamicItemAdapter.DynamicItemViewHolder> {
-    Context mContext;
-    DynamicBean bean;
+    private Context mContext;
+    private DynamicBean bean;
 
     public DynamicItemAdapter(Context mContext) {
         this.mContext = mContext;
@@ -24,6 +24,7 @@ public class DynamicItemAdapter extends RecyclerView.Adapter<DynamicItemAdapter.
 
     public void setBean(DynamicBean bean) {
         this.bean = bean;
+        notifyDataSetChanged();
     }
 
     @Override

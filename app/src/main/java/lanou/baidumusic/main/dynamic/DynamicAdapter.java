@@ -17,8 +17,8 @@ import lanou.baidumusic.tool.bean.DynamicBean;
  * Created by dllo on 16/10/31.
  */
 public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicViewHolder> {
-    Context mContext;
-    DynamicBean bean;
+    private Context mContext;
+    private DynamicBean bean;
 
     public DynamicAdapter(Context mContext) {
         this.mContext = mContext;
@@ -26,6 +26,7 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicV
 
     public void setBean(DynamicBean bean) {
         this.bean = bean;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -91,17 +92,17 @@ public class DynamicAdapter extends RecyclerView.Adapter<DynamicAdapter.DynamicV
 
     public class DynamicViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView tvShare;
-        private final TextView tvZan;
-        private final TextView tvContentTitle;
-        private final TextView tvContentType;
-        private final ImageView ivContentPic;
-        private final RecyclerView rvDynamicItem;
-        private final TextView tvTopicTitle;
-        private final TextView tvMsg;
-        private final TextView tvCTime;
-        private final TextView tvUsername;
-        private final ImageView ivUserPic;
+        private TextView tvShare;
+        private TextView tvZan;
+        private TextView tvContentTitle;
+        private TextView tvContentType;
+        private ImageView ivContentPic;
+        private RecyclerView rvDynamicItem;
+        private TextView tvTopicTitle;
+        private TextView tvMsg;
+        private TextView tvCTime;
+        private TextView tvUsername;
+        private ImageView ivUserPic;
 
         public DynamicViewHolder(View itemView) {
             super(itemView);

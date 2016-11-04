@@ -11,8 +11,8 @@ import java.util.ArrayList;
  */
 public class LocalAdapter extends FragmentPagerAdapter {
 
-    ArrayList<Fragment> fragmentArrayList;
-    String[] titles = {"歌曲", "文件夹", "歌手", "专辑"};
+    private ArrayList<Fragment> fragmentArrayList;
+    private String[] titles = {"歌曲", "文件夹", "歌手", "专辑"};
 
     public LocalAdapter(FragmentManager fm) {
         super(fm);
@@ -20,6 +20,7 @@ public class LocalAdapter extends FragmentPagerAdapter {
 
     public void setFragmentArrayList(ArrayList<Fragment> fragmentArrayList) {
         this.fragmentArrayList = fragmentArrayList;
+        notifyDataSetChanged();
     }
 
     @Override

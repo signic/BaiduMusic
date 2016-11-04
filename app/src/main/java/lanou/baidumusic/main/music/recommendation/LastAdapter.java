@@ -17,8 +17,8 @@ import lanou.baidumusic.tool.bean.RecommendationBean;
  */
 public class LastAdapter extends RecyclerView.Adapter<LastAdapter.LastViewHolder> {
 
-    Context mContext;
-    RecommendationBean bean;
+    private Context mContext;
+    private RecommendationBean bean;
 
     public LastAdapter(Context mContext) {
         this.mContext = mContext;

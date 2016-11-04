@@ -9,10 +9,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.tool.Values;
 import lanou.baidumusic.tool.base.BaseFragment;
 import lanou.baidumusic.tool.bean.TopListBean;
 import lanou.baidumusic.tool.volley.GsonRequest;
+import lanou.baidumusic.tool.volley.Values;
 import lanou.baidumusic.tool.volley.VolleySingleton;
 
 /**
@@ -31,7 +31,6 @@ public class TopListFragment extends BaseFragment implements OnTopListClickListe
     @Override
     protected void initView() {
         lvTopList = bindView(R.id.lv_toplist);
-
         adapter = new TopListAdapter(getActivity());
     }
 
@@ -59,13 +58,14 @@ public class TopListFragment extends BaseFragment implements OnTopListClickListe
     @Override
     public void onTopClick(String type) {
         TopListItemFragment fragment = new TopListItemFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("type", type);
+        fragment.setArguments(bundle);
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.replace_view, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
-        Bundle bundle = new Bundle();
-        bundle.putString("type", type);
-        fragment.setArguments(bundle);
+
     }
 }

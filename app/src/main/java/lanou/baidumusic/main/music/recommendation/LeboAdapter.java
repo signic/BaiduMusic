@@ -16,8 +16,8 @@ import lanou.baidumusic.tool.bean.RecommendationBean;
  * Created by dllo on 16/10/29.
  */
 public class LeboAdapter extends RecyclerView.Adapter<LeboAdapter.LeboViewHolder> {
-    Context mContext;
-    RecommendationBean bean;
+    private Context mContext;
+    private RecommendationBean bean;
 
     public LeboAdapter(Context mContext) {
         this.mContext = mContext;
@@ -25,6 +25,7 @@ public class LeboAdapter extends RecyclerView.Adapter<LeboAdapter.LeboViewHolder
 
     public void setBean(RecommendationBean bean) {
         this.bean = bean;
+        notifyDataSetChanged();
     }
     @Override
     public LeboViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

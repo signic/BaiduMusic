@@ -15,10 +15,9 @@ import lanou.baidumusic.tool.volley.VolleySingleton;
 /**
  * Created by dllo on 16/11/3.
  */
-public class TopListItemAdapter extends RecyclerView.Adapter<TopListItemAdapter
-        .TopListItemViewHolder> {
-    Context mContext;
-    TopListItemBean bean;
+public class TopListItemAdapter extends RecyclerView.Adapter<TopListItemAdapter.TopListItemViewHolder> {
+    private Context mContext;
+    private TopListItemBean bean;
 
     public TopListItemAdapter(Context mContext) {
         this.mContext = mContext;
@@ -26,6 +25,7 @@ public class TopListItemAdapter extends RecyclerView.Adapter<TopListItemAdapter
 
     public void setBean(TopListItemBean bean) {
         this.bean = bean;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -58,8 +58,8 @@ public class TopListItemAdapter extends RecyclerView.Adapter<TopListItemAdapter
         public TopListItemViewHolder(View itemView) {
             super(itemView);
             ivList = (ImageView) itemView.findViewById(R.id.iv_toplist_list);
-            tvTitle = (TextView) itemView.findViewById(R.id.tv_playlist_list_title);
-            tvAuthor = (TextView) itemView.findViewById(R.id.tv_playlist_list_author);
+            tvTitle = (TextView) itemView.findViewById(R.id.tv_toplist_list_title);
+            tvAuthor = (TextView) itemView.findViewById(R.id.tv_toplist_list_author);
         }
     }
 }

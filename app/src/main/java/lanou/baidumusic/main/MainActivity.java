@@ -9,9 +9,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,6 +40,10 @@ public class MainActivity extends BaseActivity {
     private ImageButton ibGengduo;
     private ImageButton ibSearch;
     private LinearLayout llPlay;
+    private FragmentManager manager;
+    private ImageButton ibList;
+    private PopupWindow popupWindow;
+    private ArrayList<Fragment> fragments;
 
     @Override
     protected int getLayout() {
@@ -49,11 +57,12 @@ public class MainActivity extends BaseActivity {
         ibGengduo = bindView(R.id.ib_gengduo);
         ibSearch = bindView(R.id.ib_search);
         llPlay = bindView(R.id.ll_main_play);
-        ibTwins = bindView(R.id.iv_main_twins);
+        ibTwins = bindView(R.id.ib_main_twins);
+        ibList = (ImageButton) findViewById(R.id.ib_main_list);
 
         player = new MediaPlayer();
 
-        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments = new ArrayList<>();
         MyAdapter adapter = new MyAdapter(getSupportFragmentManager());
 
         fragments.add(new MineFragment());
@@ -65,11 +74,29 @@ public class MainActivity extends BaseActivity {
         vpMain.setAdapter(adapter);
         tbMain.setupWithViewPager(vpMain);
         tbMain.setTabTextColors(Color.GRAY, Color.WHITE);
+
     }
 
     @Override
     protected void initData() {
-        // player = MediaPlayer.create(this, R.raw.remix);
+
+        vpMain.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                dissMissPop();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         try {
             player.setDataSource(this, Uri.parse("http://zhangmenshiting.baidu.com/data2/music/124469076/124469076.mp3?xcode=44388abf5c8780fca0d51cfc739c1004"));
             player.prepare();
@@ -80,7 +107,7 @@ public class MainActivity extends BaseActivity {
         ibGengduo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager manager = getSupportFragmentManager();
+                manager = getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.replace(R.id.replace_view, new MoreFragment());
                 transaction.addToBackStack(null);
@@ -91,7 +118,7 @@ public class MainActivity extends BaseActivity {
         ibSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager manager = getSupportFragmentManager();
+                manager = getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.replace(R.id.replace_view, new SearchFragment());
                 transaction.addToBackStack(null);
@@ -120,6 +147,41 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+
+        ibList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (popupWindow == null || !popupWindow.isShowing()) {
+                    popupWindow = new PopupWindow(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
+                            .LayoutParams.WRAP_CONTENT);
+
+                    View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.pop,
+                            null);
+                    ListAdapter listAdapter = new ListAdapter(MainActivity.this);
+                    ListView lvList = (ListView) view.findViewById(R.id.lv_main_list);
+                    ArrayList<ListBean> listBeanArrayList = new ArrayList<>();
+                    for (int i = 0; i < 50; i++) {
+                        ListBean listBean = new ListBean();
+                        listBean.setTitle("title" + i);
+                        listBean.setAuthor("author" + i);
+                        listBeanArrayList.add(listBean);
+                    }
+                    listAdapter.setBeanArrayList(listBeanArrayList);
+                    lvList.setAdapter(listAdapter);
+                    popupWindow.setContentView(view);
+                    popupWindow.showAsDropDown(ibList, 0, -1550);
+
+                } else {
+                    popupWindow.dismiss();
+                }
+            }
+        });
+    }
+
+    public void dissMissPop() {
+        if (popupWindow != null) {
+            popupWindow.dismiss();
+        }
     }
 
 }

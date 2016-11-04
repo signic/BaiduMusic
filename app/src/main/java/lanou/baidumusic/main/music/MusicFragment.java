@@ -36,7 +36,7 @@ public class MusicFragment extends BaseFragment {
         fragmentArrayList.add(new VideoFragment());
         fragmentArrayList.add(new KaraokeFragment());
 
-        MusicAdapter adapter = new MusicAdapter(getActivity().getSupportFragmentManager());
+        MusicAdapter adapter = new MusicAdapter(getChildFragmentManager());
         adapter.setFragmentArrayList(fragmentArrayList);
         vpMusic.setAdapter(adapter);
         tbMusic.setupWithViewPager(vpMusic);

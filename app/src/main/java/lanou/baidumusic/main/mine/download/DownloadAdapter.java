@@ -11,8 +11,8 @@ import java.util.ArrayList;
  */
 public class DownloadAdapter extends FragmentPagerAdapter {
 
-    ArrayList<Fragment> fragmentArrayList;
-    String[] titles = {"已下载(0)", "正在下载(0)"};
+    private ArrayList<Fragment> fragmentArrayList;
+    private String[] titles = {"已下载(0)", "正在下载(0)"};
 
     public DownloadAdapter(FragmentManager fm) {
         super(fm);
@@ -20,6 +20,7 @@ public class DownloadAdapter extends FragmentPagerAdapter {
 
     public void setFragmentArrayList(ArrayList<Fragment> fragmentArrayList) {
         this.fragmentArrayList = fragmentArrayList;
+        notifyDataSetChanged();
     }
 
     @Override
