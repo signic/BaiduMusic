@@ -57,13 +57,13 @@ public class TopListFragment extends BaseFragment implements OnTopListClickListe
 
     @Override
     public void onTopClick(String type) {
-        TopListItemFragment fragment = new TopListItemFragment();
+        TopListItemFragment fragmentItem = new TopListItemFragment();
         Bundle bundle = new Bundle();
         bundle.putString("type", type);
-        fragment.setArguments(bundle);
+        fragmentItem.setArguments(bundle);
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.replace_view, fragment);
+        transaction.replace(R.id.replace_view, fragmentItem);
         transaction.addToBackStack(null);
         transaction.commit();
 

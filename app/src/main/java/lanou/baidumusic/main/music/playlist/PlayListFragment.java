@@ -14,10 +14,10 @@ import com.android.volley.VolleyError;
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 
 import lanou.baidumusic.R;
-import lanou.baidumusic.tool.volley.Values;
 import lanou.baidumusic.tool.base.BaseFragment;
 import lanou.baidumusic.tool.bean.PlayListBean;
 import lanou.baidumusic.tool.volley.GsonRequest;
+import lanou.baidumusic.tool.volley.Values;
 import lanou.baidumusic.tool.volley.VolleySingleton;
 
 /**
@@ -71,20 +71,7 @@ public class PlayListFragment extends BaseFragment implements OnPlayListClickLis
                 GsonData(Values.MUSIC_PLAYLIST_LAST);
             }
         });
-
-        rvPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager = getChildFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.replace(R.id.replace_view, new PlayListItemFragment());
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
-        adapter.setPlayListItemClickListener(this);
     }
-
 
     private void GsonData(String url) {
         GsonRequest<PlayListBean> gsonRequest = new GsonRequest<>(PlayListBean.class, url,
@@ -92,8 +79,9 @@ public class PlayListFragment extends BaseFragment implements OnPlayListClickLis
                     @Override
                     public void onResponse(PlayListBean response) {
                         // 请求成功的方法
-                        rvPlay.setAdapter(adapter);
+                        adapter.setPlayListItemClickListener(PlayListFragment.this);
                         adapter.setBean(response);
+                        rvPlay.setAdapter(adapter);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -107,15 +95,15 @@ public class PlayListFragment extends BaseFragment implements OnPlayListClickLis
 
     @Override
     public void onPlayListClick(String listId) {
-        PlayListItemFragment fragment = new PlayListItemFragment();
-        FragmentManager manager = getActivity().getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.replace_view, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        PlayListItemFragment fragmentItem = new PlayListItemFragment();
         Bundle bundle = new Bundle();
         bundle.putString("listId", listId);
-        fragment.setArguments(bundle);
+        fragmentItem.setArguments(bundle);
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.replace_view, fragmentItem);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 }

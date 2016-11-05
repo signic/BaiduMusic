@@ -20,11 +20,11 @@ public class PlayListItemAdapter extends RecyclerView.Adapter<PlayListItemAdapte
     private Context mContext;
     private PlayListItemBean bean;
     private PopupWindow popupWindow;
-//    private OnPlaylistItemClickListener onPlaylistItemClickListener;
-//
-//    public void setOnPlaylistItemClickListener(OnPlaylistItemClickListener onPlaylistItemClickListener) {
-//        this.onPlaylistItemClickListener = onPlaylistItemClickListener;
-//    }
+    private OnPlaylistItemClickListener onPlaylistItemClickListener;
+
+    public void setOnPlaylistItemClickListener(OnPlaylistItemClickListener onPlaylistItemClickListener) {
+        this.onPlaylistItemClickListener = onPlaylistItemClickListener;
+    }
 
     public PlayListItemAdapter(Context mContext) {
         this.mContext = mContext;
@@ -70,13 +70,13 @@ public class PlayListItemAdapter extends RecyclerView.Adapter<PlayListItemAdapte
             }
         });
 
-//        holder.llList.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String songId = bean.getContent().get(position).getSong_id();
-//                onPlaylistItemClickListener.onItemClickListener(songId);
-//            }
-//        });
+        holder.llList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String songId = bean.getContent().get(position).getSong_id();
+                onPlaylistItemClickListener.onItemClickListener(songId);
+            }
+        });
     }
 
     @Override

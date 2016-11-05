@@ -4,61 +4,62 @@ package lanou.baidumusic.tool.bean;
  * Created by dllo on 16/11/4.
  */
 public class PlayListSongInfoBean {
+
     /**
      * special_type : 0
-     * pic_huge : http://musicdata.baidu.com/data2/pic/5d006a59d068c86cddcf5f38baf032e9/261956789/261956789.jpg
+     * pic_huge :
      * resource_type : 0
-     * pic_premium : http://musicdata.baidu.com/data2/pic/6b7c491a951b13789ea587b4ea190647/261956910/261956910.jpg
+     * pic_premium : http://musicdata.baidu.com/data2/pic/21414d8e3235d238289d008a4a1504c1/267893005/267893005.jpg
      * havehigh : 2
-     * author : 马頔
-     * toneid : 0
-     * has_mv : 0
-     * song_id : 124400558
+     * author : 张韶涵
+     * toneid : 600902000008883133
+     * has_mv : 1
+     * song_id : 2127386
      * piao_id : 0
-     * artist_id : 105022809
-     * lrclink : http://musicdata.baidu.com/data2/lrc/247091502/247091502.lrc
+     * artist_id : 77
+     * lrclink : http://musicdata.baidu.com/data2/lrc/13914486/13914486.lrc
      * relate_status : 0
-     * learn : 0
-     * pic_big : http://musicdata.baidu.com/data2/pic/bc69fdc0cb9b9cad59108e10d5383080/261957183/261957183.jpg
+     * learn : 1
+     * pic_big : http://musicdata.baidu.com/data2/pic/53cf0b6794195721dca04ff9313eab54/88729335/88729335.jpg
      * play_type : 0
-     * album_id : 124197080
-     * album_title : 孤岛
-     * bitrate_fee : {"0":"0|0","1":"0|0"}
+     * album_id : 2022852
+     * album_title : Over The Rainbow
+     * bitrate_fee : {"0":"129|-1","1":"-1|-1"}
      * song_source : web
-     * all_artist_id : 105022809
-     * all_artist_ting_uid : 160889026
-     * all_rate : 24,64,128,192,256,320
+     * all_artist_id : 77
+     * all_artist_ting_uid : 1069
+     * all_rate : 24,64,128,192,256,320,flac
      * charge : 0
-     * copy_type : 0
+     * copy_type : 1
      * is_first_publish : 0
      * korean_bb_song : 0
-     * pic_radio : http://musicdata.baidu.com/data2/pic/1333f905e75a06d3fdd185bc16642a05/261957015/261957015.jpg
-     * has_mv_mobile : 0
-     * title : 海咪咪小姐
-     * pic_small : http://musicdata.baidu.com/data2/pic/31033ee51806a33e482e3bb645df7dac/261957313/261957313.jpg
-     * album_no : 5
+     * pic_radio : http://musicdata.baidu.com/data2/pic/21345167deb6cf35530c0e54ddfbecf9/88729325/88729325.jpg
+     * has_mv_mobile : 1
+     * title : 遗失的美好
+     * pic_small : http://musicdata.baidu.com/data2/pic/8e1863c111b655cd41d25c7d172c73b1/88729347/88729347.jpg
+     * album_no : 11
      * resource_type_ext : 0
-     * ting_uid : 160889026
+     * ting_uid : 1069
      */
 
     private SonginfoBean songinfo;
     /**
-     * songinfo : {"special_type":0,"pic_huge":"http://musicdata.baidu.com/data2/pic/5d006a59d068c86cddcf5f38baf032e9/261956789/261956789.jpg","resource_type":"0","pic_premium":"http://musicdata.baidu.com/data2/pic/6b7c491a951b13789ea587b4ea190647/261956910/261956910.jpg","havehigh":2,"author":"马頔","toneid":"0","has_mv":0,"song_id":"124400558","piao_id":"0","artist_id":"105022809","lrclink":"http://musicdata.baidu.com/data2/lrc/247091502/247091502.lrc","relate_status":"0","learn":0,"pic_big":"http://musicdata.baidu.com/data2/pic/bc69fdc0cb9b9cad59108e10d5383080/261957183/261957183.jpg","play_type":0,"album_id":"124197080","album_title":"孤岛","bitrate_fee":"{\"0\":\"0|0\",\"1\":\"0|0\"}","song_source":"web","all_artist_id":"105022809","all_artist_ting_uid":"160889026","all_rate":"24,64,128,192,256,320","charge":0,"copy_type":"0","is_first_publish":0,"korean_bb_song":"0","pic_radio":"http://musicdata.baidu.com/data2/pic/1333f905e75a06d3fdd185bc16642a05/261957015/261957015.jpg","has_mv_mobile":0,"title":"海咪咪小姐","pic_small":"http://musicdata.baidu.com/data2/pic/31033ee51806a33e482e3bb645df7dac/261957313/261957313.jpg","album_no":"5","resource_type_ext":"0","ting_uid":"160889026"}
+     * songinfo : {"special_type":0,"pic_huge":"","resource_type":"0","pic_premium":"http://musicdata.baidu.com/data2/pic/21414d8e3235d238289d008a4a1504c1/267893005/267893005.jpg","havehigh":2,"author":"张韶涵","toneid":"600902000008883133","has_mv":1,"song_id":"2127386","piao_id":"0","artist_id":"77","lrclink":"http://musicdata.baidu.com/data2/lrc/13914486/13914486.lrc","relate_status":"0","learn":1,"pic_big":"http://musicdata.baidu.com/data2/pic/53cf0b6794195721dca04ff9313eab54/88729335/88729335.jpg","play_type":0,"album_id":"2022852","album_title":"Over The Rainbow","bitrate_fee":"{\"0\":\"129|-1\",\"1\":\"-1|-1\"}","song_source":"web","all_artist_id":"77","all_artist_ting_uid":"1069","all_rate":"24,64,128,192,256,320,flac","charge":0,"copy_type":"1","is_first_publish":0,"korean_bb_song":"0","pic_radio":"http://musicdata.baidu.com/data2/pic/21345167deb6cf35530c0e54ddfbecf9/88729325/88729325.jpg","has_mv_mobile":1,"title":"遗失的美好","pic_small":"http://musicdata.baidu.com/data2/pic/8e1863c111b655cd41d25c7d172c73b1/88729347/88729347.jpg","album_no":"11","resource_type_ext":"0","ting_uid":"1069"}
      * error_code : 22000
-     * bitrate : {"show_link":"http://zhangmenshiting.baidu.com/data2/music/124401315/124401315.mp3?xcode=49b22cfad00113fdb4504f1dc3711450","free":1,"song_file_id":124401315,"file_size":2001894,"file_extension":"mp3","file_duration":250,"file_bitrate":64,"file_link":"http://yinyueshiting.baidu.com/data2/music/124401315/124401315.mp3?xcode=49b22cfad00113fdb4504f1dc3711450","hash":"63cba3492cedb2a9e03613074cdf737c5d6a57dc"}
+     * bitrate : {"show_link":"http://zhangmenshiting.baidu.com/data2/music/124590573/124590573.mp3?xcode=84080c53bc40c25fb50a78e8b32aeef1","free":1,"song_file_id":124590573,"file_size":2089434,"file_extension":"mp3","file_duration":261,"file_bitrate":64,"file_link":"http://yinyueshiting.baidu.com/data2/music/124590573/124590573.mp3?xcode=84080c53bc40c25fb50a78e8b32aeef1","hash":"32e20ca6f09942efa4dda493a2e5529463d0e54c"}
      */
 
     private int error_code;
     /**
-     * show_link : http://zhangmenshiting.baidu.com/data2/music/124401315/124401315.mp3?xcode=49b22cfad00113fdb4504f1dc3711450
+     * show_link : http://zhangmenshiting.baidu.com/data2/music/124590573/124590573.mp3?xcode=84080c53bc40c25fb50a78e8b32aeef1
      * free : 1
-     * song_file_id : 124401315
-     * file_size : 2001894
+     * song_file_id : 124590573
+     * file_size : 2089434
      * file_extension : mp3
-     * file_duration : 250
+     * file_duration : 261
      * file_bitrate : 64
-     * file_link : http://yinyueshiting.baidu.com/data2/music/124401315/124401315.mp3?xcode=49b22cfad00113fdb4504f1dc3711450
-     * hash : 63cba3492cedb2a9e03613074cdf737c5d6a57dc
+     * file_link : http://yinyueshiting.baidu.com/data2/music/124590573/124590573.mp3?xcode=84080c53bc40c25fb50a78e8b32aeef1
+     * hash : 32e20ca6f09942efa4dda493a2e5529463d0e54c
      */
 
     private BitrateBean bitrate;

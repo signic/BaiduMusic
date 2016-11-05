@@ -4,7 +4,6 @@ package lanou.baidumusic.tool.volley;
  * Created by dllo on 16/10/26.
  */
 public final class Values {
-
     // 音乐 -> 推荐
     public static final String MUSIC_RECOMMENDATION = "http://tingapi.ting.baidu" +
             ".com/v1/restserver/ting?from=android&version=5.9.0" +
@@ -33,6 +32,9 @@ public final class Values {
             ".com/v1/restserver/ting?method=baidu.ting.diy.gedanInfo&from=ios&listid=";
     public static final String MUSIC_PLAYLIST_LIST_BEHIND = "&version=5.2.3&from=ios&channel=appstore";
 
+    // 音乐 -> 歌单 -> 最热/最新 -> 列表 -> 歌曲信息
+    public static final String SONG_INFO = "http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.song.play&songid=";
+
     // 音乐 -> 榜单
     public static final String MUSIC_TOPLIST = "http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu" +
             ".ting.billboard.billCategory&format=json&from=ios&version=5.2.1&from=ios&channel=appstore";
@@ -44,11 +46,6 @@ public final class Values {
             "&format=json&offset=0&size=50&from=ios&fields=title,song_id,author,resource_type," +
             "havehigh,is_new,has_mv_mobile,album_title,ting_uid,album_id,charge," +
                     "all_rate&version=5.2.1&from=ios&channel=appstore";
-
-    // 音乐 -> 歌单 -> 列表 -> 歌曲信息
-    public static final String SONG_INFO_FRONT ="http://tingapi.ting.baidu" +
-            ".com/v1/restserver/ting?from=webapp_music&method=baidu.ting.song.play&format=json&callback=&songid=";
-    public static final String SONG_INFO_BEHIND =  "&_=1413017198449";
 
     // 音乐 -> 视频 -> 最新
     public static final String MUSIC_VIDEO_LAST = "http://tingapi.ting.baidu" +
@@ -74,13 +71,4 @@ public final class Values {
     public static final String LIVE = "http://tingapi.ting.baidu" +
             ".com/v1/restserver/ting?from=android&version=5.9.0" +
             ".0&channel=1382d&operator=0&method=baidu.ting.show.live&page_no=1&page_size=40";
-
-    // gedan
-    public static final String GEDAN = "http://tingapi.ting.baidu" +
-            ".com/v1/restserver/ting?from=android&version=5.9.0" +
-            ".0&channel=1382d&operator=0&method=baidu.ting.ugcdiy" +
-            ".getBaseInfo&param=47mzNr5n39MPtV6NP4AIDtNFDfevk" +
-            "%2FspU8Tzgz74COFHTEPqY66l6O7eSwxrQ7EahS%2BcJhfh1N3qQPTsoIIrQgkq6CI5fcxVkghFp3i" +
-            "%2FA2q2NyLpJ6iKuvlxcS65YVJB5HIZENW9uyANONPauxXvMA%3D%3D&timestamp=1478003971&sign" +
-            "=6349632da1a19cb19cb585457db9a9ed";
 }

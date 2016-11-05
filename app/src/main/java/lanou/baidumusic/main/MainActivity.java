@@ -1,9 +1,10 @@
 package lanou.baidumusic.main;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,11 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import lanou.baidumusic.R;
@@ -29,11 +31,12 @@ import lanou.baidumusic.more.MoreFragment;
 import lanou.baidumusic.play.PlayActivity;
 import lanou.baidumusic.search.SearchFragment;
 import lanou.baidumusic.tool.base.BaseActivity;
+import lanou.baidumusic.tool.volley.VolleySingleton;
+import lanou.baidumusic.tool.widget.PlayerService;
 
 public class MainActivity extends BaseActivity {
 
-    private boolean isPlay = false;
-    private MediaPlayer player;
+    private boolean isPlaying = false;
     private ImageButton ibTwins;
     private TabLayout tbMain;
     private ViewPager vpMain;
@@ -44,6 +47,10 @@ public class MainActivity extends BaseActivity {
     private ImageButton ibList;
     private PopupWindow popupWindow;
     private ArrayList<Fragment> fragments;
+    private ImageView ivMainPlay;
+    private TextView tvTitle;
+    private TextView tvAuthor;
+    private MainBroadCastReceiver cast;
 
     @Override
     protected int getLayout() {
@@ -59,8 +66,9 @@ public class MainActivity extends BaseActivity {
         llPlay = bindView(R.id.ll_main_play);
         ibTwins = bindView(R.id.ib_main_twins);
         ibList = (ImageButton) findViewById(R.id.ib_main_list);
-
-        player = new MediaPlayer();
+        ivMainPlay = bindView(R.id.iv_main_play);
+        tvTitle = bindView(R.id.tv_main_title);
+        tvAuthor = bindView(R.id.tv_main_author);
 
         fragments = new ArrayList<>();
         MyAdapter adapter = new MyAdapter(getSupportFragmentManager());
@@ -74,11 +82,22 @@ public class MainActivity extends BaseActivity {
         vpMain.setAdapter(adapter);
         tbMain.setupWithViewPager(vpMain);
         tbMain.setTabTextColors(Color.GRAY, Color.WHITE);
-
     }
 
     @Override
     protected void initData() {
+
+        Intent intent = new Intent(this, PlayerService.class);
+        startService(intent);
+
+        cast = new MainBroadCastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("sendInfo");
+        registerReceiver(cast, filter);
+
+        IntentFilter filter1 = new IntentFilter();
+        filter.addAction("sendState1");
+        registerReceiver(cast, filter);
 
         vpMain.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -96,13 +115,6 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-
-        try {
-            player.setDataSource(this, Uri.parse("http://zhangmenshiting.baidu.com/data2/music/124469076/124469076.mp3?xcode=44388abf5c8780fca0d51cfc739c1004"));
-            player.prepare();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         ibGengduo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,20 +143,6 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, PlayActivity.class);
                 startActivity(intent);
-            }
-        });
-
-        ibTwins.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isPlay = !isPlay;
-                if (isPlay) {
-                    player.start();
-                    ibTwins.setImageResource(R.mipmap.bt_minibar_pause_normal);
-                } else {
-                    player.pause();
-                    ibTwins.setImageResource(R.mipmap.bt_minibar_play_normal);
-                }
             }
         });
 
@@ -178,10 +176,66 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+//    public void playerStart() {
+//        Intent service = new Intent(MainActivity.this, PlayerService.class);
+//        service.putExtra("playerState", "START");
+//        startService(service);
+//    }
+//    public void playerPause() {
+//        Intent service = new Intent(MainActivity.this, PlayerService.class);
+//        service.putExtra("playerState", "PAUSE");
+//        startService(service);
+//    }
+//    public void playerStop() {
+//        Intent service = new Intent(MainActivity.this, PlayerService.class);
+//        service.putExtra("playerState", "STOP");
+//        startService(service);
+//    }
+
     public void dissMissPop() {
         if (popupWindow != null) {
             popupWindow.dismiss();
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(cast);
+    }
+
+    class MainBroadCastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, final Intent intent) {
+            String pic = intent.getStringExtra("pic");
+            String title = intent.getStringExtra("title");
+            String author = intent.getStringExtra("author");
+            isPlaying = intent.getBooleanExtra("state", false);
+
+            VolleySingleton.getInstance().getImage(pic, ivMainPlay);
+            tvTitle.setText(title);
+            tvAuthor.setText(author);
+
+            if (isPlaying) {
+                ibTwins.setImageResource(R.mipmap.bt_minibar_pause_normal);
+            } else {
+                ibTwins.setImageResource(R.mipmap.bt_minibar_play_normal);
+            }
+
+            ibTwins.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent1 = new Intent("sendState");
+                    isPlaying = !isPlaying;
+                    if (isPlaying) {
+                        ibTwins.setImageResource(R.mipmap.bt_minibar_pause_normal);
+                    } else {
+                        ibTwins.setImageResource(R.mipmap.bt_minibar_play_normal);
+                    }
+                    intent1.putExtra("isPlaying", isPlaying);
+                    sendBroadcast(intent1);
+                }
+            });
+        }
+    }
 }

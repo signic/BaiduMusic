@@ -68,30 +68,35 @@
             android:layout_height="0dp"
             android:layout_weight="1.5">
             <ImageButton
+                android:id="@+id/ib_playage_order"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@mipmap/bt_playpage_order_normal_new"
                 android:background="@null"/>
             <ImageButton
+                android:id="@+id/ib_playage_previous"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@mipmap/bt_playpage_button_previous_normal_new"
                 android:background="@null"/>
             <ImageButton
+                android:id="@+id/ib_playpage_play"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.5"
                 android:src="@mipmap/bt_playpage_button_play_normal_new"
                 android:background="@null"/>
             <ImageButton
+                android:id="@+id/ib_playpage_next"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@mipmap/bt_playpage_button_next_normal_new"
                 android:background="@null"/>
             <ImageButton
+                android:id="@+id/ib_playpage_list"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

@@ -8,24 +8,51 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageButton
+            android:id="@+id/ib_playpage_small"
             android:layout_width="80dp"
-            android:layout_height="80dp"/>
+            android:layout_height="80dp"
+            android:background="@null"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center_vertical">
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="歌手: New Empire"
-                android:textSize="20sp"/>
-            <TextView
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="歌手: "
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/tv_playpage_info_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Empire"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="专辑: In A Breath"
-                android:textSize="20sp"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="专辑: "
+                    android:textSize="20sp"/>
+                <TextView
+                    android:id="@+id/tv_playpage_info_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="In A Breath"
+                    android:textSize="20sp"/>
+            </LinearLayout>
+
+
         </LinearLayout>
     </LinearLayout>
 

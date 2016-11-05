@@ -21,6 +21,7 @@
         <activity android:name=".play.PlayActivity">
 
         </activity>
+        <service android:name=".tool.widget.PlayerService"/>
     </application>
 
 </manifest>
