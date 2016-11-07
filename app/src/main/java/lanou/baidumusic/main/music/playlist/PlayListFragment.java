@@ -94,10 +94,15 @@ public class PlayListFragment extends BaseFragment implements OnPlayListClickLis
     }
 
     @Override
-    public void onPlayListClick(String listId) {
+    public void onPlayListClick(String listId, int songNum, int listenNum, String username, String
+            title) {
         PlayListItemFragment fragmentItem = new PlayListItemFragment();
         Bundle bundle = new Bundle();
         bundle.putString("listId", listId);
+        bundle.putInt("songNum", songNum);
+        bundle.putInt("listenNum", listenNum);
+        bundle.putString("username", username);
+        bundle.putString("title", title);
         fragmentItem.setArguments(bundle);
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();

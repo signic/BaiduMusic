@@ -4,5 +4,5 @@ package lanou.baidumusic.main.music.playlist;
  * Created by dllo on 16/11/2.
  */
 public interface OnPlayListClickListener {
-    void onPlayListClick(String listId);
+    void onPlayListClick(String listId, int songNum, int listenNum, String username, String title);
 }

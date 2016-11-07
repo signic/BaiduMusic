@@ -1,9 +1,11 @@
 package lanou.baidumusic.tool.volley;
 
+import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
@@ -50,6 +52,35 @@ public class VolleySingleton {
 
     public <T> void addRequest(Request<T> request) {
         mRequestQueue.add(request);
+    }
+
+    public void getImage(String url,GetBitmap getBitmap) {
+        mImageLoader.get(url,new BitmapLoader(getBitmap));
+    }
+
+    public class BitmapLoader implements ImageLoader.ImageListener {
+        private GetBitmap getBitmap;
+
+        public BitmapLoader(GetBitmap getBitmap) {
+            this.getBitmap = getBitmap;
+        }
+
+        @Override
+        public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+            Bitmap bitmap = response.getBitmap();
+            if(bitmap != null) {
+                getBitmap.onGetBitmap(bitmap);
+            }
+        }
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            getBitmap.onGetBitmap(null);
+        }
+    }
+
+    public interface GetBitmap {
+        void onGetBitmap(Bitmap bitmap);
     }
 
 }

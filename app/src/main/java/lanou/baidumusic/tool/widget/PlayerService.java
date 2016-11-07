@@ -9,7 +9,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.io.IOException;
 
@@ -53,10 +52,12 @@ public class PlayerService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             String fileLink = intent.getStringExtra("fileLink");
-            Log.d("PlayerBroadCastReceiver", fileLink);
             try {
                 boolean state = intent.getBooleanExtra("isPlaying", false);
+
+
                 if (player == null) {
+                    player.reset();
                     player.setDataSource(PlayerService.this, Uri.parse(fileLink));
                     player.prepare();
                     player.start();

@@ -85,7 +85,6 @@ public class PlayListItemAdapter extends RecyclerView.Adapter<PlayListItemAdapte
     }
 
     public class ListItemViewHolder extends RecyclerView.ViewHolder {
-
         private TextView tvTitle;
         private TextView tvAuthor;
         private ImageView ivMv;
@@ -93,7 +92,6 @@ public class PlayListItemAdapter extends RecyclerView.Adapter<PlayListItemAdapte
         private ImageView ivK;
         private ImageView ibMore;
         private LinearLayout llList;
-
         public ListItemViewHolder(View itemView) {
             super(itemView);
             llList = (LinearLayout) itemView.findViewById(R.id.ll_playlist_list);

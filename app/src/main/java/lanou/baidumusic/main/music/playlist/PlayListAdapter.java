@@ -56,7 +56,11 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayLi
             @Override
             public void onClick(View v) {
                 String listId = bean.getDiyInfo().get(position).getList_id();
-                playListClickListener.onPlayListClick(listId);
+                int songNum = bean.getDiyInfo().get(position).getSong_num();
+                int listenNum = bean.getDiyInfo().get(position).getListen_num();
+                String username = bean.getDiyInfo().get(position).getUsername();
+                String title = bean.getDiyInfo().get(position).getTitle();
+                playListClickListener.onPlayListClick(listId, songNum, listenNum, username, title);
             }
         });
     }

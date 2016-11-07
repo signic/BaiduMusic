@@ -51,6 +51,15 @@ public class MainActivity extends BaseActivity {
     private TextView tvTitle;
     private TextView tvAuthor;
     private MainBroadCastReceiver cast;
+    private String pic;
+    private String title;
+    private String author;
+    private String albumTitle;
+    private ArrayList<ListBean> listBeanArrayList;
+    private ListBean listBean;
+    private ListAdapter listAdapter;
+    private ListView lvList;
+    private View view;
 
     @Override
     protected int getLayout() {
@@ -72,6 +81,11 @@ public class MainActivity extends BaseActivity {
 
         fragments = new ArrayList<>();
         MyAdapter adapter = new MyAdapter(getSupportFragmentManager());
+        listBeanArrayList = new ArrayList<>();
+
+        view = LayoutInflater.from(MainActivity.this).inflate(R.layout.pop, null);
+        lvList = (ListView) view.findViewById(R.id.lv_main_list);
+        listAdapter = new ListAdapter(MainActivity.this);
 
         fragments.add(new MineFragment());
         fragments.add(new MusicFragment());
@@ -95,9 +109,9 @@ public class MainActivity extends BaseActivity {
         filter.addAction("sendInfo");
         registerReceiver(cast, filter);
 
-        IntentFilter filter1 = new IntentFilter();
-        filter.addAction("sendState1");
-        registerReceiver(cast, filter);
+//        IntentFilter filter1 = new IntentFilter();
+//        filter.addAction("sendState1");
+//        registerReceiver(cast, filter);
 
         vpMain.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -119,6 +133,7 @@ public class MainActivity extends BaseActivity {
         ibGengduo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                popupWindow.dismiss();
                 manager = getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.replace(R.id.replace_view, new MoreFragment());
@@ -130,6 +145,7 @@ public class MainActivity extends BaseActivity {
         ibSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                popupWindow.dismiss();
                 manager = getSupportFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 transaction.replace(R.id.replace_view, new SearchFragment());
@@ -138,11 +154,27 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        ibTwins.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent("sendState");
+                isPlaying = !isPlaying;
+                if (isPlaying) {
+                    ibTwins.setImageResource(R.mipmap.bt_minibar_pause_normal);
+
+                } else {
+                    ibTwins.setImageResource(R.mipmap.bt_minibar_play_normal);
+                }
+                intent1.putExtra("isPlaying", isPlaying);
+                sendBroadcast(intent1);
+            }
+        });
+
         llPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, PlayActivity.class);
-                startActivity(intent);
+                Intent intent1 = new Intent(MainActivity.this, PlayActivity.class);
+                startActivity(intent1);
             }
         });
 
@@ -153,19 +185,6 @@ public class MainActivity extends BaseActivity {
                     popupWindow = new PopupWindow(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
                             .LayoutParams.WRAP_CONTENT);
 
-                    View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.pop,
-                            null);
-                    ListAdapter listAdapter = new ListAdapter(MainActivity.this);
-                    ListView lvList = (ListView) view.findViewById(R.id.lv_main_list);
-                    ArrayList<ListBean> listBeanArrayList = new ArrayList<>();
-                    for (int i = 0; i < 50; i++) {
-                        ListBean listBean = new ListBean();
-                        listBean.setTitle("title" + i);
-                        listBean.setAuthor("author" + i);
-                        listBeanArrayList.add(listBean);
-                    }
-                    listAdapter.setBeanArrayList(listBeanArrayList);
-                    lvList.setAdapter(listAdapter);
                     popupWindow.setContentView(view);
                     popupWindow.showAsDropDown(ibList, 0, -1550);
 
@@ -205,16 +224,32 @@ public class MainActivity extends BaseActivity {
     }
 
     class MainBroadCastReceiver extends BroadcastReceiver {
+
         @Override
         public void onReceive(Context context, final Intent intent) {
-            String pic = intent.getStringExtra("pic");
-            String title = intent.getStringExtra("title");
-            String author = intent.getStringExtra("author");
+            pic = intent.getStringExtra("pic");
+            title = intent.getStringExtra("title");
+            author = intent.getStringExtra("author");
+            albumTitle = intent.getStringExtra("albumTitle");
             isPlaying = intent.getBooleanExtra("state", false);
 
             VolleySingleton.getInstance().getImage(pic, ivMainPlay);
             tvTitle.setText(title);
             tvAuthor.setText(author);
+
+            // 将选中的歌加入播放列表,实现不重复添加
+            for (int i = 0; i < listBeanArrayList.size(); i++) {
+                if (listBeanArrayList.get(i).getAuthor().equals(author) &&
+                        listBeanArrayList.get(i).getTitle().equals(title)) {
+                    listBeanArrayList.remove(i);
+                }
+            }
+            listBean = new ListBean();
+            listBean.setTitle(title);
+            listBean.setAuthor(author);
+            listBeanArrayList.add(0, listBean);
+            listAdapter.setBeanArrayList(listBeanArrayList);
+            lvList.setAdapter(listAdapter);
 
             if (isPlaying) {
                 ibTwins.setImageResource(R.mipmap.bt_minibar_pause_normal);
@@ -222,20 +257,18 @@ public class MainActivity extends BaseActivity {
                 ibTwins.setImageResource(R.mipmap.bt_minibar_play_normal);
             }
 
-            ibTwins.setOnClickListener(new View.OnClickListener() {
+            llPlay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent1 = new Intent("sendState");
-                    isPlaying = !isPlaying;
-                    if (isPlaying) {
-                        ibTwins.setImageResource(R.mipmap.bt_minibar_pause_normal);
-                    } else {
-                        ibTwins.setImageResource(R.mipmap.bt_minibar_play_normal);
-                    }
-                    intent1.putExtra("isPlaying", isPlaying);
-                    sendBroadcast(intent1);
+                    Intent intent1 = new Intent(MainActivity.this, PlayActivity.class);
+                    intent1.putExtra("pic", pic);
+                    intent1.putExtra("title", title);
+                    intent1.putExtra("author", author);
+                    intent1.putExtra("albumTitle", albumTitle);
+                    startActivity(intent1);
                 }
             });
+
         }
     }
 }
