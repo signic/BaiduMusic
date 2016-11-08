@@ -10,8 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import lanou.baidumusic.R;
+import lanou.baidumusic.tool.bean.ListBean;
 import lanou.baidumusic.tool.bean.PlayListItemBean;
+import lanou.baidumusic.tool.database.DBTools;
 
 /**
  * Created by dllo on 16/11/3.
@@ -21,6 +25,8 @@ public class PlayListItemAdapter extends RecyclerView.Adapter<PlayListItemAdapte
     private PlayListItemBean bean;
     private PopupWindow popupWindow;
     private OnPlaylistItemClickListener onPlaylistItemClickListener;
+    private DBTools dbTools;
+
 
     public void setOnPlaylistItemClickListener(OnPlaylistItemClickListener onPlaylistItemClickListener) {
         this.onPlaylistItemClickListener = onPlaylistItemClickListener;
@@ -28,6 +34,7 @@ public class PlayListItemAdapter extends RecyclerView.Adapter<PlayListItemAdapte
 
     public PlayListItemAdapter(Context mContext) {
         this.mContext = mContext;
+        dbTools = new DBTools(mContext);
     }
 
     public void setBean(PlayListItemBean bean) {
@@ -62,8 +69,6 @@ public class PlayListItemAdapter extends RecyclerView.Adapter<PlayListItemAdapte
 
                     View view = LayoutInflater.from(mContext).inflate(R.layout.pop_item, null);
                     popupWindow.setContentView(view);
-
-
                 } else {
                     popupWindow.dismiss();
                 }
@@ -73,8 +78,20 @@ public class PlayListItemAdapter extends RecyclerView.Adapter<PlayListItemAdapte
         holder.llList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dbTools.deleteAllSong();
                 String songId = bean.getContent().get(position).getSong_id();
-                onPlaylistItemClickListener.onItemClickListener(songId);
+                ArrayList<ListBean> listBeanArrayList = new ArrayList<>();
+                for (int i = 0; i < bean.getContent().size(); i++) {
+                    String author = bean.getContent().get(i).getAuthor();
+                    String title = bean.getContent().get(i).getTitle();
+                    ListBean listBean = new ListBean();
+                    listBean.setAuthor(author);
+                    listBean.setTitle(title);
+                    listBeanArrayList.add(listBean);
+                    dbTools.insertSongTable(listBean);
+                }
+
+                onPlaylistItemClickListener.onItemClickListener(songId, position);
             }
         });
     }

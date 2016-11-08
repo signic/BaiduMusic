@@ -1,4 +1,4 @@
-package lanou.baidumusic.main;
+package lanou.baidumusic.tool.bean;
 
 /**
  * Created by dllo on 16/11/4.
@@ -6,6 +6,7 @@ package lanou.baidumusic.main;
 public class ListBean {
     String title;
     String author;
+    String fileLink;
 
     public String getTitle() {
         return title;
@@ -21,5 +22,13 @@ public class ListBean {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getFileLink() {
+        return fileLink;
+    }
+
+    public void setFileLink(String fileLink) {
+        this.fileLink = fileLink;
     }
 }

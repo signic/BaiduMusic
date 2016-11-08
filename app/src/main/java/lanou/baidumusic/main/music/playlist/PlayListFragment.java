@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+import com.litesuits.orm.LiteOrm;
 
 import lanou.baidumusic.R;
 import lanou.baidumusic.tool.base.BaseFragment;
@@ -29,6 +30,7 @@ public class PlayListFragment extends BaseFragment implements OnPlayListClickLis
     private TextView tvHostest;
     private RecyclerView rvPlay;
     private PlayListAdapter adapter;
+    private LiteOrm liteOrm;
 
     @Override
     protected int getLayout() {
@@ -94,8 +96,7 @@ public class PlayListFragment extends BaseFragment implements OnPlayListClickLis
     }
 
     @Override
-    public void onPlayListClick(String listId, int songNum, int listenNum, String username, String
-            title) {
+    public void onPlayListClick(String listId, int songNum, int listenNum, String username, String title) {
         PlayListItemFragment fragmentItem = new PlayListItemFragment();
         Bundle bundle = new Bundle();
         bundle.putString("listId", listId);
@@ -104,6 +105,7 @@ public class PlayListFragment extends BaseFragment implements OnPlayListClickLis
         bundle.putString("username", username);
         bundle.putString("title", title);
         fragmentItem.setArguments(bundle);
+
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.replace_view, fragmentItem);

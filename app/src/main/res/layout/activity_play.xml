@@ -59,10 +59,11 @@
                 android:background="@null"/>
         </LinearLayout>
 
-        <ProgressBar
+        <SeekBar
+            android:id="@+id/seekBar"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"/>
+            android:layout_height="12dp"
+            android:thumb="@mipmap/bt_playpage_button_progress_normal"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"

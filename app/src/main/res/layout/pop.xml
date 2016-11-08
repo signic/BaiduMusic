@@ -24,11 +24,13 @@
             android:textSize="12sp"
             android:gravity="center"/>
         <TextView
+            android:id="@+id/tv_pop_delete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
             android:text="全部清空"
-            android:textSize="10sp"/>
+            android:textSize="10sp"
+            android:clickable="true"/>
     </LinearLayout>
     <ListView
         android:id="@+id/lv_main_list"

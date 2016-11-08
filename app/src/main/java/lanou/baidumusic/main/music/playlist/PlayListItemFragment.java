@@ -22,7 +22,6 @@ import lanou.baidumusic.tool.volley.GsonRequest;
 import lanou.baidumusic.tool.volley.Values;
 import lanou.baidumusic.tool.volley.VolleySingleton;
 import lanou.baidumusic.tool.widget.DividerItemDecoration;
-import lanou.baidumusic.tool.widget.FastBlur;
 
 /**
  * Created by dllo on 16/11/2.
@@ -92,13 +91,15 @@ public class PlayListItemFragment extends BaseFragment implements OnPlaylistItem
                         tvSongNum.setText("/" + String.valueOf(songNum) + "首歌");
                         tvUsername.setText(username);
 
-                        VolleySingleton.getInstance().getImage(response.getPic_300(), new VolleySingleton.GetBitmap() {
+                        VolleySingleton.getInstance().getImage(response.getPic_300(), new
+                                 VolleySingleton.GetBitmap() {
                             @Override
                             public void onGetBitmap(Bitmap bitmap) {
-                                bitmap = FastBlur.doBlur(bitmap, 1, true);
+//                                bitmap = FastBlur.doBlur(bitmap, 10, true);
                                 ivBackground.setImageBitmap(bitmap);
                             }
                         });
+
 
                         itemAdapter.setOnPlaylistItemClickListener(PlayListItemFragment.this);
                         itemAdapter.setBean(response);
@@ -123,7 +124,7 @@ public class PlayListItemFragment extends BaseFragment implements OnPlaylistItem
     }
 
     @Override
-    public void onItemClickListener(String songId) {
+    public void onItemClickListener(String songId, final int position) {
 
         GsonRequest<PlayListSongInfoBean> gsonRequest = new GsonRequest<>(PlayListSongInfoBean
                 .class, Values.SONG_INFO + songId, new Response.Listener<PlayListSongInfoBean>() {
@@ -137,6 +138,8 @@ public class PlayListItemFragment extends BaseFragment implements OnPlaylistItem
                         intent.putExtra("author", response.getSonginfo().getAuthor());
                         intent.putExtra("albumTitle", response.getSonginfo().getAlbum_title());
                         intent.putExtra("lyrLink", response.getSonginfo().getLrclink());
+                        intent.putExtra("position", position);
+                        intent.putExtra("isPlaying", true);
                         getActivity().sendBroadcast(intent);
                     }
                 }, new Response.ErrorListener() {
