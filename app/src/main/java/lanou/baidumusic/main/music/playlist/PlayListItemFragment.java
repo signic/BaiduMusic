@@ -18,6 +18,7 @@ import lanou.baidumusic.R;
 import lanou.baidumusic.tool.base.BaseFragment;
 import lanou.baidumusic.tool.bean.PlayListItemBean;
 import lanou.baidumusic.tool.bean.PlayListSongInfoBean;
+import lanou.baidumusic.tool.database.DBTools;
 import lanou.baidumusic.tool.volley.GsonRequest;
 import lanou.baidumusic.tool.volley.Values;
 import lanou.baidumusic.tool.volley.VolleySingleton;
@@ -43,6 +44,7 @@ public class PlayListItemFragment extends BaseFragment implements OnPlaylistItem
     private String username;
     private String title;
     private int listenNum;
+    private DBTools dbTools;
 
     @Override
     protected int getLayout() {
@@ -62,6 +64,7 @@ public class PlayListItemFragment extends BaseFragment implements OnPlaylistItem
         ivBackground = bindView(R.id.iv_playlist_list_background);
         toolbar = bindView(R.id.toolbar);
 
+        dbTools = new DBTools(getActivity());
         itemAdapter = new PlayListItemAdapter(getActivity());
 
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
@@ -124,25 +127,27 @@ public class PlayListItemFragment extends BaseFragment implements OnPlaylistItem
     }
 
     @Override
-    public void onItemClickListener(String songId, final int position) {
+    public void onItemClickListener(String sId, int position) {
+        GsonLink(sId, position);
+    }
 
+    private void GsonLink(final String songId, final int position) {
         GsonRequest<PlayListSongInfoBean> gsonRequest = new GsonRequest<>(PlayListSongInfoBean
                 .class, Values.SONG_INFO + songId, new Response.Listener<PlayListSongInfoBean>() {
-                    @Override
-                    public void onResponse(PlayListSongInfoBean response) {
-                        // 请求成功的方法
-                        Intent intent = new Intent("sendInfo");
-                        intent.putExtra("fileLink", response.getBitrate().getFile_link());
-                        intent.putExtra("pic", response.getSonginfo().getPic_premium());
-                        intent.putExtra("title", response.getSonginfo().getTitle());
-                        intent.putExtra("author", response.getSonginfo().getAuthor());
-                        intent.putExtra("albumTitle", response.getSonginfo().getAlbum_title());
-                        intent.putExtra("lyrLink", response.getSonginfo().getLrclink());
-                        intent.putExtra("position", position);
-                        intent.putExtra("isPlaying", true);
-                        getActivity().sendBroadcast(intent);
-                    }
-                }, new Response.ErrorListener() {
+            @Override
+            public void onResponse(PlayListSongInfoBean response) {
+                // 请求成功的方法
+                Intent intent = new Intent("sendInfo");
+                intent.putExtra("pic", response.getSonginfo().getPic_premium());
+                intent.putExtra("title", response.getSonginfo().getTitle());
+                intent.putExtra("author", response.getSonginfo().getAuthor());
+                intent.putExtra("albumTitle", response.getSonginfo().getAlbum_title());
+                intent.putExtra("lyrLink", response.getSonginfo().getLrclink());
+                intent.putExtra("position", position);
+                intent.putExtra("isPlaying", true);
+                getActivity().sendBroadcast(intent);
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 

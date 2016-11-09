@@ -21,7 +21,8 @@ public class MyHelper extends SQLiteOpenHelper {
         db.execSQL("create table " + DBValues.TABLE_SONG
                 + "(id integer primary key autoincrement, "
                 + DBValues.SONG_TABLE_TITLE + " text,"
-                + DBValues.SONG_TABLE_AUTHOR + " text)");
+                + DBValues.SONG_TABLE_AUTHOR + " text,"
+                + DBValues.SONG_TABLE_SONGID + " text)");
     }
 
     // 这个方法是用来更新数据库的,做数据库版本升级用的

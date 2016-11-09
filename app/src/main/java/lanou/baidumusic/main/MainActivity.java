@@ -71,13 +71,12 @@ public class MainActivity extends BaseActivity {
     private String author;
     private String albumTitle;
     private ArrayList<ListBean> listBeanArrayList;
-    private ListBean listBean;
     private ListAdapter listAdapter;
     private ListView lvList;
     private View view;
     private TextView tvPopDelete;
     private ImageButton ibNext;
-    private int position;
+    private int position = 0;
 
     @Override
     protected int getLayout() {
@@ -91,12 +90,12 @@ public class MainActivity extends BaseActivity {
         ibGengduo = bindView(R.id.ib_gengduo);
         ibSearch = bindView(R.id.ib_search);
         llPlay = bindView(R.id.ll_main_play);
-        ibTwins = bindView(R.id.ib_main_twins);
-        ibList = (ImageButton) findViewById(R.id.ib_main_list);
         ivMainPlay = bindView(R.id.iv_main_play);
-        ibNext = bindView(R.id.ib_main_next);
         tvTitle = bindView(R.id.tv_main_title);
         tvAuthor = bindView(R.id.tv_main_author);
+        ibTwins = bindView(R.id.ib_main_twins);
+        ibNext = bindView(R.id.ib_main_next);
+        ibList = (ImageButton) findViewById(R.id.ib_main_list);
 
         dbTools = new DBTools(this);
         fragments = new ArrayList<>();
@@ -184,6 +183,14 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        ibNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ibTwins.setImageResource(R.mipmap.bt_minibar_pause_normal);
+                EventBus.getDefault().post(new StateEvent(2));
+            }
+        });
+
         llPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,7 +217,7 @@ public class MainActivity extends BaseActivity {
         lvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                EventBus.getDefault().post(new StateEvent(0));
+                EventBus.getDefault().post(new StateEvent(3));
             }
         });
 
@@ -290,17 +297,6 @@ public class MainActivity extends BaseActivity {
                     startActivity(intent1);
                 }
             });
-
-            // 点击播放下一首
-            ibNext.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent1 = new Intent("sendPosition");
-                    intent1.putExtra("position", position);
-                    sendBroadcast(intent1);
-                }
-            });
-
         }
     }
 }

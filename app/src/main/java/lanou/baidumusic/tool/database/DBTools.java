@@ -36,6 +36,7 @@ public class DBTools {
         ContentValues values = new ContentValues();
         values.put(DBValues.SONG_TABLE_TITLE, bean.getTitle());
         values.put(DBValues.SONG_TABLE_AUTHOR, bean.getAuthor());
+        values.put(DBValues.SONG_TABLE_SONGID, bean.getSongId());
         database.insert(DBValues.TABLE_SONG, null, values);
     }
 
@@ -47,10 +48,12 @@ public class DBTools {
             while (cursor.moveToNext()) {
                 String title = cursor.getString(cursor.getColumnIndex(DBValues.SONG_TABLE_TITLE));
                 String author = cursor.getString(cursor.getColumnIndex(DBValues.SONG_TABLE_AUTHOR));
+                String songId = cursor.getString(cursor.getColumnIndex(DBValues.SONG_TABLE_SONGID));
 
                 ListBean bean = new ListBean();
                 bean.setTitle(title);
                 bean.setAuthor(author);
+                bean.setSongId(songId);
                 listBeanArrayList.add(bean);
             }
             cursor.close();

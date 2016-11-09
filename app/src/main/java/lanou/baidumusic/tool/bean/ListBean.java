@@ -6,7 +6,7 @@ package lanou.baidumusic.tool.bean;
 public class ListBean {
     String title;
     String author;
-    String fileLink;
+    String songId;
 
     public String getTitle() {
         return title;
@@ -24,11 +24,13 @@ public class ListBean {
         this.author = author;
     }
 
-    public String getFileLink() {
-        return fileLink;
+    public String getSongId() {
+        return songId;
     }
 
-    public void setFileLink(String fileLink) {
-        this.fileLink = fileLink;
+    public void setSongId(String songId) {
+        this.songId = songId;
     }
+
+
 }
