@@ -37,7 +37,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@mipmap/bt_playpage_button_download_activited_new"
+                android:src="@mipmap/bt_playpage_button_download_normal_new"
                 android:background="@null"/>
             <ImageButton
                 android:layout_width="0dp"
@@ -83,7 +83,7 @@
                 android:src="@mipmap/bt_playpage_button_previous_normal_new"
                 android:background="@null"/>
             <ImageButton
-                android:id="@+id/ib_playpage_play"
+                android:id="@+id/ib_playpage_twins"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.5"

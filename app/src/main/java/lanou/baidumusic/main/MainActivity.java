@@ -21,6 +21,9 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
@@ -38,7 +41,10 @@ import lanou.baidumusic.play.PlayActivity;
 import lanou.baidumusic.search.SearchFragment;
 import lanou.baidumusic.tool.base.BaseActivity;
 import lanou.baidumusic.tool.bean.ListBean;
+import lanou.baidumusic.tool.bean.PlayListSongInfoBean;
 import lanou.baidumusic.tool.database.DBTools;
+import lanou.baidumusic.tool.volley.GsonRequest;
+import lanou.baidumusic.tool.volley.Values;
 import lanou.baidumusic.tool.volley.VolleySingleton;
 import lanou.baidumusic.tool.widget.PlayerService;
 
@@ -76,7 +82,8 @@ public class MainActivity extends BaseActivity {
     private View view;
     private TextView tvPopDelete;
     private ImageButton ibNext;
-    private int position = 0;
+    private int pos = 0;
+    private int state = 0;
 
     @Override
     protected int getLayout() {
@@ -128,6 +135,8 @@ public class MainActivity extends BaseActivity {
         filter.addAction("sendInfo");
         registerReceiver(cast, filter);
 
+        listBeanArrayList = dbTools.QueryAllSong();
+
         vpMain.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -145,6 +154,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        // 点击进入更多界面
         ibGengduo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,6 +167,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        // 点击进入搜索界面
         ibSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,36 +180,48 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        // 播放/暂停按钮
         ibTwins.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isPlaying = !isPlaying;
                 if (isPlaying) {
+                    state = 0;//表示播放
                     ibTwins.setImageResource(R.mipmap.bt_minibar_pause_normal);
-                    EventBus.getDefault().post(new StateEvent(0));
+                    EventBus.getDefault().post(new StateEvent(state));
                 } else {
+                    state = 1;//表示暂停
                     ibTwins.setImageResource(R.mipmap.bt_minibar_play_normal);
-                    EventBus.getDefault().post(new StateEvent(1));
+                    EventBus.getDefault().post(new StateEvent(state));
                 }
             }
         });
 
+        // 下一首按钮
         ibNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pos = pos + 1;
+                state = 2;//表示下一首
                 ibTwins.setImageResource(R.mipmap.bt_minibar_pause_normal);
-                EventBus.getDefault().post(new StateEvent(2));
+                EventBus.getDefault().post(new StateEvent(state));
+                // 播放的图片,名字...相应改变
+                GsonData(pos);
             }
         });
 
+        // 点击跳转到播放详情界面
         llPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(MainActivity.this, PlayActivity.class);
+                intent1.putExtra("position", pos);
+                intent1.putExtra("state", state);
                 startActivity(intent1);
             }
         });
 
+        // 菜单按钮,点击弹出菜单
         ibList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -214,10 +237,16 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        // 点击弹出菜单的菜单项,作出相应的动作
         lvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                EventBus.getDefault().post(new StateEvent(3));
+                state = 3;
+                pos = position;
+                EventBus.getDefault().post(new StateEvent(state));
+                ibTwins.setImageResource(R.mipmap.bt_minibar_pause_normal);
+                // 播放的图片,名字...相应改变
+                GsonData(pos);
             }
         });
 
@@ -244,6 +273,35 @@ public class MainActivity extends BaseActivity {
         unregisterReceiver(cast);
     }
 
+    // 解析图片,歌名,歌手
+    private void GsonData(final int position) {
+        GsonRequest<PlayListSongInfoBean> gsonRequest = new GsonRequest<>(PlayListSongInfoBean
+                .class, Values.SONG_INFO + listBeanArrayList.get(position).getSongId(), new Response
+                .Listener<PlayListSongInfoBean>() {
+            @Override
+            public void onResponse(PlayListSongInfoBean response) {
+                // 请求成功的方法
+                String pics = response.getSonginfo().getPic_small();
+                VolleySingleton.getInstance().getImage(pics, ivMainPlay);
+                tvTitle.setText(listBeanArrayList.get(position).getTitle());
+                tvAuthor.setText(listBeanArrayList.get(position).getAuthor());
+
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("pos", position);
+//                MainFragment mainFragment = new MainFragment();
+//                mainFragment.setArguments(bundle);
+//                InfoFragment infoFragment = new InfoFragment();
+//                infoFragment.setArguments(bundle);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        VolleySingleton.getInstance().addRequest(gsonRequest);
+    }
+
     class MainBroadCastReceiver extends BroadcastReceiver {
 
         @Override
@@ -252,7 +310,7 @@ public class MainActivity extends BaseActivity {
             title = intent.getStringExtra("title");
             author = intent.getStringExtra("author");
             albumTitle = intent.getStringExtra("albumTitle");
-            position = intent.getIntExtra("position", -1);
+            pos = intent.getIntExtra("position", -1);
             isPlaying = intent.getBooleanExtra("isPlaying", false);
 
             // 将选中歌曲所在的列表加入播放列表
@@ -284,19 +342,6 @@ public class MainActivity extends BaseActivity {
             } else {
                 ibTwins.setImageResource(R.mipmap.bt_minibar_play_normal);
             }
-
-            // 点击跳转到播放详情页面,同时传值
-            llPlay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent1 = new Intent(MainActivity.this, PlayActivity.class);
-                    intent1.putExtra("pic", pic);
-                    intent1.putExtra("title", title);
-                    intent1.putExtra("author", author);
-                    intent1.putExtra("albumTitle", albumTitle);
-                    startActivity(intent1);
-                }
-            });
         }
     }
 }
