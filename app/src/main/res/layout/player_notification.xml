@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="110dp">
+              android:layout_height="wrap_content"
+    android:paddingTop="5dp">
 
     <ImageView
         android:id="@+id/iv_notification"
@@ -14,40 +15,27 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2.5"
-        android:orientation="vertical">
+        android:layout_weight="4"
+        android:orientation="horizontal">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="230dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tv_notification_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="A Little Braver"/>
-                <TextView
-                    android:id="@+id/tv_notification_author"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="New Empire"/>
-            </LinearLayout>
-
-            <ImageButton
-                android:id="@+id/ib_notification_close"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_notification_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/bt_notificationbar_close"
-                android:background="@null"/>
+                android:text="A Little Braver"/>
+            <TextView
+                android:id="@+id/tv_notification_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Empire"/>
         </LinearLayout>
+
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:gravity="center">
             <ImageButton
@@ -71,5 +59,14 @@
                 android:src="@mipmap/bt_notificationbar_next"
                 android:background="@null"/>
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/ib_notification_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_marginLeft="5dp"
+            android:src="@mipmap/bt_notificationbar_close"
+            android:background="@null"/>
     </LinearLayout>
 </LinearLayout>

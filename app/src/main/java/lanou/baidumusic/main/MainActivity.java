@@ -1,15 +1,13 @@
 package lanou.baidumusic.main;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
@@ -34,8 +33,6 @@ import lanou.baidumusic.main.live.LiveFragment;
 import lanou.baidumusic.main.mine.MineFragment;
 import lanou.baidumusic.main.music.MusicFragment;
 import lanou.baidumusic.main.music.poplist.ListAdapter;
-import lanou.baidumusic.main.music.state.StateChangeListener;
-import lanou.baidumusic.main.music.state.StateEvent;
 import lanou.baidumusic.more.MoreFragment;
 import lanou.baidumusic.play.PlayActivity;
 import lanou.baidumusic.search.SearchFragment;
@@ -43,6 +40,8 @@ import lanou.baidumusic.tool.base.BaseActivity;
 import lanou.baidumusic.tool.bean.ListBean;
 import lanou.baidumusic.tool.bean.PlayListSongInfoBean;
 import lanou.baidumusic.tool.database.DBTools;
+import lanou.baidumusic.tool.state.AtyToSerEvent;
+import lanou.baidumusic.tool.state.SerToAtyEvent;
 import lanou.baidumusic.tool.volley.GsonRequest;
 import lanou.baidumusic.tool.volley.Values;
 import lanou.baidumusic.tool.volley.VolleySingleton;
@@ -50,13 +49,7 @@ import lanou.baidumusic.tool.widget.PlayerService;
 
 public class MainActivity extends BaseActivity {
 
-    private StateChangeListener stateChangeListener;
     private DBTools dbTools;
-
-    public void setStateChangeListener(StateChangeListener stateChangeListener) {
-        this.stateChangeListener = stateChangeListener;
-    }
-
     private boolean isPlaying = false;
     private ImageButton ibTwins;
     private TabLayout tbMain;
@@ -71,19 +64,19 @@ public class MainActivity extends BaseActivity {
     private ImageView ivMainPlay;
     private TextView tvTitle;
     private TextView tvAuthor;
-    private MainBroadCastReceiver cast;
-    private String pic;
-    private String title;
-    private String author;
-    private String albumTitle;
     private ArrayList<ListBean> listBeanArrayList;
     private ListAdapter listAdapter;
     private ListView lvList;
     private View view;
     private TextView tvPopDelete;
     private ImageButton ibNext;
-    private int pos = 0;
-    private int state = 0;
+    private int pos;
+    private int state;
+    private String pic;
+    private String title;
+    private String albumTitle;
+    private String author;
+    private String songId;
 
     @Override
     protected int getLayout() {
@@ -127,15 +120,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        Intent intent = new Intent(this, PlayerService.class);
+        final Intent intent = new Intent(this, PlayerService.class);
         startService(intent);
-
-        cast = new MainBroadCastReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("sendInfo");
-        registerReceiver(cast, filter);
-
-        listBeanArrayList = dbTools.QueryAllSong();
+        EventBus.getDefault().register(this);
 
         vpMain.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -184,16 +171,16 @@ public class MainActivity extends BaseActivity {
         ibTwins.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isPlaying = !isPlaying;
                 if (isPlaying) {
                     state = 0;//表示播放
                     ibTwins.setImageResource(R.mipmap.bt_minibar_pause_normal);
-                    EventBus.getDefault().post(new StateEvent(state));
+                    EventBus.getDefault().post(new AtyToSerEvent(state, pos, pic, title, albumTitle, author));
                 } else {
                     state = 1;//表示暂停
                     ibTwins.setImageResource(R.mipmap.bt_minibar_play_normal);
-                    EventBus.getDefault().post(new StateEvent(state));
+                    EventBus.getDefault().post(new AtyToSerEvent(state, pos, pic, title, albumTitle, author));
                 }
+                isPlaying = !isPlaying;
             }
         });
 
@@ -204,9 +191,12 @@ public class MainActivity extends BaseActivity {
                 pos = pos + 1;
                 state = 2;//表示下一首
                 ibTwins.setImageResource(R.mipmap.bt_minibar_pause_normal);
-                EventBus.getDefault().post(new StateEvent(state));
                 // 播放的图片,名字...相应改变
                 GsonData(pos);
+                title = listBeanArrayList.get(pos).getTitle();
+                albumTitle = listBeanArrayList.get(pos).getAlbumTitle();
+                author = listBeanArrayList.get(pos).getAuthor();
+                EventBus.getDefault().post(new AtyToSerEvent(state, pos, pic, title, albumTitle, author));
             }
         });
 
@@ -214,9 +204,17 @@ public class MainActivity extends BaseActivity {
         llPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                title = listBeanArrayList.get(pos).getTitle();
+                albumTitle = listBeanArrayList.get(pos).getAlbumTitle();
+                author = listBeanArrayList.get(pos).getAuthor();
                 Intent intent1 = new Intent(MainActivity.this, PlayActivity.class);
-                intent1.putExtra("position", pos);
                 intent1.putExtra("state", state);
+                Log.d("MainActivity", "state:" + state);
+                intent1.putExtra("pos", pos);
+                intent1.putExtra("pic", pic);
+                intent1.putExtra("title", title);
+                intent1.putExtra("albumTitle", albumTitle);
+                intent1.putExtra("author", author);
                 startActivity(intent1);
             }
         });
@@ -240,16 +238,34 @@ public class MainActivity extends BaseActivity {
         // 点击弹出菜单的菜单项,作出相应的动作
         lvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 state = 3;
-                pos = position;
-                EventBus.getDefault().post(new StateEvent(state));
                 ibTwins.setImageResource(R.mipmap.bt_minibar_pause_normal);
                 // 播放的图片,名字...相应改变
-                GsonData(pos);
+                GsonData(position);
+                title = listBeanArrayList.get(pos).getTitle();
+                albumTitle = listBeanArrayList.get(pos).getAlbumTitle();
+                author = listBeanArrayList.get(pos).getAuthor();
+                songId = listBeanArrayList.get(position).getSongId();
+                GsonRequest<PlayListSongInfoBean> gsonRequest = new GsonRequest<>(PlayListSongInfoBean
+                        .class, Values.SONG_INFO + songId, new Response.Listener<PlayListSongInfoBean>() {
+                    @Override
+                    public void onResponse(PlayListSongInfoBean response) {
+                        // 请求成功的方法
+                        pic = response.getSonginfo().getPic_huge();
+                        EventBus.getDefault().post(new AtyToSerEvent(state, position, pic, title, albumTitle, author));
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+                VolleySingleton.getInstance().addRequest(gsonRequest);
             }
         });
 
+        // 弹出的popup,点击清空列表
         tvPopDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -261,6 +277,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    // 使popupwindow消失
     public void dissMissPop() {
         if (popupWindow != null) {
             popupWindow.dismiss();
@@ -270,14 +287,14 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(cast);
+        EventBus.getDefault().unregister(this);
     }
 
     // 解析图片,歌名,歌手
     private void GsonData(final int position) {
         GsonRequest<PlayListSongInfoBean> gsonRequest = new GsonRequest<>(PlayListSongInfoBean
-                .class, Values.SONG_INFO + listBeanArrayList.get(position).getSongId(), new Response
-                .Listener<PlayListSongInfoBean>() {
+                .class, Values.SONG_INFO + listBeanArrayList.get(position).getSongId(),
+                new Response.Listener<PlayListSongInfoBean>() {
             @Override
             public void onResponse(PlayListSongInfoBean response) {
                 // 请求成功的方法
@@ -285,13 +302,6 @@ public class MainActivity extends BaseActivity {
                 VolleySingleton.getInstance().getImage(pics, ivMainPlay);
                 tvTitle.setText(listBeanArrayList.get(position).getTitle());
                 tvAuthor.setText(listBeanArrayList.get(position).getAuthor());
-
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("pos", position);
-//                MainFragment mainFragment = new MainFragment();
-//                mainFragment.setArguments(bundle);
-//                InfoFragment infoFragment = new InfoFragment();
-//                infoFragment.setArguments(bundle);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -302,26 +312,46 @@ public class MainActivity extends BaseActivity {
         VolleySingleton.getInstance().addRequest(gsonRequest);
     }
 
-    class MainBroadCastReceiver extends BroadcastReceiver {
+    // 接收从PlayerService传来的数据
+    @Subscribe
+    public void getServiceEvent(SerToAtyEvent serToAtyEvent) {
+        pos = serToAtyEvent.getPosition();
+        pic = serToAtyEvent.getPic();
+        title = serToAtyEvent.getTitle();
+        albumTitle = serToAtyEvent.getAlbumTitle();
+        author = serToAtyEvent.getAuthor();
+        VolleySingleton.getInstance().getImage(pic, ivMainPlay);
+        tvTitle.setText(title);
+        tvAuthor.setText(author);
+        // 按钮图片变成播放图片
+        ibTwins.setImageResource(R.mipmap.bt_minibar_pause_normal);
 
-        @Override
-        public void onReceive(Context context, final Intent intent) {
-            pic = intent.getStringExtra("pic");
-            title = intent.getStringExtra("title");
-            author = intent.getStringExtra("author");
-            albumTitle = intent.getStringExtra("albumTitle");
-            pos = intent.getIntExtra("position", -1);
-            isPlaying = intent.getBooleanExtra("isPlaying", false);
+        // 将选中歌曲所在的列表加入播放列表
+        listBeanArrayList = dbTools.QueryAllSong();
+        listAdapter.setBeanArrayList(listBeanArrayList);
+        lvList.setAdapter(listAdapter);
+    }
 
-            // 将选中歌曲所在的列表加入播放列表
-            listBeanArrayList = dbTools.QueryAllSong();
-            listAdapter.setBeanArrayList(listBeanArrayList);
-            lvList.setAdapter(listAdapter);
-
-            VolleySingleton.getInstance().getImage(pic, ivMainPlay);
-            tvTitle.setText(title);
-            tvAuthor.setText(author);
-
+//    class MainBroadCastReceiver extends BroadcastReceiver {
+//
+//        @Override
+//        public void onReceive(Context context, final Intent intent) {
+//            pic = intent.getStringExtra("pic");
+//            title = intent.getStringExtra("title");
+//            author = intent.getStringExtra("author");
+//            albumTitle = intent.getStringExtra("albumTitle");
+//            pos = intent.getIntExtra("position", -1);
+//            isPlaying = intent.getBooleanExtra("isPlaying", false);
+//
+//            // 将选中歌曲所在的列表加入播放列表
+//            listBeanArrayList = dbTools.QueryAllSong();
+//            listAdapter.setBeanArrayList(listBeanArrayList);
+//            lvList.setAdapter(listAdapter);
+//
+//            VolleySingleton.getInstance().getImage(pic, ivMainPlay);
+//            tvTitle.setText(title);
+//            tvAuthor.setText(author);
+//
 //            // 将选中的歌加入播放列表,实现不重复添加
 //            for (int i = 0; i < listBeanArrayList.size(); i++) {
 //                if (listBeanArrayList.get(i).getAuthor().equals(author) &&
@@ -335,13 +365,13 @@ public class MainActivity extends BaseActivity {
 //            listBeanArrayList.add(0, listBean);
 //            listAdapter.setBeanArrayList(listBeanArrayList);
 //            lvList.setAdapter(listAdapter);
-
-            // 判断状态,若正在播放,则将按钮图片变成播放图片,反之为暂停按钮.
-            if (isPlaying) {
-                ibTwins.setImageResource(R.mipmap.bt_minibar_pause_normal);
-            } else {
-                ibTwins.setImageResource(R.mipmap.bt_minibar_play_normal);
-            }
-        }
-    }
+//
+//            // 判断状态,若正在播放,则将按钮图片变成播放图片,反之为暂停按钮.
+//            if (isPlaying) {
+//                ibTwins.setImageResource(R.mipmap.bt_minibar_pause_normal);
+//            } else {
+//                ibTwins.setImageResource(R.mipmap.bt_minibar_play_normal);
+//            }
+//        }
+//    }
 }

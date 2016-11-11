@@ -10,8 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import lanou.baidumusic.R;
 import lanou.baidumusic.tool.bean.ListBean;
 import lanou.baidumusic.tool.bean.PlayListItemBean;
@@ -26,7 +24,6 @@ public class PlayListItemAdapter extends RecyclerView.Adapter<PlayListItemAdapte
     private PopupWindow popupWindow;
     private OnPlaylistItemClickListener onPlaylistItemClickListener;
     private DBTools dbTools;
-    private ArrayList<ListBean> listBeanArrayList;
 
     public void setOnPlaylistItemClickListener(OnPlaylistItemClickListener onPlaylistItemClickListener) {
         this.onPlaylistItemClickListener = onPlaylistItemClickListener;
@@ -35,7 +32,6 @@ public class PlayListItemAdapter extends RecyclerView.Adapter<PlayListItemAdapte
     public PlayListItemAdapter(Context mContext) {
         this.mContext = mContext;
         dbTools = new DBTools(mContext);
-        listBeanArrayList = new ArrayList<>();
     }
 
     public void setBean(PlayListItemBean bean) {
@@ -79,20 +75,20 @@ public class PlayListItemAdapter extends RecyclerView.Adapter<PlayListItemAdapte
         holder.llList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String sId = bean.getContent().get(position).getSong_id();
                 dbTools.deleteAllSong();
                 for (int i = 0; i < bean.getContent().size(); i++) {
-                    String author = bean.getContent().get(i).getAuthor();
                     String title = bean.getContent().get(i).getTitle();
+                    String albumTitle = bean.getContent().get(i).getAlbum_title();
+                    String author = bean.getContent().get(i).getAuthor();
                     String songId = bean.getContent().get(i).getSong_id();
                     ListBean listBean = new ListBean();
-                    listBean.setAuthor(author);
                     listBean.setTitle(title);
+                    listBean.setAlbumTitle(albumTitle);
+                    listBean.setAuthor(author);
                     listBean.setSongId(songId);
-                    listBeanArrayList.add(listBean);
                     dbTools.insertSongTable(listBean);
                 }
-                onPlaylistItemClickListener.onItemClickListener(sId, position);
+                onPlaylistItemClickListener.onItemClickListener(position);
             }
         });
     }

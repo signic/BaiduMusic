@@ -5,6 +5,7 @@ package lanou.baidumusic.tool.bean;
  */
 public class ListBean {
     String title;
+    String albumTitle;
     String author;
     String songId;
 
@@ -14,6 +15,14 @@ public class ListBean {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getAlbumTitle() {
+        return albumTitle;
+    }
+
+    public void setAlbumTitle(String albumTitle) {
+        this.albumTitle = albumTitle;
     }
 
     public String getAuthor() {
@@ -31,6 +40,4 @@ public class ListBean {
     public void setSongId(String songId) {
         this.songId = songId;
     }
-
-
 }

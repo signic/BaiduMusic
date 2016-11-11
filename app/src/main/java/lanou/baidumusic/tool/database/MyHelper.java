@@ -21,6 +21,7 @@ public class MyHelper extends SQLiteOpenHelper {
         db.execSQL("create table " + DBValues.TABLE_SONG
                 + "(id integer primary key autoincrement, "
                 + DBValues.SONG_TABLE_TITLE + " text,"
+                + DBValues.SONG_TABLE_ALBUMTITLE + " text,"
                 + DBValues.SONG_TABLE_AUTHOR + " text,"
                 + DBValues.SONG_TABLE_SONGID + " text)");
     }

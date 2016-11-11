@@ -8,6 +8,7 @@ public class DBValues {
 
     public static String TABLE_SONG = "song";
     public static String SONG_TABLE_TITLE = "title";
+    public static String SONG_TABLE_ALBUMTITLE = "albumTitle";
     public static String SONG_TABLE_AUTHOR = "author";
     public static String SONG_TABLE_SONGID = "songId";
 }

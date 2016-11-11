@@ -1,6 +1,5 @@
 package lanou.baidumusic.main.music.playlist;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,11 +13,12 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import org.greenrobot.eventbus.EventBus;
+
 import lanou.baidumusic.R;
 import lanou.baidumusic.tool.base.BaseFragment;
 import lanou.baidumusic.tool.bean.PlayListItemBean;
-import lanou.baidumusic.tool.bean.PlayListSongInfoBean;
-import lanou.baidumusic.tool.database.DBTools;
+import lanou.baidumusic.tool.state.PositionEvent;
 import lanou.baidumusic.tool.volley.GsonRequest;
 import lanou.baidumusic.tool.volley.Values;
 import lanou.baidumusic.tool.volley.VolleySingleton;
@@ -40,11 +40,11 @@ public class PlayListItemFragment extends BaseFragment implements OnPlaylistItem
     private ImageButton ibReturn;
     private ImageView ivBackground;
     private TextView tvUsername;
+    private String listId;
     private int songNum;
     private String username;
     private String title;
     private int listenNum;
-    private DBTools dbTools;
 
     @Override
     protected int getLayout() {
@@ -64,9 +64,7 @@ public class PlayListItemFragment extends BaseFragment implements OnPlaylistItem
         ivBackground = bindView(R.id.iv_playlist_list_background);
         toolbar = bindView(R.id.toolbar);
 
-        dbTools = new DBTools(getActivity());
         itemAdapter = new PlayListItemAdapter(getActivity());
-
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         rvList.setLayoutManager(manager);
         rvList.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
@@ -75,13 +73,13 @@ public class PlayListItemFragment extends BaseFragment implements OnPlaylistItem
     @Override
     protected void initData() {
         Bundle arguments = getArguments();
-        String listId = arguments.getString("listId");
+        listId = arguments.getString("listId");
         songNum = arguments.getInt("songNum");
         listenNum = arguments.getInt("listenNum");
         username = arguments.getString("username");
         title = arguments.getString("title");
         GsonRequest<PlayListItemBean> gsonRequest = new GsonRequest<>(PlayListItemBean.class,
-                Values.MUSIC_PLAYLIST_LIST_FRONT +  listId + Values.MUSIC_PLAYLIST_LIST_BEHIND,
+                Values.MUSIC_PLAYLIST_LIST_FRONT + listId + Values.MUSIC_PLAYLIST_LIST_BEHIND,
                 new Response.Listener<PlayListItemBean>() {
 
                     @Override
@@ -93,7 +91,6 @@ public class PlayListItemFragment extends BaseFragment implements OnPlaylistItem
                         tvListenNum.setText(String.valueOf(listenNum));
                         tvSongNum.setText("/" + String.valueOf(songNum) + "首歌");
                         tvUsername.setText(username);
-
                         VolleySingleton.getInstance().getImage(response.getPic_300(), new
                                  VolleySingleton.GetBitmap() {
                             @Override
@@ -102,7 +99,6 @@ public class PlayListItemFragment extends BaseFragment implements OnPlaylistItem
                                 ivBackground.setImageBitmap(bitmap);
                             }
                         });
-
 
                         itemAdapter.setOnPlaylistItemClickListener(PlayListItemFragment.this);
                         itemAdapter.setBean(response);
@@ -117,7 +113,7 @@ public class PlayListItemFragment extends BaseFragment implements OnPlaylistItem
 
         VolleySingleton.getInstance().addRequest(gsonRequest);
 
-
+        // 返回按钮
         ibReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,32 +123,7 @@ public class PlayListItemFragment extends BaseFragment implements OnPlaylistItem
     }
 
     @Override
-    public void onItemClickListener(String sId, int position) {
-        GsonLink(sId, position);
-    }
-
-    private void GsonLink(final String songId, final int position) {
-        GsonRequest<PlayListSongInfoBean> gsonRequest = new GsonRequest<>(PlayListSongInfoBean
-                .class, Values.SONG_INFO + songId, new Response.Listener<PlayListSongInfoBean>() {
-            @Override
-            public void onResponse(PlayListSongInfoBean response) {
-                // 请求成功的方法
-                Intent intent = new Intent("sendInfo");
-                intent.putExtra("pic", response.getSonginfo().getPic_premium());
-                intent.putExtra("title", response.getSonginfo().getTitle());
-                intent.putExtra("author", response.getSonginfo().getAuthor());
-                intent.putExtra("albumTitle", response.getSonginfo().getAlbum_title());
-                intent.putExtra("lyrLink", response.getSonginfo().getLrclink());
-                intent.putExtra("position", position);
-                intent.putExtra("isPlaying", true);
-                getActivity().sendBroadcast(intent);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        VolleySingleton.getInstance().addRequest(gsonRequest);
+    public void onItemClickListener(int position) {
+        EventBus.getDefault().post(new PositionEvent(position));
     }
 }
