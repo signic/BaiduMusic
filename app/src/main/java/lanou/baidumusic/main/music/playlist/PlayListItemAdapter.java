@@ -2,6 +2,7 @@ package lanou.baidumusic.main.music.playlist;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,17 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
 import lanou.baidumusic.R;
 import lanou.baidumusic.tool.bean.ListBean;
 import lanou.baidumusic.tool.bean.PlayListItemBean;
+import lanou.baidumusic.tool.bean.PlayListSongInfoBean;
 import lanou.baidumusic.tool.database.DBTools;
+import lanou.baidumusic.tool.volley.GsonRequest;
+import lanou.baidumusic.tool.volley.Values;
+import lanou.baidumusic.tool.volley.VolleySingleton;
 
 /**
  * Created by dllo on 16/11/3.
@@ -75,20 +83,13 @@ public class PlayListItemAdapter extends RecyclerView.Adapter<PlayListItemAdapte
         holder.llList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                onPlaylistItemClickListener.onItemClickListener(position);
                 dbTools.deleteAllSong();
                 for (int i = 0; i < bean.getContent().size(); i++) {
-                    String title = bean.getContent().get(i).getTitle();
-                    String albumTitle = bean.getContent().get(i).getAlbum_title();
-                    String author = bean.getContent().get(i).getAuthor();
                     String songId = bean.getContent().get(i).getSong_id();
-                    ListBean listBean = new ListBean();
-                    listBean.setTitle(title);
-                    listBean.setAlbumTitle(albumTitle);
-                    listBean.setAuthor(author);
-                    listBean.setSongId(songId);
-                    dbTools.insertSongTable(listBean);
+                    Log.d("PlayListItemAdapter1", songId);
+                    GsonInfo(songId);
                 }
-                onPlaylistItemClickListener.onItemClickListener(position);
             }
         });
     }
@@ -116,6 +117,38 @@ public class PlayListItemAdapter extends RecyclerView.Adapter<PlayListItemAdapte
             ivK = (ImageView) itemView.findViewById(R.id.iv_playlist_list_k);
             ibMore = (ImageView) itemView.findViewById(R.id.ib_playlist_list_more);
         }
+    }
+
+    public void GsonInfo(String songId) {
+        GsonRequest<PlayListSongInfoBean> gsonRequest = new GsonRequest<>(PlayListSongInfoBean.class,
+                Values.SONG_INFO + songId, new Response.Listener<PlayListSongInfoBean>() {
+
+            @Override
+            public void onResponse(PlayListSongInfoBean response) {
+                // 请求成功的方法
+                String title = response.getSonginfo().getTitle();
+                String albumTitle = response.getSonginfo().getAlbum_title();
+                String author = response.getSonginfo().getAuthor();
+                String pic = response.getSonginfo().getPic_premium();
+                String fileLink = response.getBitrate().getFile_link();
+                int duration = response.getBitrate().getFile_duration();
+                ListBean listBean = new ListBean();
+                listBean.setTitle(title);
+                listBean.setAlbumTitle(albumTitle);
+                listBean.setAuthor(author);
+                listBean.setPic(pic);
+                listBean.setFileLink(fileLink);
+                listBean.setDuration(duration);
+                dbTools.insertSongTable(listBean);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        VolleySingleton.getInstance().addRequest(gsonRequest);
     }
 
 }

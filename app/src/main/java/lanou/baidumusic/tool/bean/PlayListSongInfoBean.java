@@ -7,59 +7,59 @@ public class PlayListSongInfoBean {
 
     /**
      * special_type : 0
-     * pic_huge :
+     * pic_huge : http://musicdata.baidu.com/data2/pic/88547755/88547755.jpg
      * resource_type : 0
-     * pic_premium : http://musicdata.baidu.com/data2/pic/21414d8e3235d238289d008a4a1504c1/267893005/267893005.jpg
+     * pic_premium : http://musicdata.baidu.com/data2/pic/cad2884302ce0257ab4da5b18f565017/268334951/268334951.jpg
      * havehigh : 2
-     * author : 张韶涵
-     * toneid : 600902000008883133
-     * has_mv : 1
-     * song_id : 2127386
+     * author : 周蕙
+     * toneid : 0
+     * has_mv : 0
+     * song_id : 983998
      * piao_id : 0
-     * artist_id : 77
-     * lrclink : http://musicdata.baidu.com/data2/lrc/13914486/13914486.lrc
+     * artist_id : 847
+     * lrclink : http://musicdata.baidu.com/data2/lrc/983999/983999.lrc
      * relate_status : 0
      * learn : 1
-     * pic_big : http://musicdata.baidu.com/data2/pic/53cf0b6794195721dca04ff9313eab54/88729335/88729335.jpg
+     * pic_big : http://musicdata.baidu.com/data2/pic/e90018d700ad5fcbe456aa85c70051d8/88547768/88547768.jpg
      * play_type : 0
-     * album_id : 2022852
-     * album_title : Over The Rainbow
+     * album_id : 182053
+     * album_title : 精选Ii
      * bitrate_fee : {"0":"129|-1","1":"-1|-1"}
      * song_source : web
-     * all_artist_id : 77
-     * all_artist_ting_uid : 1069
-     * all_rate : 24,64,128,192,256,320,flac
+     * all_artist_id : 847
+     * all_artist_ting_uid : 1403
+     * all_rate : 24,64,128,192,320,flac
      * charge : 0
      * copy_type : 1
      * is_first_publish : 0
      * korean_bb_song : 0
-     * pic_radio : http://musicdata.baidu.com/data2/pic/21345167deb6cf35530c0e54ddfbecf9/88729325/88729325.jpg
-     * has_mv_mobile : 1
-     * title : 遗失的美好
-     * pic_small : http://musicdata.baidu.com/data2/pic/8e1863c111b655cd41d25c7d172c73b1/88729347/88729347.jpg
-     * album_no : 11
+     * pic_radio : http://musicdata.baidu.com/data2/pic/27802798dd0b7d9e1d28810f22cae2e7/88547758/88547758.jpg
+     * has_mv_mobile : 0
+     * title : 不哭
+     * pic_small : http://musicdata.baidu.com/data2/pic/136467578cb3945a57cf44695255879d/88547778/88547778.jpg
+     * album_no : 3
      * resource_type_ext : 0
-     * ting_uid : 1069
+     * ting_uid : 1403
      */
 
     private SonginfoBean songinfo;
     /**
-     * songinfo : {"special_type":0,"pic_huge":"","resource_type":"0","pic_premium":"http://musicdata.baidu.com/data2/pic/21414d8e3235d238289d008a4a1504c1/267893005/267893005.jpg","havehigh":2,"author":"张韶涵","toneid":"600902000008883133","has_mv":1,"song_id":"2127386","piao_id":"0","artist_id":"77","lrclink":"http://musicdata.baidu.com/data2/lrc/13914486/13914486.lrc","relate_status":"0","learn":1,"pic_big":"http://musicdata.baidu.com/data2/pic/53cf0b6794195721dca04ff9313eab54/88729335/88729335.jpg","play_type":0,"album_id":"2022852","album_title":"Over The Rainbow","bitrate_fee":"{\"0\":\"129|-1\",\"1\":\"-1|-1\"}","song_source":"web","all_artist_id":"77","all_artist_ting_uid":"1069","all_rate":"24,64,128,192,256,320,flac","charge":0,"copy_type":"1","is_first_publish":0,"korean_bb_song":"0","pic_radio":"http://musicdata.baidu.com/data2/pic/21345167deb6cf35530c0e54ddfbecf9/88729325/88729325.jpg","has_mv_mobile":1,"title":"遗失的美好","pic_small":"http://musicdata.baidu.com/data2/pic/8e1863c111b655cd41d25c7d172c73b1/88729347/88729347.jpg","album_no":"11","resource_type_ext":"0","ting_uid":"1069"}
+     * songinfo : {"special_type":0,"pic_huge":"http://musicdata.baidu.com/data2/pic/88547755/88547755.jpg","resource_type":"0","pic_premium":"http://musicdata.baidu.com/data2/pic/cad2884302ce0257ab4da5b18f565017/268334951/268334951.jpg","havehigh":2,"author":"周蕙","toneid":"0","has_mv":0,"song_id":"983998","piao_id":"0","artist_id":"847","lrclink":"http://musicdata.baidu.com/data2/lrc/983999/983999.lrc","relate_status":"0","learn":1,"pic_big":"http://musicdata.baidu.com/data2/pic/e90018d700ad5fcbe456aa85c70051d8/88547768/88547768.jpg","play_type":0,"album_id":"182053","album_title":"精选Ii","bitrate_fee":"{\"0\":\"129|-1\",\"1\":\"-1|-1\"}","song_source":"web","all_artist_id":"847","all_artist_ting_uid":"1403","all_rate":"24,64,128,192,320,flac","charge":0,"copy_type":"1","is_first_publish":0,"korean_bb_song":"0","pic_radio":"http://musicdata.baidu.com/data2/pic/27802798dd0b7d9e1d28810f22cae2e7/88547758/88547758.jpg","has_mv_mobile":0,"title":"不哭","pic_small":"http://musicdata.baidu.com/data2/pic/136467578cb3945a57cf44695255879d/88547778/88547778.jpg","album_no":"3","resource_type_ext":"0","ting_uid":"1403"}
      * error_code : 22000
-     * bitrate : {"show_link":"http://zhangmenshiting.baidu.com/data2/music/124590573/124590573.mp3?xcode=84080c53bc40c25fb50a78e8b32aeef1","free":1,"song_file_id":124590573,"file_size":2089434,"file_extension":"mp3","file_duration":261,"file_bitrate":64,"file_link":"http://yinyueshiting.baidu.com/data2/music/124590573/124590573.mp3?xcode=84080c53bc40c25fb50a78e8b32aeef1","hash":"32e20ca6f09942efa4dda493a2e5529463d0e54c"}
+     * bitrate : {"show_link":"http://zhangmenshiting.baidu.com/data2/music/42887866/42887866.mp3?xcode=945af60e1563456c5342a3548728ab76","free":1,"song_file_id":42887866,"file_size":2277435,"file_extension":"mp3","file_duration":284,"file_bitrate":64,"file_link":"http://yinyueshiting.baidu.com/data2/music/42887866/42887866.mp3?xcode=945af60e1563456c5342a3548728ab76","hash":"50f4fb8a689b7d8d34607e60d13934475c4f7bff"}
      */
 
     private int error_code;
     /**
-     * show_link : http://zhangmenshiting.baidu.com/data2/music/124590573/124590573.mp3?xcode=84080c53bc40c25fb50a78e8b32aeef1
+     * show_link : http://zhangmenshiting.baidu.com/data2/music/42887866/42887866.mp3?xcode=945af60e1563456c5342a3548728ab76
      * free : 1
-     * song_file_id : 124590573
-     * file_size : 2089434
+     * song_file_id : 42887866
+     * file_size : 2277435
      * file_extension : mp3
-     * file_duration : 261
+     * file_duration : 284
      * file_bitrate : 64
-     * file_link : http://yinyueshiting.baidu.com/data2/music/124590573/124590573.mp3?xcode=84080c53bc40c25fb50a78e8b32aeef1
-     * hash : 32e20ca6f09942efa4dda493a2e5529463d0e54c
+     * file_link : http://yinyueshiting.baidu.com/data2/music/42887866/42887866.mp3?xcode=945af60e1563456c5342a3548728ab76
+     * hash : 50f4fb8a689b7d8d34607e60d13934475c4f7bff
      */
 
     private BitrateBean bitrate;

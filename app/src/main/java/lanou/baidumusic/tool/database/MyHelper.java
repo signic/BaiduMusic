@@ -23,7 +23,9 @@ public class MyHelper extends SQLiteOpenHelper {
                 + DBValues.SONG_TABLE_TITLE + " text,"
                 + DBValues.SONG_TABLE_ALBUMTITLE + " text,"
                 + DBValues.SONG_TABLE_AUTHOR + " text,"
-                + DBValues.SONG_TABLE_SONGID + " text)");
+                + DBValues.SONG_TABLE_PIC + " text,"
+                + DBValues.SONG_TABLE_LINK + " text,"
+                + DBValues.SONG_TABLE_DURATION + " text)");
     }
 
     // 这个方法是用来更新数据库的,做数据库版本升级用的

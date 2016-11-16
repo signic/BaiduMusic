@@ -10,5 +10,7 @@ public class DBValues {
     public static String SONG_TABLE_TITLE = "title";
     public static String SONG_TABLE_ALBUMTITLE = "albumTitle";
     public static String SONG_TABLE_AUTHOR = "author";
-    public static String SONG_TABLE_SONGID = "songId";
+    public static String SONG_TABLE_PIC = "pic";
+    public static String SONG_TABLE_LINK = "link";
+    public static String SONG_TABLE_DURATION = "duration";
 }

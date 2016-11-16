@@ -4,17 +4,19 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.RemoteViews;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -24,136 +26,310 @@ import java.util.ArrayList;
 
 import lanou.baidumusic.R;
 import lanou.baidumusic.tool.bean.ListBean;
-import lanou.baidumusic.tool.bean.PlayListSongInfoBean;
 import lanou.baidumusic.tool.database.DBTools;
 import lanou.baidumusic.tool.state.AtyToSerEvent;
-import lanou.baidumusic.tool.state.PlayerAtyToSerEvent;
 import lanou.baidumusic.tool.state.PositionEvent;
 import lanou.baidumusic.tool.state.SerToAtyEvent;
-import lanou.baidumusic.tool.volley.GsonRequest;
-import lanou.baidumusic.tool.volley.Values;
-import lanou.baidumusic.tool.volley.VolleySingleton;
 
 /**
  * Created by dllo on 16/11/5.
  */
 public class PlayerService extends Service {
-
-    private MediaPlayer player;
-    private int state = 0;
-    private ArrayList<ListBean> listBeanArrayList;
-    private DBTools dbTools;
+    private int state;
     private int position = 0;
     private String pic;
     private String title;
     private String albumTitle;
     private String author;
-    private String songId;
+    private String link;
+    private MediaPlayer player;
+    private ArrayList<ListBean> listBeanArrayList;
+    private DBTools dbTools;
+    private RemoteViews views;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        initMediaPlayer();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+        player = new MediaPlayer();
         dbTools = new DBTools(this);
         listBeanArrayList = new ArrayList<>();
-        return super.onStartCommand(intent, flags, startId);
+        EventBus.getDefault().register(this);
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        PlayerBinder binder = new PlayerBinder();
+        return binder;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
+    public class PlayerBinder extends Binder {
+        // 判断歌曲状态
+        public boolean getPlayerIsPlaying() {
+            return player.isPlaying();
+        }
+
+        // 获取歌曲时长
+        public int getPlayerDuration() {
+            return player.getDuration();
+        }
+
+        // 获取歌曲当前的播放进度
+        public int getPlayerCurrentPosition() {
+            return player.getCurrentPosition();
+        }
+
+        // 快进/快退
+        public void fastMove(int progress) {
+            player.seekTo(progress);
+        }
     }
 
-    // 初始化MediaPlayer
-    private void initMediaPlayer() {
-        player = new MediaPlayer();
-        //文件时长 mils 毫秒，我们需要自行转换为所需的显示格式
-        player.getDuration();
-        //当前播放时间 单位同上
-        player.getCurrentPosition();
-    }
+//    public class PlayerBinder extends Binder {
+//        // 获取歌曲集合的方法
+//        public ArrayList<ListBean> getListViewData() {
+//            if (listBeanArrayList != null) {
+//                return listBeanArrayList;
+//            } else {
+//                return null;
+//            }
+//        }
+//
+//        // 初始化音乐播放器
+//        public void initMediaPlayer(int position) {
+//            try {
+//                String path = listBeanArrayList.get(position).getFileLink();
+//                player.reset();
+//                player.setDataSource(PlayerService.this, Uri.parse(path));
+//                player.prepare();
+//                player.start();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        // 播放
+//        public void play() {
+//            player.start();
+//        }
+//
+//        // 暂停
+//        public void pause() {
+//            player.pause();
+//        }
+//
+//        // 获取当前歌曲实体类
+//        public ListBean getCurrentSongBean() {
+//            return listBeanArrayList.get(position);
+//        }
+//
+//        // 下一首
+//        public void next() {
+//            position++;
+//            link = listBeanArrayList.get(position).getFileLink();
+//            pic = listBeanArrayList.get(position).getPic();
+//            title = listBeanArrayList.get(position).getTitle();
+//            albumTitle = listBeanArrayList.get(position).getAlbumTitle();
+//            author = listBeanArrayList.get(position).getAuthor();
+//            if (position == listBeanArrayList.size()) {
+//                position = 0;
+//            }
+//            try {
+//                player.reset();
+//                player.setDataSource(PlayerService.this, Uri.parse(link));
+//                player.prepare();
+//                player.start();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            EventBus.getDefault().post(new SerToAtyEvent(pic, title, albumTitle, author));
+//        }
+//
+//        // 上一首
+//        public void previous() {
+//            position--;
+//            link = listBeanArrayList.get(position).getFileLink();
+//            pic = listBeanArrayList.get(position).getPic();
+//            title = listBeanArrayList.get(position).getTitle();
+//            albumTitle = listBeanArrayList.get(position).getAlbumTitle();
+//            author = listBeanArrayList.get(position).getAuthor();
+//            if (position < 0) {
+//                position = listBeanArrayList.size() - 1;
+//            }
+//            try {
+//                player.reset();
+//                player.setDataSource(PlayerService.this, Uri.parse(link));
+//                player.prepare();
+//                player.start();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            EventBus.getDefault().post(new SerToAtyEvent(pic, title, albumTitle, author));
+//        }
+//
+//        // 判断歌曲状态
+//        public boolean getPlayerIsPlaying() {
+//            return player.isPlaying();
+//        }
+//
+//        // 获取歌曲时长
+//        public int getPlayerDuration() {
+//            return player.getDuration();
+//        }
+//
+//        // 获取歌曲当前的播放进度
+//        public int getPlayerCurrentPosition() {
+//            return player.getCurrentPosition();
+//        }
+//
+//        // 快进/快退
+//        public void fastMove(int progress) {
+//            player.seekTo(progress);
+//        }
+//
+//        // 退出应用
+//        public void stop() {
+//            player.stop();
+//            player.release();
+//        }
+//
+//    }
 
     // 通知栏
-    private void playerNotification(String url) {
+    private void playerNotification() {
+        listBeanArrayList = dbTools.QueryAllSong();
+        title = listBeanArrayList.get(position).getTitle();
+        author = listBeanArrayList.get(position).getAuthor();
+        pic = listBeanArrayList.get(position).getPic();
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         Notification.Builder builder = new Notification.Builder(this);
 
         builder.setSmallIcon(R.mipmap.icon);
 
-        RemoteViews views = new RemoteViews(getPackageName(), R.layout.player_notification);
-        views.setTextViewText(R.id.tv_notification_title, "A Little Braver");
-        views.setTextViewText(R.id.tv_notification_author, "New Empire");
+        views = new RemoteViews(getPackageName(), R.layout.player_notification);
+        views.setTextViewText(R.id.tv_notification_title, title);
+        views.setTextViewText(R.id.tv_notification_author, author);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
         views.setImageViewBitmap(R.id.iv_notification, bitmap);
 //        VolleySingleton.getInstance().getImage(url, iv);
 //        views.setImageViewUri(R.id.iv_notification, Uri.parse(url));
-
+        //注册广播
+        NotificationBroadcastReceiver receiver = new NotificationBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("notification");
+        registerReceiver(receiver, intentFilter);
         Intent intent = new Intent(getPackageName());
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 301, intent, PendingIntent
+        intent.putExtra("buttonId", 0);
+        PendingIntent intent_prev = PendingIntent.getBroadcast(this, 0, intent, PendingIntent
                 .FLAG_UPDATE_CURRENT);
-        views.setOnClickPendingIntent(R.id.ib_notification_close, pendingIntent);
-        views.setOnClickPendingIntent(R.id.ib_notification_twins, pendingIntent);
-        views.setOnClickPendingIntent(R.id.ib_notification_previous, pendingIntent);
-        views.setOnClickPendingIntent(R.id.ib_notification_next, pendingIntent);
+        intent.putExtra("buttonId", 1);
+        PendingIntent intent_twins = PendingIntent.getBroadcast(this, 1, intent, PendingIntent
+                .FLAG_UPDATE_CURRENT);
+        intent.putExtra("buttonId", 2);
+        PendingIntent intent_next = PendingIntent.getBroadcast(this, 2, intent, PendingIntent
+                .FLAG_UPDATE_CURRENT);
+        intent.putExtra("buttonId", 3);
+        PendingIntent intent_close = PendingIntent.getBroadcast(this, 3, intent, PendingIntent
+                .FLAG_UPDATE_CURRENT);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 301, intent, PendingIntent
+//                .FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.ib_notification_previous, intent_prev);
+        views.setOnClickPendingIntent(R.id.ib_notification_twins, intent_twins);
+        views.setOnClickPendingIntent(R.id.ib_notification_next, intent_next);
+        views.setOnClickPendingIntent(R.id.ib_notification_close, intent_close);
         builder.setContent(views);
         Notification notification = builder.build();
-        manager.notify(404, notification);
-
-//        Notification foregroundNote;
-//        RemoteViews bigView = new RemoteViews(getPackageName(), R.layout.player_notification);
-//        Notification.Builder mNotifyBuilder = new Notification.Builder(this);
-//        foregroundNote = mNotifyBuilder.setContentTitle("some string")
-//                .setContentText("Slide down on note to expand")
-//                .setSmallIcon(R.mipmap.ic_launcher)
-//                .build();
-//        foregroundNote.bigContentView = bigView;
-//        NotificationManager mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//        mNotifyManager.notify(1, foregroundNote);
+//        manager.notify(404, notification);
+        startForeground(463, notification);
     }
+
+    class NotificationBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            listBeanArrayList = dbTools.QueryAllSong();
+            link = listBeanArrayList.get(position).getFileLink();
+            pic = listBeanArrayList.get(position).getPic();
+            title = listBeanArrayList.get(position).getTitle();
+            albumTitle = listBeanArrayList.get(position).getAlbumTitle();
+            author = listBeanArrayList.get(position).getAuthor();
+            String action = intent.getAction();
+            if (action.equals("notification")) {
+                //通过传递过来的ID判断按钮点击属性或者通过getResultCode()获得相应点击事件
+                int buttonId = intent.getIntExtra("buttonId", -1);
+                switch (buttonId) {
+                    // 上一首
+                    case R.id.ib_notification_previous:
+                        Bitmap bitmap1 = BitmapFactory.decodeResource(getResources(), R.mipmap
+                                .bt_notificationbar_pause);
+                        views.setImageViewBitmap(R.id.ib_notification_twins, bitmap1);
+                        position--;
+                        if (position > 0) {
+                            initPlayer(link);
+                        } else {
+                            position = listBeanArrayList.size() - 1;
+                            initPlayer(link);
+                        }
+                        EventBus.getDefault().post(new SerToAtyEvent(pic, title, albumTitle, author));
+                        break;
+                    // 播放/暂停
+                    case R.id.ib_notification_twins:
+                        if (player.isPlaying()) {
+                            Bitmap bitmap2 = BitmapFactory.decodeResource(getResources(), R.mipmap
+                                    .bt_notificationbar_pause);
+                            views.setImageViewBitmap(R.id.ib_notification_twins, bitmap2);
+                            player.start();
+                        } else {
+                            Bitmap bitmap3 = BitmapFactory.decodeResource(getResources(), R.mipmap
+                                    .bt_notificationbar_play);
+                            views.setImageViewBitmap(R.id.ib_notification_twins, bitmap3);
+                            player.pause();
+                        }
+                        break;
+                    // 下一首
+                    case R.id.ib_notification_next:
+                        Bitmap bitmap4 = BitmapFactory.decodeResource(getResources(), R.mipmap
+                                .bt_notificationbar_pause);
+                        views.setImageViewBitmap(R.id.ib_notification_twins, bitmap4);
+                        position++;
+                        if (position < listBeanArrayList.size()) {
+                            initPlayer(link);
+                        } else {
+                            position = 0;
+                            initPlayer(link);
+                        }
+                        EventBus.getDefault().post(new SerToAtyEvent(pic, title, albumTitle, author));
+                        break;
+                    // 关闭
+                    case R.id.ib_notification_close:
+                        onDestroy();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
 
     // 歌曲自动播放下一首
     private void playMediaPlayer() {
         listBeanArrayList = dbTools.QueryAllSong();
+        title = listBeanArrayList.get(position).getTitle();
+        albumTitle = listBeanArrayList.get(position).getAlbumTitle();
+        author = listBeanArrayList.get(position).getAuthor();
+        pic = listBeanArrayList.get(position).getPic();
+        link = listBeanArrayList.get(position).getFileLink();
         player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                position = position + 1;
+                position++;
                 if (position < listBeanArrayList.size()) {
-                    GsonLink(position);
+                    initPlayer(link);
                 } else {
-                    GsonLink(0);
+                    position = 0;
+                    initPlayer(link);
                 }
-                title = listBeanArrayList.get(position).getTitle();
-                albumTitle = listBeanArrayList.get(position).getAlbumTitle();
-                author = listBeanArrayList.get(position).getAuthor();
-                songId = listBeanArrayList.get(position).getSongId();
-                GsonRequest<PlayListSongInfoBean> gsonRequest = new GsonRequest<>(PlayListSongInfoBean
-                        .class, Values.SONG_INFO + songId, new Response.Listener<PlayListSongInfoBean>() {
-                    @Override
-                    public void onResponse(PlayListSongInfoBean response) {
-                        // 请求成功的方法
-                        pic = response.getSonginfo().getPic_huge();
-                        EventBus.getDefault().post(new SerToAtyEvent(position, pic, title, albumTitle, author));
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-                VolleySingleton.getInstance().addRequest(gsonRequest);
+                EventBus.getDefault().post(new SerToAtyEvent(pic, title, albumTitle, author));
             }
         });
     }
@@ -161,38 +337,44 @@ public class PlayerService extends Service {
     // 接收从PlayListItemFragment发过来的数据
     @Subscribe
     public void getPositionEvent(PositionEvent positionEvent) {
-        position = positionEvent.getPosition();
-        GsonLink(position);
         listBeanArrayList = dbTools.QueryAllSong();
+        position = positionEvent.getPosition();
         title = listBeanArrayList.get(position).getTitle();
         albumTitle = listBeanArrayList.get(position).getAlbumTitle();
         author = listBeanArrayList.get(position).getAuthor();
-        songId = listBeanArrayList.get(position).getSongId();
-        GsonRequest<PlayListSongInfoBean> gsonRequest = new GsonRequest<>(PlayListSongInfoBean
-                .class, Values.SONG_INFO + songId, new Response.Listener<PlayListSongInfoBean>() {
-            @Override
-            public void onResponse(PlayListSongInfoBean response) {
-                // 请求成功的方法
-                pic = response.getSonginfo().getPic_huge();
-                EventBus.getDefault().post(new SerToAtyEvent(position, pic, title, albumTitle, author));
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+        pic = listBeanArrayList.get(position).getPic();
+        link = listBeanArrayList.get(position).getFileLink();
+        initPlayer(link);
+        EventBus.getDefault().post(new SerToAtyEvent(pic, title, albumTitle, author));
+    }
 
-            }
-        });
-        VolleySingleton.getInstance().addRequest(gsonRequest);
+    // 音乐播放
+    public void initPlayer(String link) {
+        try {
+            player.reset();
+            player.setDataSource(PlayerService.this, Uri.parse(link));
+            player.prepare();
+            player.start();
+            // 歌曲结束后自动播放下一首
+//            playMediaPlayer();
+            // 通知栏
+            playerNotification();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // 接收从MainActivity发送过来的数据
     @Subscribe
-    public void getActivityEvent(AtyToSerEvent stateEvent) {
-        state = stateEvent.getState();
-        position = stateEvent.getPosition();
-        title = stateEvent.getTitle();
-        albumTitle = stateEvent.getAlbumTitle();
-        author = stateEvent.getAuthor();
+    public void getActivityEvent(AtyToSerEvent atyToSerEvent) {
+        state = atyToSerEvent.getState();
+        position = atyToSerEvent.getPosition();
+        listBeanArrayList = dbTools.QueryAllSong();
+        pic = listBeanArrayList.get(position).getPic();
+        title = listBeanArrayList.get(position).getTitle();
+        albumTitle = listBeanArrayList.get(position).getAlbumTitle();
+        author = listBeanArrayList.get(position).getAuthor();
+        link = listBeanArrayList.get(position).getFileLink();
         switch (state) {
             case 0://播放
                 player.start();
@@ -202,88 +384,36 @@ public class PlayerService extends Service {
                 break;
             case 2://下一首
                 if (position < listBeanArrayList.size()) {
-                    GsonLink(position);
+                    initPlayer(link);
+                    EventBus.getDefault().post(new SerToAtyEvent(pic, title, albumTitle, author));
                 } else {
-                    GsonLink(0);
+                    position = 0;
+                    initPlayer(link);
+                    EventBus.getDefault().post(new SerToAtyEvent(pic, title, albumTitle, author));
                 }
-                EventBus.getDefault().post(new SerToAtyEvent(position, pic, title, albumTitle, author));
+                Log.d("PlayerService", link);
                 break;
             case 3:
-                GsonLink(position);
-                EventBus.getDefault().post(new SerToAtyEvent(position, pic, title, albumTitle, author));
+                initPlayer(link);
+                EventBus.getDefault().post(new SerToAtyEvent(pic, title, albumTitle, author));
                 break;
             case 4://上一首
                 if (position > 0) {
-                    GsonLink(position);
+                    initPlayer(link);
                 } else {
-                    GsonLink(listBeanArrayList.size() - 1);
+                    position = listBeanArrayList.size() - 1;
+                    initPlayer(link);
                 }
-                EventBus.getDefault().post(new SerToAtyEvent(position, pic, title, albumTitle, author));
+                EventBus.getDefault().post(new SerToAtyEvent(pic, title, albumTitle, author));
                 break;
+
         }
     }
 
-    // 接收从PlayActivity发送过来的数据
-    @Subscribe
-    public void getPlayerActivityEvent(PlayerAtyToSerEvent playerAtyToSerEvent) {
-        state = playerAtyToSerEvent.getState();
-        position = playerAtyToSerEvent.getPosition();
-        title = playerAtyToSerEvent.getTitle();
-        albumTitle = playerAtyToSerEvent.getAlbumTitle();
-        author = playerAtyToSerEvent.getAuthor();
-        switch (state) {
-            case 0://播放
-                player.start();
-                break;
-            case 1://暂停
-                player.pause();
-                break;
-            case 2://下一首
-                GsonLink(position);
-                EventBus.getDefault().post(new SerToAtyEvent(position, pic, title, albumTitle, author));
-                break;
-            case 3:
-                GsonLink(position);
-                EventBus.getDefault().post(new SerToAtyEvent(position, pic, title, albumTitle, author));
-                break;
-            case 4://上一首
-                GsonLink(position);
-                EventBus.getDefault().post(new SerToAtyEvent(position, pic, title, albumTitle, author));
-                break;
-        }
-    }
-
-    // 解析歌曲链接
-    public void GsonLink(final int position) {
-        listBeanArrayList = dbTools.QueryAllSong();
-        GsonRequest<PlayListSongInfoBean> gsonRequest = new GsonRequest<>(PlayListSongInfoBean
-                .class, Values.SONG_INFO + listBeanArrayList.get(position).getSongId(), new Response
-                .Listener<PlayListSongInfoBean>() {
-            @Override
-            public void onResponse(PlayListSongInfoBean response) {
-                // 请求成功的方法
-                String fileLink = response.getBitrate().getFile_link();
-                String pic = response.getSonginfo().getPic_big();
-                try {
-                    player.reset();
-                    player.setDataSource(PlayerService.this, Uri.parse(fileLink));
-                    player.prepare();
-                    player.start();
-                    // 歌曲结束后自动播放下一首
-                    playMediaPlayer();
-                    // 通知栏
-                    playerNotification(pic);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        VolleySingleton.getInstance().addRequest(gsonRequest);
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
 }

@@ -7,7 +7,9 @@ public class ListBean {
     String title;
     String albumTitle;
     String author;
-    String songId;
+    String pic;
+    String fileLink;
+    int duration;
 
     public String getTitle() {
         return title;
@@ -33,11 +35,27 @@ public class ListBean {
         this.author = author;
     }
 
-    public String getSongId() {
-        return songId;
+    public String getPic() {
+        return pic;
     }
 
-    public void setSongId(String songId) {
-        this.songId = songId;
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
+
+    public String getFileLink() {
+        return fileLink;
+    }
+
+    public void setFileLink(String fileLink) {
+        this.fileLink = fileLink;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }

@@ -3,7 +3,8 @@ package lanou.baidumusic.main.music.toplist;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.ListView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -14,6 +15,7 @@ import lanou.baidumusic.tool.bean.TopListBean;
 import lanou.baidumusic.tool.volley.GsonRequest;
 import lanou.baidumusic.tool.volley.Values;
 import lanou.baidumusic.tool.volley.VolleySingleton;
+import lanou.baidumusic.tool.widget.DividerItemDecoration;
 
 /**
  * Created by dllo on 16/10/24.
@@ -21,7 +23,7 @@ import lanou.baidumusic.tool.volley.VolleySingleton;
 public class TopListFragment extends BaseFragment implements OnTopListClickListener {
 
     private TopListAdapter adapter;
-    private ListView lvTopList;
+    private RecyclerView rvTopList;
 
     @Override
     protected int getLayout() {
@@ -30,8 +32,12 @@ public class TopListFragment extends BaseFragment implements OnTopListClickListe
 
     @Override
     protected void initView() {
-        lvTopList = bindView(R.id.lv_toplist);
+        rvTopList = bindView(R.id.rv_toplist);
         adapter = new TopListAdapter(getActivity());
+
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        rvTopList.setLayoutManager(manager);
+        rvTopList.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
     }
 
     @Override
@@ -43,7 +49,7 @@ public class TopListFragment extends BaseFragment implements OnTopListClickListe
                 // 请求成功的方法
                 adapter.setOnTopListClickListener(TopListFragment.this);
                 adapter.setBean(response);
-                lvTopList.setAdapter(adapter);
+                rvTopList.setAdapter(adapter);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -51,7 +57,6 @@ public class TopListFragment extends BaseFragment implements OnTopListClickListe
 
             }
         });
-
         VolleySingleton.getInstance().addRequest(gsonRequest);
     }
 
@@ -66,6 +71,5 @@ public class TopListFragment extends BaseFragment implements OnTopListClickListe
         transaction.replace(R.id.replace_view, fragmentItem);
         transaction.addToBackStack(null);
         transaction.commit();
-
     }
 }

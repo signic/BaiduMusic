@@ -73,7 +73,7 @@ public class PlayListFragment extends BaseFragment implements OnPlayListClickLis
         });
     }
 
-    private void GsonData(String url) {
+    public void GsonData(String url) {
         GsonRequest<PlayListBean> gsonRequest = new GsonRequest<>(PlayListBean.class, url,
                 new Response.Listener<PlayListBean>() {
                     @Override

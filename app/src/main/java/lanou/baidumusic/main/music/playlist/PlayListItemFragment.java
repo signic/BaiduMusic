@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -79,7 +80,7 @@ public class PlayListItemFragment extends BaseFragment implements OnPlaylistItem
         username = arguments.getString("username");
         title = arguments.getString("title");
         GsonRequest<PlayListItemBean> gsonRequest = new GsonRequest<>(PlayListItemBean.class,
-                Values.MUSIC_PLAYLIST_LIST_FRONT + listId + Values.MUSIC_PLAYLIST_LIST_BEHIND,
+                Values.MUSIC_PLAYLIST_LIST_FRONT + listId,
                 new Response.Listener<PlayListItemBean>() {
 
                     @Override
@@ -95,7 +96,7 @@ public class PlayListItemFragment extends BaseFragment implements OnPlaylistItem
                                  VolleySingleton.GetBitmap() {
                             @Override
                             public void onGetBitmap(Bitmap bitmap) {
-//                                bitmap = FastBlur.doBlur(bitmap, 10, true);
+//                                bitmap = FastBlur.doBlur(bitmap, 8, true);
                                 ivBackground.setImageBitmap(bitmap);
                             }
                         });
@@ -125,5 +126,7 @@ public class PlayListItemFragment extends BaseFragment implements OnPlaylistItem
     @Override
     public void onItemClickListener(int position) {
         EventBus.getDefault().post(new PositionEvent(position));
+        Log.d("PlayListItemFragment", "position:" + position);
     }
+
 }

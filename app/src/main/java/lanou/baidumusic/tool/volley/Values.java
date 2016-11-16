@@ -30,7 +30,6 @@ public final class Values {
     // 音乐 -> 歌单 -> 最热/最新 -> 列表
     public static final String MUSIC_PLAYLIST_LIST_FRONT = "http://tingapi.ting.baidu" +
             ".com/v1/restserver/ting?method=baidu.ting.diy.gedanInfo&from=ios&listid=";
-    public static final String MUSIC_PLAYLIST_LIST_BEHIND = "&version=5.2.3&from=ios&channel=appstore";
 
     // 音乐 -> 歌单 -> 最热/最新 -> 列表 -> 歌曲信息
     public static final String SONG_INFO = "http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.song.play&songid=";
